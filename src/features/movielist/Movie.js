@@ -6,8 +6,8 @@ export const Movie = ({ movie, id }) => {
 
   return (
     <div>
-      <h2>title: {movie.title}</h2>
-      <h3>rank:{movie.rank}</h3>
+      <h2>Title: {movie.title}</h2>
+      <h3>Rank:{movie.rank}</h3>
       <h4>id: {id}</h4>
       <button onClick={() => dispatch(changeRank(id))}>ChangeRank</button>
     </div>
