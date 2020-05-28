@@ -16,7 +16,7 @@
   {
     "title": "The Avengers",
     "year": 2012,
-    "rank": 1000,
+    "rank": 10000,
     "cast": [
       "Robert Downey, Jr.",
       "Chris Evans",
@@ -37,7 +37,7 @@
   {
     "title": "Movie A",
     "year": 2013,
-    "rank": 100,
+    "rank": 1000,
     "cast": [
       "Robert Downey, Jr.",
       "Chris Evans",
@@ -57,7 +57,7 @@
   {
     "title": "Movie BBB",
     "year": 2003,
-    "rank": 10000,
+    "rank": 1900,
     "cast": [
       "Robert Downey, Jr.",
       "Chris Evans",
@@ -77,7 +77,7 @@
   {
     "title": "Movie CX",
     "year": 2018,
-    "rank": 5000,
+    "rank": 10,
     "cast": [
       "Robert Downey, Jr.",
       "Chris Evans",

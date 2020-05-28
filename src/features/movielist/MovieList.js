@@ -19,18 +19,21 @@ const MovieList = () => {
   const renderMovies = () => {
     if (loading) return <p>Loading movies...</p>;
     if (hasErrors) return <p>Unable to display movies</p>;
-    console.log(movies);
 
     let unrankedMovies = movies.filter((movie) => movie.rank < 1);
+    let rankedMovies = movies.filter((movie) => movie.rank >= 1);
+    console.log("ranked movies array:", rankedMovies);
+    console.log("unranked movies array:", unrankedMovies);
+    //show 2 unranked movies until 1 movie is ranked. THis ranked movie becomes basis of comparison for future movies.
 
-    //console.log("unranked movies:" + unrankedMovies);
-
-    //need to figure out what to do with only 1 movie being rendered and how to go about adding in new movies at increasing rank values. Possibly going for a new splice based upon a middle ranking method permeating outwards
-    if (unrankedMovies.length >= 2) {
+    if (rankedMovies.length === 0) {
       return unrankedMovies
         .slice(0, 2)
         .map((movie) => <Movie key={movie.id} movie={movie} id={movie.id} />);
-    } else {
+    } else if (unrankedMovies.length >= 1) {
+      // Reusable sort function from:
+      // https://stackoverflow.com/questions/979256/sorting-an-array-of-objects-by-property-values
+
       const sort_by = (field, reverse, primer) => {
         const key = primer
           ? function (x) {
@@ -45,13 +48,36 @@ const MovieList = () => {
           return (a = key(a)), (b = key(b)), reverse * ((a > b) - (b > a));
         };
       };
-      let moviesSorted = movies.slice().sort(sort_by("rank", true, parseInt));
-      console.log(movies);
-      console.log(moviesSorted);
 
-      return moviesSorted.map((movie) => (
-        <Movie key={movie.id} movie={movie} id={movie.id} />
-      ));
+      const moviesSortedByRank = rankedMovies
+        .slice()
+        .sort(sort_by("rank", true, parseInt));
+
+      //Should work for now, but might need to be reconfigured later.
+      //KEEP AN EYE ON THIS!
+      const midMovieIndex = Math.round(moviesSortedByRank.length / 2);
+
+      console.log(midMovieIndex);
+
+      return (
+        <div>
+          <div>
+            {unrankedMovies.slice(0, 1).map((movie) => (
+              <Movie key={movie.id} movie={movie} id={movie.id} />
+            ))}
+          </div>
+          <div>
+            {moviesSortedByRank
+              .slice(midMovieIndex, midMovieIndex + 1)
+              .map((movie) => (
+                <Movie key={movie.id} movie={movie} id={movie.id} />
+              ))}
+          </div>
+        </div>
+      );
+    } else {
+      //no unranked movies left
+      return <p>No unranked movies</p>;
     }
   };
   return (
