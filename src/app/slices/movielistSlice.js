@@ -24,9 +24,15 @@ const movielistSlice = createSlice({
       state.hasErrors = true;
       console.log(state.movies);
     },
-    changeRank: (state, action) => {
+    changeRank: (state, action, id) => {
       //action.payload = whatever is passed through to the changeRank reducer
       // in the case of movie.js it's the id currently
+
+      // if (action.id === id) {
+      //   const movieID = action.payload;
+
+      //   console.log(action.payload);
+      // }
 
       console.log(state.movies[action.payload - 1].title);
 

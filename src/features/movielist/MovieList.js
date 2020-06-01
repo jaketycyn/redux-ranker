@@ -7,6 +7,7 @@ import {
   movielistSelector,
 } from "../../app/slices/movielistSlice";
 import { Movie } from "./Movie";
+import RankedItemsDisplay from "./RankedItemsDisplay";
 
 const MovieList = () => {
   const dispatch = useDispatch();
@@ -20,8 +21,8 @@ const MovieList = () => {
     if (loading) return <p>Loading movies...</p>;
     if (hasErrors) return <p>Unable to display movies</p>;
 
-    let unrankedMovies = movies.filter((movie) => movie.rank < 1);
-    let rankedMovies = movies.filter((movie) => movie.rank >= 1);
+    const unrankedMovies = movies.filter((movie) => movie.rank < 1);
+    const rankedMovies = movies.filter((movie) => movie.rank >= 1);
     console.log("ranked movies array:", rankedMovies);
     console.log("unranked movies array:", unrankedMovies);
     //show 2 unranked movies until 1 movie is ranked. THis ranked movie becomes basis of comparison for future movies.
@@ -30,7 +31,7 @@ const MovieList = () => {
       return unrankedMovies
         .slice(0, 2)
         .map((movie) => <Movie key={movie.id} movie={movie} id={movie.id} />);
-    } else if (unrankedMovies.length >= 1) {
+    } else if (unrankedMovies.length >= 1 && rankedMovies.length >= 1) {
       // Reusable sort function from:
       // https://stackoverflow.com/questions/979256/sorting-an-array-of-objects-by-property-values
 
@@ -77,13 +78,16 @@ const MovieList = () => {
       );
     } else {
       //no unranked movies left
-      return <p>No unranked movies</p>;
+      return (
+        <p>No unranked movies. Feel free to look through your sorted list </p>
+      );
     }
   };
   return (
     <section>
       <h1>Movies</h1>
       {renderMovies()}
+      <RankedItemsDisplay />
     </section>
   );
 };

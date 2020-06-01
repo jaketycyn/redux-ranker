@@ -1,3 +1,12 @@
+Priorities:
+    1) List rendering logic for 2 already ranked items
+    2) Entire "ranked" list component display 
+    3) Actual changes to data based upon selection (updating .json files via redux actions)
+    
+
+
+
+
 Sorted List component that allows people to see everything that is ranked and/or unranked.
 
 Possible Drag/Drop functionality for this sorted List
