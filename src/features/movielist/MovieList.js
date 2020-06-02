@@ -17,6 +17,10 @@ const MovieList = () => {
     dispatch(fetchMovies());
   }, [dispatch]);
 
+
+  const A = 'A'
+  const B = 'B'
+
   const renderMovies = () => {
     if (loading) return <p>Loading movies...</p>;
     if (hasErrors) return <p>Unable to display movies</p>;
@@ -28,10 +32,21 @@ const MovieList = () => {
     //show 2 unranked movies until 1 movie is ranked. THis ranked movie becomes basis of comparison for future movies.
 
     if (rankedMovies.length === 0) {
-      return unrankedMovies
-        .slice(0, 2)
-        .map((movie) => <Movie key={movie.id} movie={movie} id={movie.id} />);
-    } else if (unrankedMovies.length >= 1 && rankedMovies.length >= 1) {
+     
+      return (
+        <div>
+          <div> 
+          {unrankedMovies
+            .slice(0, 1)
+            .map((movie) => <Movie key={movie.id} movie={movie} id={movie.id} option={A}/>)}
+          </div>
+          <div>
+          {unrankedMovies
+            .slice(1, 2)
+            .map((movie) => <Movie key={movie.id} movie={movie} id={movie.id} option={B}/>)}
+          </div>
+        </div>
+      )} else if (unrankedMovies.length >= 1 && rankedMovies.length >= 1) {
       // Reusable sort function from:
       // https://stackoverflow.com/questions/979256/sorting-an-array-of-objects-by-property-values
 
@@ -61,17 +76,17 @@ const MovieList = () => {
       console.log(midMovieIndex);
 
       return (
-        <div>
+        <div> 
           <div>
             {unrankedMovies.slice(0, 1).map((movie) => (
-              <Movie key={movie.id} movie={movie} id={movie.id} />
+              <Movie key={movie.id} movie={movie} id={movie.id} option={A}/>
             ))}
           </div>
           <div>
             {moviesSortedByRank
               .slice(midMovieIndex, midMovieIndex + 1)
               .map((movie) => (
-                <Movie key={movie.id} movie={movie} id={movie.id} />
+                <Movie key={movie.id} movie={movie} id={movie.id} option={B}/>
               ))}
           </div>
         </div>
