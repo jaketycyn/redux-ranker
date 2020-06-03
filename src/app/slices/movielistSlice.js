@@ -7,6 +7,10 @@ export const initialState = {
   movies: [],
 };
 
+//if returning proxy via a console log
+// use JSON.stringify(state, undefined, 2)
+// state = movies.state or whatever variable state is assigned to
+
 const movielistSlice = createSlice({
   name: "movielist",
   initialState,
@@ -27,16 +31,23 @@ const movielistSlice = createSlice({
     changeRank: (state, action, id) => {
       //action.payload = whatever is passed through to the changeRank reducer
       // in the case of movie.js it's the id currently
+      const foundMovie = state.movies.find(element => element.id === action.payload.id) 
 
-      // if (action.id === id) {
+      console.log(JSON.stringify(foundMovie, undefined, 2))
+      
+      console.log(action.payload.id);
+      if (action.payload.id === state) {
       //   const movieID = action.payload;
-
+      
       //   console.log(action.payload);
-      // }
+      }
 
-      console.log(state.movies[action.payload - 1].title);
+     
+      // console.log(state.movies[action.payload.id - 1].title);
 
-      state.movies[action.payload - 1].rank = 2;
+      //testing of the option property attachd to Movie component = works so far
+      // console.log(action.payload.option)
+      // state.movies[action.payload.id - 1].rank = 2;1
     },
   },
 });
