@@ -9,7 +9,6 @@ import {
 import { Movie } from "./Movie";
 import RankedItemsDisplay from "./RankedItemsDisplay";
 
-//testing new changes
 const MovieList = () => {
   const dispatch = useDispatch();
   const { loading, hasErrors, movies } = useSelector(movielistSelector);
@@ -18,39 +17,49 @@ const MovieList = () => {
     dispatch(fetchMovies());
   }, [dispatch]);
 
-
-  const A = 'A'
+  // variables created for options
+ 
+  const A = 'A' 
   const B = 'B'
-
+  //
   const renderMovies = () => {
     if (loading) return <p>Loading movies...</p>;
     if (hasErrors) return <p>Unable to display movies</p>;
 
-    const unrankedMovies = movies.filter((movie) => movie.rank < 1);
+    const unrankedMovies = movies.filter((movie) => movie.rank == 0);
     const rankedMovies = movies.filter((movie) => movie.rank >= 1);
-    console.log("ranked movies array:", rankedMovies);
-    console.log("unranked movies array:", unrankedMovies);
-    //show 2 unranked movies until 1 movie is ranked. THis ranked movie becomes basis of comparison for future movies.
+    // console.log("ranked movies array:", rankedMovies);
+    // console.log("unranked movies array:", unrankedMovies);
 
+    
+    //show 2 unranked movies until 1 movie is ranked. THis ranked movie becomes basis of comparison for future movies.
     if (rankedMovies.length === 0) {
      
+      //create matchup variable that takes the # of indv. items from slice state and creates an object with them.
+      //this object will be passed down as a prop to action.prototype to be used to look up from main state
+      // an indiv. matchup variable will be created for each 'case' / if statement
+
+      const unRankedMatchup = unrankedMovies.slice(0,2)
+      console.log(unRankedMatchup)
       return (
         <div>
           <div> 
-          {unrankedMovies
+          {unRankedMatchup
             .slice(0, 1)
-            .map((movie) => <Movie key={movie.id} movie={movie} id={movie.id} option={A}/>)}
+            .map((movie) => <Movie key={movie.id} movie={movie} id={movie.id} option={A} combatants={unRankedMatchup}/>)}
           </div>
           <div>
-          {unrankedMovies
+          {unRankedMatchup
             .slice(1, 2)
-            .map((movie) => <Movie key={movie.id} movie={movie} id={movie.id} option={B}/>)}
+            .map((movie) => <Movie key={movie.id} movie={movie} id={movie.id} option={B} combatants={unRankedMatchup}/>)}
           </div>
         </div>
+
+
       )} else if (unrankedMovies.length >= 1 && rankedMovies.length >= 1) {
       // Reusable sort function from:
       // https://stackoverflow.com/questions/979256/sorting-an-array-of-objects-by-property-values
-
+      
       const sort_by = (field, reverse, primer) => {
         const key = primer
           ? function (x) {
@@ -68,30 +77,71 @@ const MovieList = () => {
 
       const moviesSortedByRank = rankedMovies
         .slice()
-        .sort(sort_by("rank", true, parseInt));
+        // false = reversed order 
+        .sort(sort_by("rank", false, parseInt));
 
       //Should work for now, but might need to be reconfigured later.
       //KEEP AN EYE ON THIS!
-      const midMovieIndex = Math.round(moviesSortedByRank.length / 2);
+      const midMovieIndex = Math.round(moviesSortedByRank.length / 2) ;
 
       console.log(midMovieIndex);
+      const unrakedMoviSlice = unrankedMovies.slice(0, 1)
+      const rankedIncumbent = moviesSortedByRank.slice(midMovieIndex, midMovieIndex + 1)
+      const combatants = unrakedMoviSlice.concat(rankedIncumbent)
 
-      return (
-        <div> 
-          <div>
-            {unrankedMovies.slice(0, 1).map((movie) => (
-              <Movie key={movie.id} movie={movie} id={movie.id} option={A}/>
-            ))}
-          </div>
-          <div>
-            {moviesSortedByRank
-              .slice(midMovieIndex, midMovieIndex + 1)
-              .map((movie) => (
-                <Movie key={movie.id} movie={movie} id={movie.id} option={B}/>
+      //console.log("new combatants:" + JSON.stringify(combatants, undefined, 2))
+      console.log("unranked challenger:" + JSON.stringify(unrakedMoviSlice, undefined, 2))
+
+
+      // Method for getting around object is not extensive error
+      // https://stackoverflow.com/questions/45798885/object-is-not-extensible-error-when-creating-new-attribute-for-array-of-objects
+      let unrankedChallenger = unrakedMoviSlice.map((item) => 
+      //encounter = # of times it's gone through picks/choosing phase
+      //chosen = whether or not it was picked positively in the first interaction (true = yes, false = no)
+      //this indicates whether or not 
+    Object.assign({}, item, {encounters:0 , chosen: null  }, )
+)
+console.log("unranked challenger:" + JSON.stringify(unrankedChallenger, undefined, 2))
+
+//need to call af function below in movie that changes the status of unranked challenger or does stuff based off that.
+// use index of the arrays to move to the next if else scenario 
+// double function firing within Movie component based upon option = A to do. 
+if (unrankedChallenger[0].encounters == 0) {
+        return (
+          <div> 
+            <div>
+              {unrankedChallenger.map((movie) => (
+                <Movie key={movie.id} movie={movie} id={movie.id} option={A} combatants={combatants} rankedMovies={moviesSortedByRank}/>
               ))}
+            </div>
+            <div>
+              {rankedIncumbent
+                .map((movie) => (
+                  <Movie key={movie.id} movie={movie} id={movie.id} option={B} combatants={combatants} rankedMovies={moviesSortedByRank}/>
+                ))}
+            </div>
           </div>
-        </div>
-      );
+        );
+       }
+       else if (unrankedChallenger[0].encounters == 1 ) {
+        const rankedIncumbent = moviesSortedByRank.slice(midMovieIndex, midMovieIndex + 1)
+        const combatants = unrakedMoviSlice.concat(rankedIncumbent)
+        return (
+          <div> 
+            <div>
+              {unrankedChallenger.map((movie) => (
+                <Movie key={movie.id} movie={movie} id={movie.id} option={A} combatants={combatants} rankedMovies={moviesSortedByRank}/>
+              ))}
+            </div>
+            <div>
+              {rankedIncumbent
+                .map((movie) => (
+                  <Movie key={movie.id} movie={movie} id={movie.id} option={B} combatants={combatants} rankedMovies={moviesSortedByRank}/>
+                ))}
+            </div>
+          </div>
+        );
+       }
     } else {
       //no unranked movies left
       return (

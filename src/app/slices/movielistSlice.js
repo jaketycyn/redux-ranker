@@ -7,10 +7,6 @@ export const initialState = {
   movies: [],
 };
 
-//if returning proxy via a console log
-// use JSON.stringify(state, undefined, 2)
-// state = movies.state or whatever variable state is assigned to
-
 const movielistSlice = createSlice({
   name: "movielist",
   initialState,
@@ -29,25 +25,51 @@ const movielistSlice = createSlice({
       console.log(state.movies);
     },
     changeRank: (state, action, id) => {
-      //action.payload = whatever is passed through to the changeRank reducer
-      // in the case of movie.js it's the id currently
-      const foundMovie = state.movies.find(element => element.id === action.payload.id) 
+      //payload
+      console.log(action.payload)
+      //
+      
+      const OptionA = state.movies.find(element => element.id === action.payload.combatants[0].id) 
+      const OptionB = state.movies.find(element => element.id === action.payload.combatants[1].id)
+      const topRank = 1000
+      const botRank = 10000
+      const rankedMovies = action.payload.rankedMovies
+      //removes proxy
+      console.log(JSON.stringify(OptionA, undefined, 2))
+      console.log(JSON.stringify(OptionB, undefined, 2))
 
-      console.log(JSON.stringify(foundMovie, undefined, 2))
-      
-      console.log(action.payload.id);
-      if (action.payload.id === state) {
-      //   const movieID = action.payload;
-      
-      //   console.log(action.payload);
+      if (action.payload.option === "A" && OptionA.rank === 0 && OptionB.rank === 0 ) {
+        console.log('Option A selected')
+        OptionA.rank = topRank
+        OptionB.rank = botRank
       }
+       else if (action.payload.option === "B" && OptionA.rank === 0 && OptionB.rank === 0) {
+        console.log('Option B selected')
+        OptionA.rank = botRank
+        OptionB.rank = topRank
+        
+      }
+      //Challenger Selected
+        else if (action.payload.option === "A"  && OptionA.rank === 0 && OptionB.rank !== 0) {
+          console.log('Option A Selected - non initial')
+          OptionA.rank = OptionB.rank/2
+         
 
-     
-      // console.log(state.movies[action.payload.id - 1].title);
+        }
+        //incumbent Selected
+        else if (action.payload.option === "B"  && OptionA.rank === 0 && OptionB.rank !== 0) {
+          console.log('Option B Selected - non initial')
+          console.log('incumbent stage test')
+          console.log(rankedMovies)
+          OptionA.rank = OptionB.rank + (OptionB.rank/2)
+        }
+      else {
+        console.log('ChangeRank input not working as intended')
+        
+      }
+      
 
-      //testing of the option property attachd to Movie component = works so far
-      // console.log(action.payload.option)
-      // state.movies[action.payload.id - 1].rank = 2;1
+      
     },
   },
 });
