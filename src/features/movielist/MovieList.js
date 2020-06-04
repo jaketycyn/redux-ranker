@@ -33,6 +33,7 @@ const MovieList = () => {
 
     
     //show 2 unranked movies until 1 movie is ranked. THis ranked movie becomes basis of comparison for future movies.
+//unranked matchup
     if (rankedMovies.length === 0) {
      
       //create matchup variable that takes the # of indv. items from slice state and creates an object with them.
@@ -56,7 +57,10 @@ const MovieList = () => {
         </div>
 
 
-      )} else if (unrankedMovies.length >= 1 && rankedMovies.length >= 1) {
+      )} 
+      
+// unranked vs ranked matchup      
+      else if (unrankedMovies.length >= 1 && rankedMovies.length >= 1) {
       // Reusable sort function from:
       // https://stackoverflow.com/questions/979256/sorting-an-array-of-objects-by-property-values
       
@@ -85,24 +89,29 @@ const MovieList = () => {
       const midMovieIndex = Math.round(moviesSortedByRank.length / 2) ;
 
       console.log(midMovieIndex);
-      const unrakedMoviSlice = unrankedMovies.slice(0, 1)
+      const unrankedMovieSlice = unrankedMovies.slice(0, 1)
       const rankedIncumbent = moviesSortedByRank.slice(midMovieIndex, midMovieIndex + 1)
-      const combatants = unrakedMoviSlice.concat(rankedIncumbent)
+      
 
       //console.log("new combatants:" + JSON.stringify(combatants, undefined, 2))
-      console.log("unranked challenger:" + JSON.stringify(unrakedMoviSlice, undefined, 2))
+      console.log("unranked challenger:" + JSON.stringify(unrankedMovieSlice, undefined, 2))
 
 
       // Method for getting around object is not extensive error
       // https://stackoverflow.com/questions/45798885/object-is-not-extensible-error-when-creating-new-attribute-for-array-of-objects
-      let unrankedChallenger = unrakedMoviSlice.map((item) => 
+      let unrankedChallenger = unrankedMovieSlice.map((item) => 
       //encounter = # of times it's gone through picks/choosing phase
       //chosen = whether or not it was picked positively in the first interaction (true = yes, false = no)
       //this indicates whether or not 
     Object.assign({}, item, {encounters:0 , chosen: null  }, )
+
+    
 )
+
 console.log("unranked challenger:" + JSON.stringify(unrankedChallenger, undefined, 2))
 
+
+const combatants = unrankedChallenger .concat(rankedIncumbent)
 //need to call af function below in movie that changes the status of unranked challenger or does stuff based off that.
 // use index of the arrays to move to the next if else scenario 
 // double function firing within Movie component based upon option = A to do. 
@@ -123,9 +132,9 @@ if (unrankedChallenger[0].encounters == 0) {
           </div>
         );
        }
-       else if (unrankedChallenger[0].encounters == 1 ) {
-        const rankedIncumbent = moviesSortedByRank.slice(midMovieIndex, midMovieIndex + 1)
-        const combatants = unrakedMoviSlice.concat(rankedIncumbent)
+       else if (unrankedChallenger[0].encounters == 1 && unrankedChallenger[0].chosen === true) {
+        const rankedIncumbent = moviesSortedByRank.slice(midMovieIndex -1, midMovieIndex ) 
+        const combatants = unrankedMovieSlice.concat(rankedIncumbent)
         return (
           <div> 
             <div>
