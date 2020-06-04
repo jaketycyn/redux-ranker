@@ -9,6 +9,7 @@ import {
 import { Movie } from "./Movie";
 import RankedItemsDisplay from "./RankedItemsDisplay";
 
+//testing new changes
 const MovieList = () => {
   const dispatch = useDispatch();
   const { loading, hasErrors, movies } = useSelector(movielistSelector);
