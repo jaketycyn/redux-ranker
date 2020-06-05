@@ -35,8 +35,15 @@ const MovieList = () => {
   const B = 'B'
 
   const [encounter, setEncounter] = useState(0);
+
+  const updateEncounter = () => {
+    console.log("encounter pre:" + encounter)
+    setEncounter(encounter + 1)
+    console.log("encounter post:" + encounter)
+  }
   const [pickedStatus, setPickedStatus] = useState(null);
   const [ongoing, setOngoing] = useState(true);
+
 
   const unrankedMovies = movies.filter((movie) => movie.rank == 0);
    // console.log("unranked movies array:", unrankedMovies);
@@ -57,42 +64,36 @@ const MovieList = () => {
     dispatch(fetchMovies());
   }, [dispatch]);
   //
+
+
   const renderMovies = () => {
     if (loading) return <p>Loading movies...</p>;
     if (hasErrors) return <p>Unable to display movies</p>;
 
 //unranked matchup display 2 unranked movies - after one is selected, both get assigned ranks
     if (rankedMovies.length === 0) {
-     
-      //create matchup variable that takes the # of indv. items from slice state and creates an object with them.
-      //this object will be passed down as a prop to action.prototype to be used to look up from main state
-      // an indiv. matchup variable will be created for each 'case' / if statement
-
       const unRankedMatchup = unrankedMovies.slice(0,2)
       console.log(unRankedMatchup)
       return (
         <div>
+            
           <div> 
           {unRankedMatchup
             .slice(0, 1)
-            .map((movie) => <Movie key={movie.id} movie={movie} id={movie.id} option={A} combatants={unRankedMatchup}/>)}
+            .map((movie) => <Movie key={movie.id} movie={movie} id={movie.id} option={A} combatants={unRankedMatchup} />)}
           </div>
           <div>
           {unRankedMatchup
             .slice(1, 2)
-            .map((movie) => <Movie key={movie.id} movie={movie} id={movie.id} option={B} combatants={unRankedMatchup}/>)}
+            .map((movie) => <Movie key={movie.id} movie={movie} id={movie.id} option={B} combatants={unRankedMatchup} />)}
           </div>
+         
         </div>
       )} 
       
 // unranked vs ranked matchup      
       else if (unrankedMovies.length >= 1 && rankedMovies.length >= 1) {
      
-      
-
-     
-     
-
 //need to call af function below in movie that changes the status of unranked challenger or does stuff based off that.
 // use index of the arrays to move to the next if else scenario 
 // double function firing within Movie component based upon option = A to do. 
@@ -107,7 +108,7 @@ if (encounter === 0) {
             <div>
               {rankedIncumbent
                 .map((movie) => (
-                  <Movie key={movie.id} movie={movie} id={movie.id} option={B} combatants={combatants} rankedMovies={moviesSortedByRank} pickedStatus={pickedStatus}/>
+                  <Movie key={movie.id} movie={movie} id={movie.id} option={B} combatants={combatants} rankedMovies={moviesSortedByRank} pickedStatus={pickedStatus} />
                 ))}
             </div>
           </div>
@@ -115,6 +116,7 @@ if (encounter === 0) {
        }
        else if (encounter !== 0 && pickedStatus === true) {
         //true denotes Option A Incubant was picked, but more ranking needs to occur
+        setEncounter(0);
         return (
           <div> 
             <div>

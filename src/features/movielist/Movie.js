@@ -1,31 +1,38 @@
-import React from "react";
+import React, {useState}from "react";
 import { useDispatch } from "react-redux";
 import { changeRank } from "../../app/slices/movielistSlice";
-export const Movie = ({ movie, id, option, combatants, rankedMovies, pickedStatus }) => {
+export const Movie = ({ movie, id, option, combatants, rankedMovies, pickedStatus, changeEncounter }) => {
   const dispatch = useDispatch();
-
-  //use option = A to determine if 2nd function should be fire during onClick
-  // onclick will update status of encounters #
-  const updateEncounter = () => {
-    console.log('updating encounter' )
-    if (option == "A") {
-      console.log('updating encounter for picking a')
-     console.log('pickedStatus:' + pickedStatus)
-     pickedStatus = true;
-     console.log('pickedStatus:' + pickedStatus)
-     
-    }
-
-
+  
+  function updateEncounter() {
+    console.log('updateEncounter test test')
   }
+
+function updateRank() {
+  dispatch(changeRank({id: id, option: option, combatants: combatants, rankedMovies: rankedMovies}))
+}
+
+//function cobines
+function combinedUpdater() {
+  updateRank();
+  updateEncounter();
+}
+
+
   return (
     <div>
       <h2>Title: {movie.title}</h2>
       <h3>Rank:{movie.rank}</h3>
       <h4>id: {id}</h4>
       <button onClick={
+        combinedUpdater
+        //,() => ( dispatch(changeRank({id: id, option: option, combatants: combatants, rankedMovies: rankedMovies}))    ) 
+      
+      
+      }
         
-        () => (dispatch(changeRank({id: id, option: option, combatants: combatants, rankedMovies: rankedMovies})), updateEncounter()) }>ChangeRank</button>
+        
+        >ChangeRank</button>
     </div>
   );
-};
+    }
