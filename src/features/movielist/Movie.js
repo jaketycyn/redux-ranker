@@ -11,6 +11,7 @@ export const Movie = ({ movie, id, option, combatants, rankedMovies }) => {
     if (option == "A") {
       console.log('updating encounter for picking a')
      console.log(combatants[0])
+     
     }
 
 

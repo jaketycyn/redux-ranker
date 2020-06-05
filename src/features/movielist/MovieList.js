@@ -17,6 +17,27 @@ const MovieList = () => {
     dispatch(fetchMovies());
   }, [dispatch]);
 
+
+ // Reusable sort function from:
+      // https://stackoverflow.com/questions/979256/sorting-an-array-of-objects-by-property-values
+      
+      const sort_by = (field, reverse, primer) => {
+        const key = primer
+          ? function (x) {
+              return primer(x[field]);
+            }
+          : function (x) {
+              return x[field];
+            };
+        reverse = !reverse ? 1 : -1;
+
+        return function (a, b) {
+          return (a = key(a)), (b = key(b)), reverse * ((a > b) - (b > a));
+        };
+      };
+
+
+
   // variables created for options
  
   const A = 'A' 
@@ -61,24 +82,7 @@ const MovieList = () => {
       
 // unranked vs ranked matchup      
       else if (unrankedMovies.length >= 1 && rankedMovies.length >= 1) {
-      // Reusable sort function from:
-      // https://stackoverflow.com/questions/979256/sorting-an-array-of-objects-by-property-values
-      
-      const sort_by = (field, reverse, primer) => {
-        const key = primer
-          ? function (x) {
-              return primer(x[field]);
-            }
-          : function (x) {
-              return x[field];
-            };
-        reverse = !reverse ? 1 : -1;
-
-        return function (a, b) {
-          return (a = key(a)), (b = key(b)), reverse * ((a > b) - (b > a));
-        };
-      };
-
+     
       const moviesSortedByRank = rankedMovies
         .slice()
         // false = reversed order 
@@ -86,28 +90,18 @@ const MovieList = () => {
 
       //Should work for now, but might need to be reconfigured later.
       //KEEP AN EYE ON THIS!
-      const midMovieIndex = Math.round(moviesSortedByRank.length / 2) ;
-
-      console.log(midMovieIndex);
-      const unrankedMovieSlice = unrankedMovies.slice(0, 1)
-      const rankedIncumbent = moviesSortedByRank.slice(midMovieIndex, midMovieIndex + 1)
+      const encounter = 0;
+      const pickedStatus = null;
+      const nextChallenger = Math.round(moviesSortedByRank.length / 2) ;
+      const unrankedChallenger = unrankedMovies.slice(0, 1)
+      const rankedIncumbent = moviesSortedByRank.slice(nextChallenger, nextChallenger + 1)
       
 
       //console.log("new combatants:" + JSON.stringify(combatants, undefined, 2))
-      console.log("unranked challenger:" + JSON.stringify(unrankedMovieSlice, undefined, 2))
-
-
+      console.log("unranked challenger:" + JSON.stringify(unrankedChallenger, undefined, 2))
       // Method for getting around object is not extensive error
       // https://stackoverflow.com/questions/45798885/object-is-not-extensible-error-when-creating-new-attribute-for-array-of-objects
-      let unrankedChallenger = unrankedMovieSlice.map((item) => 
-      //encounter = # of times it's gone through picks/choosing phase
-      //chosen = whether or not it was picked positively in the first interaction (true = yes, false = no)
-      //this indicates whether or not 
-    Object.assign({}, item, {encounters:0 , chosen: null  }, )
-
     
-)
-
 console.log("unranked challenger:" + JSON.stringify(unrankedChallenger, undefined, 2))
 
 
@@ -115,7 +109,7 @@ const combatants = unrankedChallenger .concat(rankedIncumbent)
 //need to call af function below in movie that changes the status of unranked challenger or does stuff based off that.
 // use index of the arrays to move to the next if else scenario 
 // double function firing within Movie component based upon option = A to do. 
-if (unrankedChallenger[0].encounters == 0) {
+if (encounter == 0) {
         return (
           <div> 
             <div>
@@ -132,9 +126,8 @@ if (unrankedChallenger[0].encounters == 0) {
           </div>
         );
        }
-       else if (unrankedChallenger[0].encounters == 1 && unrankedChallenger[0].chosen === true) {
-        const rankedIncumbent = moviesSortedByRank.slice(midMovieIndex -1, midMovieIndex ) 
-        const combatants = unrankedMovieSlice.concat(rankedIncumbent)
+       else if (encounter !== 0) {
+        
         return (
           <div> 
             <div>
