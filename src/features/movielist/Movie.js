@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { changeRank } from "../../app/slices/movielistSlice";
-export const Movie = ({ movie, id, option, combatants, rankedMovies }) => {
+export const Movie = ({ movie, id, option, combatants, rankedMovies, pickedStatus }) => {
   const dispatch = useDispatch();
 
   //use option = A to determine if 2nd function should be fire during onClick
@@ -10,7 +10,9 @@ export const Movie = ({ movie, id, option, combatants, rankedMovies }) => {
     console.log('updating encounter' )
     if (option == "A") {
       console.log('updating encounter for picking a')
-     console.log(combatants[0])
+     console.log('pickedStatus:' + pickedStatus)
+     pickedStatus = true;
+     console.log('pickedStatus:' + pickedStatus)
      
     }
 

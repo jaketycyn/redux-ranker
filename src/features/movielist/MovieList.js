@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 //move /reorganize slices and app folder or this movielist folder to a more appropriate area
@@ -12,6 +12,8 @@ import RankedItemsDisplay from "./RankedItemsDisplay";
 const MovieList = () => {
   const dispatch = useDispatch();
   const { loading, hasErrors, movies } = useSelector(movielistSelector);
+
+
 
   useEffect(() => {
     dispatch(fetchMovies());
@@ -85,49 +87,40 @@ const MovieList = () => {
      
       const moviesSortedByRank = rankedMovies
         .slice()
-        // false = reversed order 
+        // false = reversed order ; lowest # is highest rank
         .sort(sort_by("rank", false, parseInt));
 
-      //Should work for now, but might need to be reconfigured later.
-      //KEEP AN EYE ON THIS!
-      const encounter = 0;
-      const pickedStatus = null;
+      const [encounter, setEncounter] = useState(0);
+      const [pickedStatus, setPickedStatus] = useState(null);
+      const [ongoing, setOngoing] = useState(true);
       const nextChallenger = Math.round(moviesSortedByRank.length / 2) ;
       const unrankedChallenger = unrankedMovies.slice(0, 1)
+      //console.log("unranked challenger:" + JSON.stringify(unrankedChallenger, undefined, 2))
       const rankedIncumbent = moviesSortedByRank.slice(nextChallenger, nextChallenger + 1)
-      
+      const combatants = unrankedChallenger.concat(rankedIncumbent)
 
-      //console.log("new combatants:" + JSON.stringify(combatants, undefined, 2))
-      console.log("unranked challenger:" + JSON.stringify(unrankedChallenger, undefined, 2))
-      // Method for getting around object is not extensive error
-      // https://stackoverflow.com/questions/45798885/object-is-not-extensible-error-when-creating-new-attribute-for-array-of-objects
-    
-console.log("unranked challenger:" + JSON.stringify(unrankedChallenger, undefined, 2))
-
-
-const combatants = unrankedChallenger .concat(rankedIncumbent)
 //need to call af function below in movie that changes the status of unranked challenger or does stuff based off that.
 // use index of the arrays to move to the next if else scenario 
 // double function firing within Movie component based upon option = A to do. 
-if (encounter == 0) {
+if (encounter === 0) {
         return (
           <div> 
             <div>
               {unrankedChallenger.map((movie) => (
-                <Movie key={movie.id} movie={movie} id={movie.id} option={A} combatants={combatants} rankedMovies={moviesSortedByRank}/>
+                <Movie key={movie.id} movie={movie} id={movie.id} option={A} combatants={combatants} rankedMovies={moviesSortedByRank} pickedStatus={pickedStatus}/>
               ))}
             </div>
             <div>
               {rankedIncumbent
                 .map((movie) => (
-                  <Movie key={movie.id} movie={movie} id={movie.id} option={B} combatants={combatants} rankedMovies={moviesSortedByRank}/>
+                  <Movie key={movie.id} movie={movie} id={movie.id} option={B} combatants={combatants} rankedMovies={moviesSortedByRank} pickedStatus={pickedStatus}/>
                 ))}
             </div>
           </div>
         );
        }
-       else if (encounter !== 0) {
-        
+       else if (encounter !== 0 && pickedStatus === true) {
+        //true denotes Option A Incubant was picked, but more ranking needs to occur
         return (
           <div> 
             <div>
