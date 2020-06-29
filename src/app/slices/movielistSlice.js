@@ -26,50 +26,64 @@ const movielistSlice = createSlice({
     },
     changeRank: (state, action, id) => {
       //payload
-      console.log(action.payload)
+      console.log(action.payload);
       //
-      
-      const OptionA = state.movies.find(element => element.id === action.payload.combatants[0].id) 
-      const OptionB = state.movies.find(element => element.id === action.payload.combatants[1].id)
-      const topRank = 1000
-      const botRank = 10000
-      const rankedMovies = action.payload.rankedMovies
-      //removes proxy
-      console.log(JSON.stringify(OptionA, undefined, 2))
-      console.log(JSON.stringify(OptionB, undefined, 2))
 
-      if (action.payload.option === "A" && OptionA.rank === 0 && OptionB.rank === 0 ) {
-        console.log('Option A selected')
-        OptionA.rank = topRank
-        OptionB.rank = botRank
-      }
-       else if (action.payload.option === "B" && OptionA.rank === 0 && OptionB.rank === 0) {
-        console.log('Option B selected')
-        OptionA.rank = botRank
-        OptionB.rank = topRank
-        
+      const OptionA = state.movies.find(
+        (element) => element.id === action.payload.combatants[0].id
+      );
+      const OptionB = state.movies.find(
+        (element) => element.id === action.payload.combatants[1].id
+      );
+      const startTopRank = 1000;
+      const startBotRank = 10000;
+      const maxBotRank = 9999999;
+      const rankedMovies = action.payload.rankedMovies;
+      //removes proxy
+      console.log(JSON.stringify(OptionA, undefined, 2));
+      console.log(JSON.stringify(OptionB, undefined, 2));
+
+      //initial rankings
+      if (
+        action.payload.option === "A" &&
+        OptionA.rank === 0 &&
+        OptionB.rank === 0
+      ) {
+        console.log("Option A selected");
+        OptionA.rank = startTopRank;
+        OptionB.rank = startBotRank;
+      } else if (
+        action.payload.option === "B" &&
+        OptionA.rank === 0 &&
+        OptionB.rank === 0
+      ) {
+        console.log("Option B selected");
+        OptionA.rank = startBotRank;
+        OptionB.rank = startTopRank;
       }
       //Challenger Selected
-        else if (action.payload.option === "A"  && OptionA.rank === 0 && OptionB.rank !== 0) {
-          console.log('Option A Selected - non initial')
-          OptionA.rank = OptionB.rank/2
-         
-
-        }
-        //incumbent Selected
-        else if (action.payload.option === "B"  && OptionA.rank === 0 && OptionB.rank !== 0) {
-          console.log('Option B Selected - non initial')
-          console.log('incumbent stage test')
-          console.log(rankedMovies)
-          OptionA.rank = OptionB.rank + (OptionB.rank/2)
-        }
-      else {
-        console.log('ChangeRank input not working as intended')
-        
+      else if (
+        action.payload.option === "A" &&
+        OptionA.rank === 0 &&
+        OptionB.rank !== 0
+      ) {
+        console.log("Option A Selected - non initial");
+        OptionA.rank = OptionB.rank / 2;
+        OptionA.active = "won";
       }
-      
-
-      
+      //incumbent Selected
+      else if (
+        action.payload.option === "B" &&
+        OptionA.rank === 0 &&
+        OptionB.rank !== 0
+      ) {
+        console.log("Option B Selected - non initial");
+        OptionA.rank = OptionB.rank;
+        OptionB.rank = OptionA.rank / 2;
+        OptionA.active = "lost";
+      } else {
+        console.log("ChangeRank input not working as intended");
+      }
     },
   },
 });

@@ -13,126 +13,214 @@ const MovieList = () => {
   const dispatch = useDispatch();
   const { loading, hasErrors, movies } = useSelector(movielistSelector);
 
- // Reusable sort function from:
-      // https://stackoverflow.com/questions/979256/sorting-an-array-of-objects-by-property-values
-      
-      const sort_by = (field, reverse, primer) => {
-        const key = primer
-          ? function (x) {
-              return primer(x[field]);
-            }
-          : function (x) {
-              return x[field];
-            };
-        reverse = !reverse ? 1 : -1;
+  // Reusable sort function from:
+  // https://stackoverflow.com/questions/979256/sorting-an-array-of-objects-by-property-values
 
-        return function (a, b) {
-          return (a = key(a)), (b = key(b)), reverse * ((a > b) - (b > a));
+  const sort_by = (field, reverse, primer) => {
+    const key = primer
+      ? function (x) {
+          return primer(x[field]);
+        }
+      : function (x) {
+          return x[field];
         };
-      };
+    reverse = !reverse ? 1 : -1;
+
+    return function (a, b) {
+      return (a = key(a)), (b = key(b)), reverse * ((a > b) - (b > a));
+    };
+  };
   // variables created for options
-  const A = 'A' 
-  const B = 'B'
+  const A = "A";
+  const B = "B";
 
   const [encounter, setEncounter] = useState(0);
 
-  const updateEncounter = () => {
-    console.log("encounter pre:" + encounter)
-    setEncounter(encounter + 1)
-    console.log("encounter post:" + encounter)
-  }
-  const [pickedStatus, setPickedStatus] = useState(null);
-  const [ongoing, setOngoing] = useState(true);
+  const handleEncounter = () => {
+    setEncounter((i) => i + 1);
+  };
 
-
+  //filtering movies into unranked and ranked
   const unrankedMovies = movies.filter((movie) => movie.rank == 0);
-   // console.log("unranked movies array:", unrankedMovies);
+  // console.log("unranked movies array:", unrankedMovies);
   const rankedMovies = movies.filter((movie) => movie.rank >= 1);
   // console.log("ranked movies array:", rankedMovies);
   const moviesSortedByRank = rankedMovies
-  .slice()
-  // false = reversed order ; lowest # is highest rank
-  .sort(sort_by("rank", false, parseInt));
+    .slice()
+    // false = reversed order ; lowest # is highest rank
+    .sort(sort_by("rank", false, parseInt));
 
-  const nextChallenger = Math.round(moviesSortedByRank.length / 2) ;
-  const unrankedChallenger = unrankedMovies.slice(0, 1)
-  //console.log("unranked challenger:" + JSON.stringify(unrankedChallenger, undefined, 2))
-  const rankedIncumbent = moviesSortedByRank.slice(nextChallenger, nextChallenger + 1)
-  const combatants = unrankedChallenger.concat(rankedIncumbent)
+  const nextChallenger = Math.round(moviesSortedByRank.length / 2);
+
+  //only used for concat and creation of combatants
+  const unrankedCombatant = unrankedMovies.slice(0, 1);
+  //console.log("unranked challenger:" + JSON.stringify(unrankedCombatant, undefined, 2))
+  const rankedIncumbent = moviesSortedByRank.slice(
+    nextChallenger,
+    nextChallenger + 1
+  );
+  const combatants = unrankedCombatant.concat(rankedIncumbent);
 
   useEffect(() => {
     dispatch(fetchMovies());
   }, [dispatch]);
   //
 
-
   const renderMovies = () => {
     if (loading) return <p>Loading movies...</p>;
     if (hasErrors) return <p>Unable to display movies</p>;
 
-//unranked matchup display 2 unranked movies - after one is selected, both get assigned ranks
+    //unranked matchup display 2 unranked movies - after one is selected, both get assigned ranks
     if (rankedMovies.length === 0) {
-      const unRankedMatchup = unrankedMovies.slice(0,2)
-      console.log(unRankedMatchup)
+      const unRankedMatchup = unrankedMovies.slice(0, 2);
       return (
         <div>
-            
-          <div> 
-          {unRankedMatchup
-            .slice(0, 1)
-            .map((movie) => <Movie key={movie.id} movie={movie} id={movie.id} option={A} combatants={unRankedMatchup} />)}
+          <div>
+            {unRankedMatchup.slice(0, 1).map((movie) => (
+              <Movie
+                key={movie.id}
+                movie={movie}
+                id={movie.id}
+                option={A}
+                combatants={unRankedMatchup}
+                encounter={encounter}
+                setEncounter={setEncounter}
+              />
+            ))}
           </div>
           <div>
-          {unRankedMatchup
-            .slice(1, 2)
-            .map((movie) => <Movie key={movie.id} movie={movie} id={movie.id} option={B} combatants={unRankedMatchup} />)}
+            {unRankedMatchup.slice(1, 2).map((movie) => (
+              <Movie
+                key={movie.id}
+                movie={movie}
+                id={movie.id}
+                option={B}
+                combatants={unRankedMatchup}
+                encounter={encounter}
+                setEncounter={setEncounter}
+              />
+            ))}
           </div>
-         
         </div>
-      )} 
-      
-// unranked vs ranked matchup      
-      else if (unrankedMovies.length >= 1 && rankedMovies.length >= 1) {
-     
-//need to call af function below in movie that changes the status of unranked challenger or does stuff based off that.
-// use index of the arrays to move to the next if else scenario 
-// double function firing within Movie component based upon option = A to do. 
-if (encounter === 0) {
+      );
+    }
+
+    // unranked vs ranked matchup
+    else if (unrankedMovies.length >= 1 && rankedMovies.length >= 1) {
+      //cloning of unrankedCombatant into unrankedChallenger and giving it a prop. to deem we're in a cycle of ranking
+      const activeRankedMovie = rankedMovies.filter(
+        (movie) => movie.active === "won" || movie.active === "lost"
+      );
+      if (
+        activeRankedMovie.length === 1 &&
+        activeRankedMovie[0].active === "won"
+      ) {
         return (
-          <div> 
+          <div>
             <div>
-              {unrankedChallenger.map((movie) => (
-                <Movie key={movie.id} movie={movie} id={movie.id} option={A} combatants={combatants} rankedMovies={moviesSortedByRank} pickedStatus={pickedStatus}/>
+              {activeRankedMovie.map((movie) => (
+                <Movie
+                  key={movie.id}
+                  movie={movie}
+                  id={movie.id}
+                  active={movie.active}
+                  option={A}
+                  combatants={combatants}
+                  rankedMovies={moviesSortedByRank}
+                  encounter={encounter}
+                  setEncounter={setEncounter}
+                />
               ))}
             </div>
             <div>
-              {rankedIncumbent
-                .map((movie) => (
-                  <Movie key={movie.id} movie={movie} id={movie.id} option={B} combatants={combatants} rankedMovies={moviesSortedByRank} pickedStatus={pickedStatus} />
-                ))}
+              {rankedIncumbent.map((movie) => (
+                <Movie
+                  key={movie.id}
+                  movie={movie}
+                  id={movie.id}
+                  option={B}
+                  combatants={combatants}
+                  rankedMovies={moviesSortedByRank}
+                  encounter={encounter}
+                  setEncounter={setEncounter}
+                />
+              ))}
             </div>
           </div>
         );
-       }
-       else if (encounter !== 0 && pickedStatus === true) {
-        //true denotes Option A Incubant was picked, but more ranking needs to occur
-        setEncounter(0);
+      } else if (
+        activeRankedMovie.length === 1 &&
+        activeRankedMovie[0].active === "lost"
+      ) {
         return (
-          <div> 
+          <p>Movie lost</p>
+          // <div>
+          //   <div>
+          //     {activeRankedMovie.map((movie) => (
+          //       <Movie
+          //         key={movie.id}
+          //         movie={movie}
+          //         id={movie.id}
+          //         active={movie.active}
+          //         option={A}
+          //         combatants={combatants}
+          //         rankedMovies={moviesSortedByRank}
+          //         encounter={encounter}
+          //         setEncounter={setEncounter}
+          //       />
+          //     ))}
+          //   </div>
+          //   <div>
+          //     {rankedIncumbent.map((movie) => (
+          //       <Movie
+          //         key={movie.id}
+          //         movie={movie}
+          //         id={movie.id}
+          //         option={B}
+          //         combatants={combatants}
+          //         rankedMovies={moviesSortedByRank}
+          //         encounter={encounter}
+          //         setEncounter={setEncounter}
+          //       />
+          //     ))}
+          //   </div>
+          // </div>
+        );
+      } else {
+        return (
+          <div>
             <div>
-              {unrankedChallenger.map((movie) => (
-                <Movie key={movie.id} movie={movie} id={movie.id} option={A} combatants={combatants} rankedMovies={moviesSortedByRank}/>
+              {unrankedCombatant.map((movie) => (
+                <Movie
+                  key={movie.id}
+                  movie={movie}
+                  id={movie.id}
+                  active={movie.active}
+                  option={A}
+                  combatants={combatants}
+                  rankedMovies={moviesSortedByRank}
+                  encounter={encounter}
+                  setEncounter={setEncounter}
+                />
               ))}
             </div>
             <div>
-              {rankedIncumbent
-                .map((movie) => (
-                  <Movie key={movie.id} movie={movie} id={movie.id} option={B} combatants={combatants} rankedMovies={moviesSortedByRank}/>
-                ))}
+              {rankedIncumbent.map((movie) => (
+                <Movie
+                  key={movie.id}
+                  movie={movie}
+                  id={movie.id}
+                  option={B}
+                  combatants={combatants}
+                  rankedMovies={moviesSortedByRank}
+                  encounter={encounter}
+                  setEncounter={setEncounter}
+                />
+              ))}
             </div>
           </div>
         );
-       }
+      }
     } else {
       //no unranked movies left
       return (
