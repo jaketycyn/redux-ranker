@@ -13,12 +13,12 @@ export const Movie = ({
   const dispatch = useDispatch();
 
   function updateEncounter() {
-    console.log(encounter);
-    setEncounter(encounter++);
-    console.log("updateEncounter test test");
-    console.log(encounter);
-    setEncounter((encounter = 0));
-    console.log(encounter);
+    // console.log(encounter);
+    // setEncounter(encounter++);
+    // console.log("updateEncounter test test");
+    // console.log(encounter);
+    // setEncounter((encounter = 0));
+    // console.log(encounter);
   }
 
   function updateRank() {
