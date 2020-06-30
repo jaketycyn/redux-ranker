@@ -46,13 +46,13 @@ const MovieList = () => {
     // false = reversed order ; lowest # is highest rank
     .sort(sort_by("rank", false, parseInt));
 
-  const nextChallenger = Math.round(moviesSortedByRank.length / 2);
+  const nextChallengerIndex = Math.round(moviesSortedByRank.length / 2);
 
   const unrankedCombatant = unrankedMovies.slice(0, 1);
   //console.log("unranked challenger:" + JSON.stringify(unrankedCombatant, undefined, 2))
   const rankedIncumbent = moviesSortedByRank.slice(
-    nextChallenger,
-    nextChallenger + 1
+    nextChallengerIndex,
+    nextChallengerIndex + 1
   );
   const combatants = unrankedCombatant.concat(rankedIncumbent);
 
@@ -68,6 +68,7 @@ const MovieList = () => {
     //unranked matchup display 2 unranked movies - after one is selected, both get assigned ranks
     if (rankedMovies.length === 0) {
       const unRankedMatchup = unrankedMovies.slice(0, 2);
+      console.log("Phase !: Unranked vs Unranked");
       return (
         <div>
           <div>
@@ -106,12 +107,15 @@ const MovieList = () => {
       const activeRankedMovie = moviesSortedByRank.filter(
         (movie) => movie.active === "won" || movie.active === "lost"
       );
+      console.log("activeRankedMovie: ");
+      console.log(activeRankedMovie);
 
       // ! winners bracket
       if (
         activeRankedMovie.length === 1 &&
         activeRankedMovie[0].active === "won"
       ) {
+        console.log("Phase 3.1: ChallengerRanked(Won) vs Ranked");
         //code is above copied for easy reading
         // const nextChallenger = Math.round(moviesSortedByRank.length / 2);
 
@@ -123,20 +127,71 @@ const MovieList = () => {
 
         const newRankedMoviesList = moviesSortedByRank.slice(
           0,
-          activeRankedMovieIndex
+          activeRankedMovieIndex + 1
         );
 
-        console.log(
-          "newRankedMovies list: " +
-            JSON.stringify(newRankedMoviesList, undefined, 1)
+        const nextRankedIncumbentIndex = Math.round(
+          newRankedMoviesList.length / 2
         );
 
+        const nextRankedIncumbent = newRankedMoviesList.slice(
+          nextRankedIncumbentIndex,
+          nextRankedIncumbentIndex + 1
+        );
+        console.log("newrankedmovelist: ");
+        console.log(newRankedMoviesList);
+        console.log("nextrankedIncumbent");
+        console.log(nextRankedIncumbent);
+
+        {
+          return (
+            <div>
+              <div>
+                {activeRankedMovie.map((movie) => (
+                  <Movie
+                    key={movie.id}
+                    movie={movie}
+                    id={movie.id}
+                    active={movie.active}
+                    option={A}
+                    combatants={combatants}
+                    rankedMovies={moviesSortedByRank}
+                    encounter={encounter}
+                    setEncounter={setEncounter}
+                  />
+                ))}
+              </div>
+              <div>
+                {nextRankedIncumbent.map((movie) => (
+                  <Movie
+                    key={movie.id}
+                    movie={movie}
+                    id={movie.id}
+                    option={B}
+                    combatants={combatants}
+                    rankedMovies={moviesSortedByRank}
+                    encounter={encounter}
+                    setEncounter={setEncounter}
+                  />
+                ))}
+              </div>
+            </div>
+          );
+        }
         // const newMovieIndex = console.log(
         //   "active ranked movie: " +
         //     JSON.stringify(activeRankedMovie[0].rank, undefined, 1)
         // );
+      }
+      // ! losers bracket
+      else if (
+        activeRankedMovie.length === 1 &&
+        activeRankedMovie[0].active === "lost"
+      ) {
+        console.log("Phase 3.2: ChallengerRanked(Lost) vs Ranked");
         return (
           <div>
+            <p>Movie lost</p>
             <div>
               {activeRankedMovie.map((movie) => (
                 <Movie
@@ -168,48 +223,9 @@ const MovieList = () => {
             </div>
           </div>
         );
-      }
-      // ! losers bracket
-      else if (
-        activeRankedMovie.length === 1 &&
-        activeRankedMovie[0].active === "lost"
-      ) {
-        return (
-          <p>Movie lost</p>
-          // <div>
-          //   <div>
-          //     {activeRankedMovie.map((movie) => (
-          //       <Movie
-          //         key={movie.id}
-          //         movie={movie}
-          //         id={movie.id}
-          //         active={movie.active}
-          //         option={A}
-          //         combatants={combatants}
-          //         rankedMovies={moviesSortedByRank}
-          //         encounter={encounter}
-          //         setEncounter={setEncounter}
-          //       />
-          //     ))}
-          //   </div>
-          //   <div>
-          //     {rankedIncumbent.map((movie) => (
-          //       <Movie
-          //         key={movie.id}
-          //         movie={movie}
-          //         id={movie.id}
-          //         option={B}
-          //         combatants={combatants}
-          //         rankedMovies={moviesSortedByRank}
-          //         encounter={encounter}
-          //         setEncounter={setEncounter}
-          //       />
-          //     ))}
-          //   </div>
-          // </div>
-        );
       } else {
         //standard
+        console.log("Phase 2: Unranked vs Ranked");
         return (
           <div>
             <div>

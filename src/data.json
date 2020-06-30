@@ -95,26 +95,25 @@
     ],
     "genres": ["Superhero"],
     "id": 5
+  },
+  {
+    "title": "F",
+    "year": 2013,
+    "rank": 0,
+    "cast": [
+      "Robert Downey, Jr.",
+      "Chris Evans",
+      "Mark Ruffalo",
+      "Chris Hemsworth",
+      "Scarlett Johansson",
+      "Jeremy Renner",
+      "Tom Hiddleston",
+      "Clark Gregg",
+      "Cobie Smulders",
+      "Stellan Skarsgård",
+      "Samuel L. Jackson"
+    ],
+    "genres": ["Superhero"],
+    "id": 6
   }
-]
-{
-  "title": "F",
-  "year": 2013,
-  "rank": 0,
-  "cast": [
-    "Robert Downey, Jr.",
-    "Chris Evans",
-    "Mark Ruffalo",
-    "Chris Hemsworth",
-    "Scarlett Johansson",
-    "Jeremy Renner",
-    "Tom Hiddleston",
-    "Clark Gregg",
-    "Cobie Smulders",
-    "Stellan Skarsgård",
-    "Samuel L. Jackson"
-  ],
-  "genres": ["Superhero"],
-  "id": 6
-}
 ]

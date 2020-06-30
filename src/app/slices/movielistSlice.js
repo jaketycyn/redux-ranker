@@ -26,6 +26,7 @@ const movielistSlice = createSlice({
     },
     changeRank: (state, action, id) => {
       //payload
+      console.log("Redux action.payload:  ");
       console.log(action.payload);
       //
 
@@ -40,8 +41,9 @@ const movielistSlice = createSlice({
       //already sorted and passed in via props sorted by rank
       const rankedMovies = action.payload.rankedMovies;
       //removes proxy
-      console.log(JSON.stringify(OptionA, undefined, 2));
-      console.log(JSON.stringify(OptionB, undefined, 2));
+
+      // console.log(JSON.stringify(OptionA, undefined, 2));
+      // console.log(JSON.stringify(OptionB, undefined, 2));
 
       //?initial rankings
       if (
