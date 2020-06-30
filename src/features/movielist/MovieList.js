@@ -56,6 +56,12 @@ const MovieList = () => {
   );
   const combatants = unrankedCombatant.concat(rankedIncumbent);
 
+  const activeRankedMovie = moviesSortedByRank.filter(
+    (movie) => movie.active === "won" || movie.active === "lost"
+  );
+  console.log("activeRankedMovie: ");
+  console.log(activeRankedMovie);
+
   useEffect(() => {
     dispatch(fetchMovies());
   }, [dispatch]);
@@ -98,13 +104,8 @@ const MovieList = () => {
     }
 
     // unranked vs ranked matchup
-    else if (unrankedMovies.length >= 1 && rankedMovies.length >= 1) {
+    else if (rankedMovies.length >= 1) {
       //cloning of unrankedCombatant into unrankedChallenger and giving it a prop. to deem we're in a cycle of ranking
-      const activeRankedMovie = moviesSortedByRank.filter(
-        (movie) => movie.active === "won" || movie.active === "lost"
-      );
-      console.log("activeRankedMovie: ");
-      console.log(activeRankedMovie);
 
       // ! winners bracket
       if (
@@ -134,8 +135,6 @@ const MovieList = () => {
           nextRankedIncumbentIndex - 1,
           nextRankedIncumbentIndex
         );
-        // todo Underneath a seperate instance is being rendered at this point (in this case its D so C vs A D gets ranked. )
-
         console.log("newrankedmovelist: ");
         console.log(newRankedMoviesList);
         console.log("nextrankedIncumbent");
@@ -223,7 +222,7 @@ const MovieList = () => {
             </div>
           </div>
         );
-      } else if (activeRankedMovie.length === 0) {
+      } else if (activeRankedMovie.length === 0 && unrankedMovies.length >= 1) {
         //standard
         console.log("Phase 2: Unranked vs Ranked");
         return (
@@ -259,13 +258,12 @@ const MovieList = () => {
             </div>
           </div>
         );
+      } else {
+        console.log("Phase 6: RANKING COMPLETE");
+        return (
+          <p>All movies ranked. Feel free to look through your sorted list </p>
+        );
       }
-    } else {
-      console.log("Phase 5: No Ranked Movies Left");
-      //no unranked movies left
-      return (
-        <p>No unranked movies. Feel free to look through your sorted list </p>
-      );
     }
   };
   return (

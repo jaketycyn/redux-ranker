@@ -66,9 +66,9 @@ const movielistSlice = createSlice({
           const index = rankedMovies.findIndex(
             (movies) => movies.rank === OptionB.rank
           );
-          const wonNewRank =
+          const newRank =
             (rankedMovies[index - 1].rank + rankedMovies[index].rank) / 2;
-          OptionA.rank = wonNewRank;
+          OptionA.rank = newRank;
           OptionA.active = "won";
         }
         //!Incumbent Selected
@@ -98,8 +98,13 @@ const movielistSlice = createSlice({
           if (index === 0) {
             const newTopRank = rankedMovies[index].rank / 2;
             OptionA.rank = newTopRank;
+            //could clean up this naming convention later
+            //purpose is to catalog historical information on who it beat
             OptionA.active = "fin_newTopRank".concat("beat_" + OptionB.title);
           } else {
+            const newRank =
+              (rankedMovies[index - 1].rank + rankedMovies[index].rank) / 2;
+            OptionA.rank = newRank;
             console.log("SUBSEQUENT ALL RANKED NON 0 INDEX");
           }
         } else if (action.payload.option === "B") {
