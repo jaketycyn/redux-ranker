@@ -59,44 +59,38 @@ const movielistSlice = createSlice({
           console.log("INITIAL RANKING ERROR!!!");
         }
       //subsequent Rankings
-      //!Challenger Selected
-      else if (
-        action.payload.option === "A" &&
-        OptionA.rank === 0 &&
-        OptionB.rank !== 0
-      ) {
-        console.log("Option A Selected - subsequent");
-        const index = rankedMovies.findIndex(
-          (movies) => movies.rank === OptionB.rank
-        );
-        const wonNewRank =
-          (rankedMovies[index - 1].rank + rankedMovies[index].rank) / 2;
-        OptionA.rank = wonNewRank;
-        OptionA.active = "won";
-      }
-      //!incumbent Selected
-      else if (
-        action.payload.option === "B" &&
-        OptionA.rank === 0 &&
-        OptionB.rank !== 0
-      ) {
-        console.log("Option B Selected - subsequent");
-        const index = rankedMovies.findIndex(
-          (movies) => movies.rank === OptionB.rank
-        );
-        if (rankedMovies.length === index + 1) {
-          console.log("this is the max index");
-          OptionA.rank = rankedMovies[index].rank * 2;
-        } else {
-          const lostNewRank =
-            (rankedMovies[index].rank + rankedMovies[index + 1].rank) / 2;
-          OptionA.rank = lostNewRank;
+      else if (OptionA.rank === 0 && OptionB.rank !== 0)
+        if (action.payload.option === "A") {
+          //!Challenger Selected
+          console.log("Option A Selected - subsequent");
+          const index = rankedMovies.findIndex(
+            (movies) => movies.rank === OptionB.rank
+          );
+          const wonNewRank =
+            (rankedMovies[index - 1].rank + rankedMovies[index].rank) / 2;
+          OptionA.rank = wonNewRank;
+          OptionA.active = "won";
         }
+        //!Incumbent Selected
+        else if (action.payload.option === "B") {
+          console.log("Option B Selected - subsequent");
+          const index = rankedMovies.findIndex(
+            (movies) => movies.rank === OptionB.rank
+          );
+          if (rankedMovies.length === index + 1) {
+            console.log("this is the max index");
+            OptionA.rank = rankedMovies[index].rank * 2;
+          } else {
+            const lostNewRank =
+              (rankedMovies[index].rank + rankedMovies[index + 1].rank) / 2;
+            OptionA.rank = lostNewRank;
+          }
 
-        OptionA.active = "lost";
-        // } else if(){
-        //   console.log('Scenario: Ranked vs Ranked')
-      } else {
+          OptionA.active = "lost";
+        } else {
+          console.log("SUBSEQUENT RANKING ERROR!!!");
+        }
+      else {
         console.log("ChangeRank input not working as intended");
       }
     },
