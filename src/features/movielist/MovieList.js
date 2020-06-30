@@ -79,8 +79,6 @@ const MovieList = () => {
                 id={movie.id}
                 option={A}
                 combatants={unRankedMatchup}
-                encounter={encounter}
-                setEncounter={setEncounter}
               />
             ))}
           </div>
@@ -92,8 +90,6 @@ const MovieList = () => {
                 id={movie.id}
                 option={B}
                 combatants={unRankedMatchup}
-                encounter={encounter}
-                setEncounter={setEncounter}
               />
             ))}
           </div>
@@ -135,14 +131,22 @@ const MovieList = () => {
         );
 
         const nextRankedIncumbent = newRankedMoviesList.slice(
-          nextRankedIncumbentIndex,
-          nextRankedIncumbentIndex + 1
+          nextRankedIncumbentIndex - 1,
+          nextRankedIncumbentIndex
         );
+        // todo Underneath a seperate instance is being rendered at this point (in this case its D so C vs A D gets ranked. )
+
         console.log("newrankedmovelist: ");
         console.log(newRankedMoviesList);
         console.log("nextrankedIncumbent");
         console.log(nextRankedIncumbent);
 
+        // const rankedIncumbent = moviesSortedByRank.slice(
+        //   nextChallengerIndex,
+        //   nextChallengerIndex + 1
+        // );
+        const updatedCombatants = activeRankedMovie.concat(nextRankedIncumbent);
+        // const combatants = unrankedCombatant.concat(rankedIncumbent);
         {
           return (
             <div>
@@ -154,10 +158,8 @@ const MovieList = () => {
                     id={movie.id}
                     active={movie.active}
                     option={A}
-                    combatants={combatants}
+                    combatants={updatedCombatants}
                     rankedMovies={moviesSortedByRank}
-                    encounter={encounter}
-                    setEncounter={setEncounter}
                   />
                 ))}
               </div>
@@ -168,10 +170,8 @@ const MovieList = () => {
                     movie={movie}
                     id={movie.id}
                     option={B}
-                    combatants={combatants}
+                    combatants={updatedCombatants}
                     rankedMovies={moviesSortedByRank}
-                    encounter={encounter}
-                    setEncounter={setEncounter}
                   />
                 ))}
               </div>
@@ -223,7 +223,7 @@ const MovieList = () => {
             </div>
           </div>
         );
-      } else {
+      } else if (activeRankedMovie.length === 0) {
         //standard
         console.log("Phase 2: Unranked vs Ranked");
         return (
@@ -261,6 +261,7 @@ const MovieList = () => {
         );
       }
     } else {
+      console.log("Phase 5: No Ranked Movies Left");
       //no unranked movies left
       return (
         <p>No unranked movies. Feel free to look through your sorted list </p>

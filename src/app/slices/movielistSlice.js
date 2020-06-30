@@ -46,24 +46,18 @@ const movielistSlice = createSlice({
       // console.log(JSON.stringify(OptionB, undefined, 2));
 
       //?initial rankings
-      if (
-        action.payload.option === "A" &&
-        OptionA.rank === 0 &&
-        OptionB.rank === 0
-      ) {
-        console.log("Option A selected");
-        OptionA.rank = startTopRank;
-        OptionB.rank = startBotRank;
-      } else if (
-        action.payload.option === "B" &&
-        OptionA.rank === 0 &&
-        OptionB.rank === 0
-      ) {
-        console.log("Option B selected");
-        OptionA.rank = startBotRank;
-        OptionB.rank = startTopRank;
-      }
-
+      if (OptionA.rank === 0 && OptionB.rank === 0)
+        if (action.payload.option === "A") {
+          console.log("Option A selected");
+          OptionA.rank = startTopRank;
+          OptionB.rank = startBotRank;
+        } else if (action.payload.option === "B") {
+          console.log("Option B selected");
+          OptionA.rank = startBotRank;
+          OptionB.rank = startTopRank;
+        } else {
+          console.log("INITIAL RANKING ERROR!!!");
+        }
       //subsequent Rankings
       //!Challenger Selected
       else if (
@@ -100,6 +94,8 @@ const movielistSlice = createSlice({
         }
 
         OptionA.active = "lost";
+        // } else if(){
+        //   console.log('Scenario: Ranked vs Ranked')
       } else {
         console.log("ChangeRank input not working as intended");
       }
