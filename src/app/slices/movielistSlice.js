@@ -100,7 +100,7 @@ const movielistSlice = createSlice({
             OptionA.rank = newTopRank;
             //could clean up this naming convention later
             //purpose is to catalog historical information on who it beat
-            OptionA.active = "fin_newTopRank".concat("beat_" + OptionB.title);
+            OptionA.active = "fin_newTopRank".concat("vs_" + OptionB.title);
           } else {
             const newRank =
               (rankedMovies[index - 1].rank + rankedMovies[index].rank) / 2;
@@ -108,6 +108,22 @@ const movielistSlice = createSlice({
             console.log("SUBSEQUENT ALL RANKED NON 0 INDEX");
           }
         } else if (action.payload.option === "B") {
+          const index = rankedMovies.findIndex(
+            (movies) => movies.rank === OptionB.rank
+          );
+          console.log("SUBSEQENT SUBSEQUENT ALL RANKED - B SELECTED");
+          console.log(index);
+          if (index === 0) {
+            OptionA.active = "fin_lost".concat("vs_" + OptionB.title);
+          }
+          //  todo: index not 0 how to not keep having hte same values face one another?  exit loop conditions
+          else {
+            console.log("Option B Selected - Incumbent");
+            const lostNewRank =
+              (rankedMovies[index].rank + rankedMovies[index + 1].rank) / 2;
+            OptionA.rank = lostNewRank;
+          }
+          OptionA.active = "lost";
         } else {
           console.log("ChangeRank input not working as intended");
         }

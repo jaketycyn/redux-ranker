@@ -113,10 +113,6 @@ const MovieList = () => {
         activeRankedMovie[0].active === "won"
       ) {
         console.log("Phase 3.1: ChallengerRanked(Won) vs Ranked");
-        //code is above copied for easy reading
-        // const nextChallenger = Math.round(moviesSortedByRank.length / 2);
-
-        //for every win it will face the mid point of the new array of ranked half way cut above it
         const activeRankedMovieIndex = moviesSortedByRank.findIndex(
           (movies) => movies.rank === activeRankedMovie[0].rank
         );
@@ -188,6 +184,36 @@ const MovieList = () => {
         activeRankedMovie[0].active === "lost"
       ) {
         console.log("Phase 3.2: ChallengerRanked(Lost) vs Ranked");
+
+        const activeRankedMovieIndex = moviesSortedByRank.findIndex(
+          (movies) => movies.rank === activeRankedMovie[0].rank
+        );
+        console.log("active rank movie index: " + activeRankedMovieIndex);
+
+        const newRankedMoviesList = moviesSortedByRank.slice(
+          activeRankedMovieIndex,
+          moviesSortedByRank.length
+        );
+
+        const nextRankedIncumbentIndex = Math.round(
+          newRankedMoviesList.length / 2
+        );
+
+        const nextRankedIncumbent = newRankedMoviesList.slice(
+          nextRankedIncumbentIndex - 1,
+          nextRankedIncumbentIndex
+        );
+        console.log("newrankedmovelist: ");
+        console.log(newRankedMoviesList);
+        console.log("nextrankedIncumbent");
+        console.log(nextRankedIncumbent);
+
+        // const rankedIncumbent = moviesSortedByRank.slice(
+        //   nextChallengerIndex,
+        //   nextChallengerIndex + 1
+        // );
+        const updatedCombatants = activeRankedMovie.concat(nextRankedIncumbent);
+
         return (
           <div>
             <p>Movie lost</p>
@@ -199,7 +225,7 @@ const MovieList = () => {
                   id={movie.id}
                   active={movie.active}
                   option={A}
-                  combatants={combatants}
+                  combatants={updatedCombatants}
                   rankedMovies={moviesSortedByRank}
                   encounter={encounter}
                   setEncounter={setEncounter}
@@ -213,7 +239,7 @@ const MovieList = () => {
                   movie={movie}
                   id={movie.id}
                   option={B}
-                  combatants={combatants}
+                  combatants={updatedCombatants}
                   rankedMovies={moviesSortedByRank}
                   encounter={encounter}
                   setEncounter={setEncounter}
@@ -222,7 +248,7 @@ const MovieList = () => {
             </div>
           </div>
         );
-      } else if (activeRankedMovie.length === 0 && unrankedMovies.length >= 1) {
+      } else if (unrankedMovies.length >= 1) {
         //standard
         console.log("Phase 2: Unranked vs Ranked");
         return (
