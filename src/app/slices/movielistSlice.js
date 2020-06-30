@@ -37,13 +37,13 @@ const movielistSlice = createSlice({
       );
       const startTopRank = 1000;
       const startBotRank = 10000;
-      const maxBotRank = 9999999;
+      //already sorted and passed in via props sorted by rank
       const rankedMovies = action.payload.rankedMovies;
       //removes proxy
       console.log(JSON.stringify(OptionA, undefined, 2));
       console.log(JSON.stringify(OptionB, undefined, 2));
 
-      //initial rankings
+      //?initial rankings
       if (
         action.payload.option === "A" &&
         OptionA.rank === 0 &&
@@ -61,25 +61,42 @@ const movielistSlice = createSlice({
         OptionA.rank = startBotRank;
         OptionB.rank = startTopRank;
       }
-      //Challenger Selected
+
+      //subsequent Rankings
+      //!Challenger Selected
       else if (
         action.payload.option === "A" &&
         OptionA.rank === 0 &&
         OptionB.rank !== 0
       ) {
-        console.log("Option A Selected - non initial");
-        OptionA.rank = OptionB.rank / 2;
+        console.log("Option A Selected - subsequent");
+        const index = rankedMovies.findIndex(
+          (movies) => movies.rank === OptionB.rank
+        );
+        const wonNewRank =
+          (rankedMovies[index - 1].rank + rankedMovies[index].rank) / 2;
+        OptionA.rank = wonNewRank;
         OptionA.active = "won";
       }
-      //incumbent Selected
+      //!incumbent Selected
       else if (
         action.payload.option === "B" &&
         OptionA.rank === 0 &&
         OptionB.rank !== 0
       ) {
-        console.log("Option B Selected - non initial");
-        OptionA.rank = OptionB.rank;
-        OptionB.rank = OptionA.rank / 2;
+        console.log("Option B Selected - subsequent");
+        const index = rankedMovies.findIndex(
+          (movies) => movies.rank === OptionB.rank
+        );
+        if (rankedMovies.length === index + 1) {
+          console.log("this is the max index");
+          OptionA.rank = rankedMovies[index].rank * 2;
+        } else {
+          const lostNewRank =
+            (rankedMovies[index].rank + rankedMovies[index + 1].rank) / 2;
+          OptionA.rank = lostNewRank;
+        }
+
         OptionA.active = "lost";
       } else {
         console.log("ChangeRank input not working as intended");
