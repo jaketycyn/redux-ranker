@@ -36,10 +36,6 @@ const MovieList = () => {
 
   const [encounter, setEncounter] = useState(0);
 
-  const handleEncounter = () => {
-    setEncounter((i) => i + 1);
-  };
-
   //filtering movies into unranked and ranked
   const unrankedMovies = movies.filter((movie) => movie.rank == 0);
   // console.log("unranked movies array:", unrankedMovies);
@@ -52,7 +48,6 @@ const MovieList = () => {
 
   const nextChallenger = Math.round(moviesSortedByRank.length / 2);
 
-  //only used for concat and creation of combatants
   const unrankedCombatant = unrankedMovies.slice(0, 1);
   //console.log("unranked challenger:" + JSON.stringify(unrankedCombatant, undefined, 2))
   const rankedIncumbent = moviesSortedByRank.slice(
@@ -108,13 +103,38 @@ const MovieList = () => {
     // unranked vs ranked matchup
     else if (unrankedMovies.length >= 1 && rankedMovies.length >= 1) {
       //cloning of unrankedCombatant into unrankedChallenger and giving it a prop. to deem we're in a cycle of ranking
-      const activeRankedMovie = rankedMovies.filter(
+      const activeRankedMovie = moviesSortedByRank.filter(
         (movie) => movie.active === "won" || movie.active === "lost"
       );
+
+      // ! winners bracket
       if (
         activeRankedMovie.length === 1 &&
         activeRankedMovie[0].active === "won"
       ) {
+        //code is above copied for easy reading
+        // const nextChallenger = Math.round(moviesSortedByRank.length / 2);
+
+        //for every win it will face the mid point of the new array of ranked half way cut above it
+        const activeRankedMovieIndex = moviesSortedByRank.findIndex(
+          (movies) => movies.rank === activeRankedMovie[0].rank
+        );
+        console.log("active rank movie index: " + activeRankedMovieIndex);
+
+        const newRankedMoviesList = moviesSortedByRank.slice(
+          0,
+          activeRankedMovieIndex
+        );
+
+        console.log(
+          "newRankedMovies list: " +
+            JSON.stringify(newRankedMoviesList, undefined, 1)
+        );
+
+        // const newMovieIndex = console.log(
+        //   "active ranked movie: " +
+        //     JSON.stringify(activeRankedMovie[0].rank, undefined, 1)
+        // );
         return (
           <div>
             <div>
@@ -148,7 +168,9 @@ const MovieList = () => {
             </div>
           </div>
         );
-      } else if (
+      }
+      // ! losers bracket
+      else if (
         activeRankedMovie.length === 1 &&
         activeRankedMovie[0].active === "lost"
       ) {
@@ -187,6 +209,7 @@ const MovieList = () => {
           // </div>
         );
       } else {
+        //standard
         return (
           <div>
             <div>
