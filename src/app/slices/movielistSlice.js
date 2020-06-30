@@ -58,11 +58,11 @@ const movielistSlice = createSlice({
         } else {
           console.log("INITIAL RANKING ERROR!!!");
         }
-      //subsequent Rankings
+      //Subsequent Rankings
       else if (OptionA.rank === 0 && OptionB.rank !== 0)
         if (action.payload.option === "A") {
           //!Challenger Selected
-          console.log("Option A Selected - subsequent");
+          console.log("Option A Selected - Challenger");
           const index = rankedMovies.findIndex(
             (movies) => movies.rank === OptionB.rank
           );
@@ -73,7 +73,7 @@ const movielistSlice = createSlice({
         }
         //!Incumbent Selected
         else if (action.payload.option === "B") {
-          console.log("Option B Selected - subsequent");
+          console.log("Option B Selected - Incumbent");
           const index = rankedMovies.findIndex(
             (movies) => movies.rank === OptionB.rank
           );
@@ -85,14 +85,27 @@ const movielistSlice = createSlice({
               (rankedMovies[index].rank + rankedMovies[index + 1].rank) / 2;
             OptionA.rank = lostNewRank;
           }
-
           OptionA.active = "lost";
         } else {
           console.log("SUBSEQUENT RANKING ERROR!!!");
         }
-      else {
-        console.log("ChangeRank input not working as intended");
-      }
+      else if (OptionA.rank > 0 && OptionB.rank > 0)
+        if (action.payload.option === "A") {
+          const index = rankedMovies.findIndex(
+            (movies) => movies.rank === OptionB.rank
+          );
+          console.log("newish index: " + index);
+          if (index === 0) {
+            const newTopRank = rankedMovies[index].rank / 2;
+            OptionA.rank = newTopRank;
+            OptionA.active = "fin_newTopRank".concat("beat_" + OptionB.title);
+          } else {
+            console.log("SUBSEQUENT ALL RANKED NON 0 INDEX");
+          }
+        } else if (action.payload.option === "B") {
+        } else {
+          console.log("ChangeRank input not working as intended");
+        }
     },
   },
 });
