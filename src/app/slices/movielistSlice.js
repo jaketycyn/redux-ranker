@@ -25,11 +25,9 @@ const movielistSlice = createSlice({
       console.log(state.movies);
     },
     changeRank: (state, action, id) => {
-      //payload
-      console.log("Redux action.payload:  ");
-      console.log(action.payload);
-      //
-
+      // payload
+      // console.log("Redux action.payload:  ");
+      // console.log(action.payload);
       const OptionA = state.movies.find(
         (element) => element.id === action.payload.combatants[0].id
       );
@@ -77,6 +75,9 @@ const movielistSlice = createSlice({
         }
         //!Incumbent Selected
         else if (action.payload.option === "B") {
+          OptionA.history = [];
+          OptionA.history.push(OptionB.id);
+          OptionA.active = "lost";
           console.log("Option B Selected - Incumbent");
           const index = rankedMovies.findIndex(
             (movies) => movies.rank === OptionB.rank
@@ -84,14 +85,13 @@ const movielistSlice = createSlice({
           if (rankedMovies.length === index + 1) {
             console.log("this is the max index");
             OptionA.rank = rankedMovies[index].rank * 2;
+            console.log("EXIT THE LOOP WE GOT HIM");
+            OptionA.active = "finished";
           } else {
             const lostNewRank =
               (rankedMovies[index].rank + rankedMovies[index + 1].rank) / 2;
             OptionA.rank = lostNewRank;
           }
-          OptionA.history = [];
-          OptionA.history.push(OptionB.id);
-          OptionA.active = "lost";
         } else {
           console.log("SUBSEQUENT RANKING ERROR!!!");
         }
@@ -100,6 +100,7 @@ const movielistSlice = createSlice({
           const index = rankedMovies.findIndex(
             (movies) => movies.rank === OptionB.rank
           );
+          OptionA.history.push(OptionB.id);
           console.log("newish index: " + index);
           if (index === 0) {
             const newTopRank = rankedMovies[index].rank / 2;
@@ -107,13 +108,11 @@ const movielistSlice = createSlice({
             //could clean up this naming convention later
             //purpose is to catalog historical information on who it beat
             OptionA.active = "fin_newTopRank".concat("vs_" + OptionB.title);
-            OptionA.history.push(OptionB.id);
           } else {
             const newRank =
               (rankedMovies[index - 1].rank + rankedMovies[index].rank) / 2;
             OptionA.rank = newRank;
             console.log("SUBSEQUENT ALL RANKED NON 0 INDEX");
-            OptionA.history.push(OptionB.id);
             if (OptionA.history.filter((item) => item === OptionB.id)) {
               console.log("EXIT THE LOOP WE GOT HIM");
               OptionA.active = "finished";
@@ -123,26 +122,22 @@ const movielistSlice = createSlice({
           const index = rankedMovies.findIndex(
             (movies) => movies.rank === OptionB.rank
           );
+          OptionA.history.push(OptionB.id);
           console.log("SUBSEQENT SUBSEQUENT ALL RANKED - B SELECTED");
-          console.log(index);
           if (index === 0) {
             OptionA.active = "fin_lost".concat("vs_" + OptionB.title);
             OptionA.history.push(OptionB.id);
           }
           //  todo: index not 0 how to not keep having hte same values face one another?  exit loop conditions
           //exit conditional for now is using OptionB.id repearing a 2nd time if it exists in the .history prop then we change .active to finished
-          else {
+          else if (OptionA.history.includes(OptionB.id) === true) {
+            console.log(console.log("EXIT THE LOOP WE GOT HIM"));
+            OptionA.active = "finished";
+          } else {
             console.log("Option B Selected - Incumbent");
             const lostNewRank =
               (rankedMovies[index].rank + rankedMovies[index + 1].rank) / 2;
             OptionA.rank = lostNewRank;
-            OptionA.history.push(OptionB.id);
-            if (OptionA.history.filter((item) => item === OptionB.id)) {
-              console.log("EXIT THE LOOP WE GOT HIM");
-              OptionA.active = "finished";
-            } else {
-              OptionA.active = "lost";
-            }
           }
         } else {
           console.log("ChangeRank input not working as intended");
