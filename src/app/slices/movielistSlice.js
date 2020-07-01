@@ -70,6 +70,10 @@ const movielistSlice = createSlice({
             (rankedMovies[index - 1].rank + rankedMovies[index].rank) / 2;
           OptionA.rank = newRank;
           OptionA.active = "won";
+
+          //using title for now issues will arise if exact same titles appear later. might use unique ids' in the future
+          OptionA.history = [];
+          OptionA.history.push(OptionB.id);
         }
         //!Incumbent Selected
         else if (action.payload.option === "B") {
@@ -85,6 +89,8 @@ const movielistSlice = createSlice({
               (rankedMovies[index].rank + rankedMovies[index + 1].rank) / 2;
             OptionA.rank = lostNewRank;
           }
+          OptionA.history = [];
+          OptionA.history.push(OptionB.id);
           OptionA.active = "lost";
         } else {
           console.log("SUBSEQUENT RANKING ERROR!!!");
@@ -101,11 +107,17 @@ const movielistSlice = createSlice({
             //could clean up this naming convention later
             //purpose is to catalog historical information on who it beat
             OptionA.active = "fin_newTopRank".concat("vs_" + OptionB.title);
+            OptionA.history.push(OptionB.id);
           } else {
             const newRank =
               (rankedMovies[index - 1].rank + rankedMovies[index].rank) / 2;
             OptionA.rank = newRank;
             console.log("SUBSEQUENT ALL RANKED NON 0 INDEX");
+            OptionA.history.push(OptionB.id);
+            if (OptionA.history.filter((item) => item === OptionB.id)) {
+              console.log("EXIT THE LOOP WE GOT HIM");
+              OptionA.active = "finished";
+            }
           }
         } else if (action.payload.option === "B") {
           const index = rankedMovies.findIndex(
@@ -115,15 +127,23 @@ const movielistSlice = createSlice({
           console.log(index);
           if (index === 0) {
             OptionA.active = "fin_lost".concat("vs_" + OptionB.title);
+            OptionA.history.push(OptionB.id);
           }
           //  todo: index not 0 how to not keep having hte same values face one another?  exit loop conditions
+          //exit conditional for now is using OptionB.id repearing a 2nd time if it exists in the .history prop then we change .active to finished
           else {
             console.log("Option B Selected - Incumbent");
             const lostNewRank =
               (rankedMovies[index].rank + rankedMovies[index + 1].rank) / 2;
             OptionA.rank = lostNewRank;
+            OptionA.history.push(OptionB.id);
+            if (OptionA.history.filter((item) => item === OptionB.id)) {
+              console.log("EXIT THE LOOP WE GOT HIM");
+              OptionA.active = "finished";
+            } else {
+              OptionA.active = "lost";
+            }
           }
-          OptionA.active = "lost";
         } else {
           console.log("ChangeRank input not working as intended");
         }

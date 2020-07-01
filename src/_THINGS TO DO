@@ -1,5 +1,6 @@
 Priorities:
     1) List rendering logic for 2 already ranked items
+        1a. Matchup history for ranked items to act as an exit for the iteration.
     2) Entire "ranked" list component display 
     3) Actual changes to data based upon selection (updating .json files via redux actions)
     
