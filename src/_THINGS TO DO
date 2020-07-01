@@ -1,55 +1,19 @@
-Priorities:
+Major Updates:
     1) List rendering logic for 2 already ranked items
-        1a. Matchup history for ranked items to act as an exit for the iteration.
-    2) Entire "ranked" list component display 
-    3) Actual changes to data based upon selection (updating .json files via redux actions)
-    
+
+    2) Actual changes to data based upon selection (updating .json files via redux actions)
+        - or connecting to a database
+
+Known Issues:
+    - Rendering of wrong elements
 
 
 
-
-Sorted List component that allows people to see everything that is ranked and/or unranked.
 
 Possible Drag/Drop functionality for this sorted List
-
-
-Logic for how to pick/rank two objects that have already been 'ranked'
-
-
-
-
 
 Comparison button/reranking = allows ranking changes between items that are already ranked. 
 
 
-
-
-
-
-
-
-
 Ideas: 
-    - Adding extra properites such as # of times ranked &/or matchups history to each item in array.
-        (ex: {
-            "title": "Movie CX",
-            "year": 2018,
-            "rank": 10,
-            "cast": [
-                "Robert Downey, Jr.",
-                "Chris Evans",
-                "Mark Ruffalo",
-                "Chris Hemsworth",
-                "Scarlett Johansson",
-                "Jeremy Renner",
-                "Tom Hiddleston",
-                "Clark Gregg",
-                "Cobie Smulders",
-                "Stellan Skarsgård",
-                "Samuel L. Jackson"
-            ],
-            "genres": ["Superhero"],
-            "id": 5
-            "timesranked": 2
-            "history": [id4, id1]         // "opponenets" 
-        })
+   
