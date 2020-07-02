@@ -102,10 +102,7 @@ const MovieList = () => {
           </div>
         </div>
       );
-    }
-
-    // unranked vs ranked matchup
-    else if (rankedMovies.length >= 1) {
+    } else if (rankedMovies.length >= 1) {
       if (activeRankedMovie.length === 1) {
         const activeRankedMovieIndex = moviesSortedByRank.findIndex(
           (movies) => movies.rank === activeRankedMovie[0].rank
@@ -239,7 +236,6 @@ const MovieList = () => {
           );
         }
       } else if (unrankedMovies.length >= 1) {
-        //standard
         console.log("Phase 2: Unranked vs Ranked");
         return (
           <div>
