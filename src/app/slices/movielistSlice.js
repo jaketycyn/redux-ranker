@@ -43,47 +43,42 @@ const movielistSlice = createSlice({
       // console.log(JSON.stringify(OptionA, undefined, 2));
       // console.log(JSON.stringify(OptionB, undefined, 2));
 
-      //?initial rankings
+      //initial rankings
       if (OptionA.rank === 0 && OptionB.rank === 0)
         if (action.payload.option === "A") {
-          console.log("Option A selected");
+          console.log("INITIAL RANKING: Option A selected");
           OptionA.rank = startTopRank;
           OptionB.rank = startBotRank;
         } else if (action.payload.option === "B") {
-          console.log("Option B selected");
+          console.log("INITIAL RANKING: Option B selected");
           OptionA.rank = startBotRank;
           OptionB.rank = startTopRank;
         } else {
           console.log("INITIAL RANKING ERROR!!!");
         }
-      //Subsequent Rankings
-      else if (OptionA.rank === 0 && OptionB.rank !== 0)
+      //Subsequent Rankings - Unranked vs Ranked
+      else if (OptionA.rank === 0 && OptionB.rank !== 0) {
+        const index = rankedMovies.findIndex(
+          (movies) => movies.rank === OptionB.rank
+        );
+        OptionA.history = [];
+        OptionA.history.push(OptionB.id);
         if (action.payload.option === "A") {
-          //!Challenger Selected
-          console.log("Option A Selected - Challenger");
-          const index = rankedMovies.findIndex(
-            (movies) => movies.rank === OptionB.rank
-          );
+          //Challenger Selected
+          console.log("SUBSEQUENT RANKING: Option A Selected - Challenger");
           const newRank =
             (rankedMovies[index - 1].rank + rankedMovies[index].rank) / 2;
           OptionA.rank = newRank;
           OptionA.active = "won";
-
-          //using title for now issues will arise if exact same titles appear later. might use unique ids' in the future
-          OptionA.history = [];
-          OptionA.history.push(OptionB.id);
         }
-        //!Incumbent Selected
+        //Incumbent Selected
         else if (action.payload.option === "B") {
-          OptionA.history = [];
-          OptionA.history.push(OptionB.id);
+          console.log("SUBSEQUENT RANKING: Option B Selected - Incumbent");
           OptionA.active = "lost";
-          console.log("Option B Selected - Incumbent");
-          const index = rankedMovies.findIndex(
-            (movies) => movies.rank === OptionB.rank
-          );
           if (rankedMovies.length === index + 1) {
-            console.log("this is the max index");
+            console.log(
+              "Max Index reached - this item is the new bottom ranked"
+            );
             OptionA.rank = rankedMovies[index].rank * 2;
             console.log("EXIT THE LOOP WE GOT HIM");
             delete OptionA.active;
@@ -95,7 +90,7 @@ const movielistSlice = createSlice({
         } else {
           console.log("SUBSEQUENT RANKING ERROR!!!");
         }
-      else if (OptionA.rank > 0 && OptionB.rank > 0)
+      } else if (OptionA.rank > 0 && OptionB.rank > 0)
         if (action.payload.option === "A") {
           // ! A SELECTED
           const index = rankedMovies.findIndex(
@@ -120,6 +115,8 @@ const movielistSlice = createSlice({
         }
         // ! B SELECTED
         else if (action.payload.option === "B") {
+          //console.log(rankedMovies);
+          console.log("SUBSEQENT SUBSEQUENT ALL RANKED - B SELECTED");
           const index = rankedMovies.findIndex(
             (movies) => movies.rank === OptionB.rank
           );
@@ -130,10 +127,8 @@ const movielistSlice = createSlice({
 
           if (OptionA.history.includes(OptionB.id)) {
             console.log(console.log("EXIT THE LOOP WE GOT HIM"));
+            OptionA.history.push(OptionB.id);
             delete OptionA.active;
-
-            //console.log(rankedMovies);
-            console.log("SUBSEQENT SUBSEQUENT ALL RANKED - B SELECTED");
           }
           // when losing to top ranked item
           else if (index === 0) {
@@ -142,6 +137,7 @@ const movielistSlice = createSlice({
           } else if (index === rankedMovies.length - 1) {
             delete OptionA.active;
             OptionA.rank = rankedMovies[index].rank * 2;
+            OptionA.history.push(OptionB.id);
           } else {
             const lostNewRank =
               (rankedMovies[index].rank + rankedMovies[index + 1].rank) / 2;
