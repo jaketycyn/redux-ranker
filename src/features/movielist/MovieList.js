@@ -46,10 +46,12 @@ const MovieList = () => {
     // false = reversed order ; lowest # is highest rank
     .sort(sort_by("rank", false, parseInt));
 
-  const nextChallengerIndex = Math.round(moviesSortedByRank.length / 2);
+  const nextChallengerIndex = Math.floor(moviesSortedByRank.length / 2);
 
   const unrankedCombatant = unrankedMovies.slice(0, 1);
-  //console.log("unranked challenger:" + JSON.stringify(unrankedCombatant, undefined, 2))
+  //console.log("unranked challenger:" + JSON.stringify(unrankedCombatant, undefined, 2))\\
+  // console.log("moviesorted by:");
+  // console.log(moviesSortedByRank);
   const rankedIncumbent = moviesSortedByRank.slice(
     nextChallengerIndex,
     nextChallengerIndex + 1
@@ -105,8 +107,6 @@ const MovieList = () => {
 
     // unranked vs ranked matchup
     else if (rankedMovies.length >= 1) {
-      //cloning of unrankedCombatant into unrankedChallenger and giving it a prop. to deem we're in a cycle of ranking
-
       // ! winners bracket
       if (
         activeRankedMovie.length === 1 &&
@@ -154,7 +154,7 @@ const MovieList = () => {
                     active={movie.active}
                     option={A}
                     combatants={updatedCombatants}
-                    rankedMovies={moviesSortedByRank}
+                    rankedMovies={newRankedMoviesList}
                   />
                 ))}
               </div>
@@ -166,7 +166,7 @@ const MovieList = () => {
                     id={movie.id}
                     option={B}
                     combatants={updatedCombatants}
-                    rankedMovies={moviesSortedByRank}
+                    rankedMovies={newRankedMoviesList}
                   />
                 ))}
               </div>
@@ -195,13 +195,13 @@ const MovieList = () => {
           moviesSortedByRank.length
         );
 
-        const nextRankedIncumbentIndex = Math.round(
+        const nextRankedIncumbentIndex = Math.floor(
           newRankedMoviesList.length / 2
         );
 
         const nextRankedIncumbent = newRankedMoviesList.slice(
-          nextRankedIncumbentIndex - 1,
-          nextRankedIncumbentIndex
+          nextRankedIncumbentIndex,
+          nextRankedIncumbentIndex + 1
         );
         console.log("newrankedmovelist: ");
         console.log(newRankedMoviesList);
@@ -233,7 +233,7 @@ const MovieList = () => {
               ))}
             </div>
             <div>
-              {rankedIncumbent.map((movie) => (
+              {nextRankedIncumbent.map((movie) => (
                 <Movie
                   key={movie.id}
                   movie={movie}
@@ -263,8 +263,6 @@ const MovieList = () => {
                   option={A}
                   combatants={combatants}
                   rankedMovies={moviesSortedByRank}
-                  encounter={encounter}
-                  setEncounter={setEncounter}
                 />
               ))}
             </div>
@@ -277,8 +275,6 @@ const MovieList = () => {
                   option={B}
                   combatants={combatants}
                   rankedMovies={moviesSortedByRank}
-                  encounter={encounter}
-                  setEncounter={setEncounter}
                 />
               ))}
             </div>

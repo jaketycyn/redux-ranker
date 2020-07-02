@@ -86,7 +86,7 @@ const movielistSlice = createSlice({
             console.log("this is the max index");
             OptionA.rank = rankedMovies[index].rank * 2;
             console.log("EXIT THE LOOP WE GOT HIM");
-            OptionA.active = "finished";
+            delete OptionA.active;
           } else {
             const lostNewRank =
               (rankedMovies[index].rank + rankedMovies[index + 1].rank) / 2;
@@ -97,47 +97,58 @@ const movielistSlice = createSlice({
         }
       else if (OptionA.rank > 0 && OptionB.rank > 0)
         if (action.payload.option === "A") {
+          // ! A SELECTED
           const index = rankedMovies.findIndex(
             (movies) => movies.rank === OptionB.rank
           );
+          if (OptionA.history.includes(OptionB.id) === true) {
+            console.log("EXIT THE LOOP WE GOT HIM");
+            delete OptionA.active;
+          }
           OptionA.history.push(OptionB.id);
           console.log("newish index: " + index);
           if (index === 0) {
             const newTopRank = rankedMovies[index].rank / 2;
             OptionA.rank = newTopRank;
-            //could clean up this naming convention later
-            //purpose is to catalog historical information on who it beat
-            OptionA.active = "fin_newTopRank".concat("vs_" + OptionB.title);
+            delete OptionA.active;
           } else {
             const newRank =
               (rankedMovies[index - 1].rank + rankedMovies[index].rank) / 2;
             OptionA.rank = newRank;
             console.log("SUBSEQUENT ALL RANKED NON 0 INDEX");
-            if (OptionA.history.filter((item) => item === OptionB.id)) {
-              console.log("EXIT THE LOOP WE GOT HIM");
-              OptionA.active = "finished";
-            }
           }
-        } else if (action.payload.option === "B") {
+        }
+        // ! B SELECTED
+        else if (action.payload.option === "B") {
           const index = rankedMovies.findIndex(
             (movies) => movies.rank === OptionB.rank
           );
-          OptionA.history.push(OptionB.id);
-          console.log("SUBSEQENT SUBSEQUENT ALL RANKED - B SELECTED");
-          if (index === 0) {
-            OptionA.active = "fin_lost".concat("vs_" + OptionB.title);
-            OptionA.history.push(OptionB.id);
-          }
-          //  todo: index not 0 how to not keep having hte same values face one another?  exit loop conditions
-          //exit conditional for now is using OptionB.id repearing a 2nd time if it exists in the .history prop then we change .active to finished
-          else if (OptionA.history.includes(OptionB.id) === true) {
+          console.log(
+            "INDEX OF B SELECTION LOSSES SDLF:KSDFLSKJD:FLSDJF:LSKDJF"
+          );
+          console.log(index);
+
+          if (OptionA.history.includes(OptionB.id)) {
             console.log(console.log("EXIT THE LOOP WE GOT HIM"));
-            OptionA.active = "finished";
+            delete OptionA.active;
+
+            //console.log(rankedMovies);
+            console.log("SUBSEQENT SUBSEQUENT ALL RANKED - B SELECTED");
+          }
+          // when losing to top ranked item
+          else if (index === 0) {
+            delete OptionA.active;
+            console.log("index 0 event loss occured - lost to top dawg");
+          } else if (index === rankedMovies.length - 1) {
+            delete OptionA.active;
+            OptionA.rank = rankedMovies[index].rank * 2;
           } else {
-            console.log("Option B Selected - Incumbent");
             const lostNewRank =
               (rankedMovies[index].rank + rankedMovies[index + 1].rank) / 2;
             OptionA.rank = lostNewRank;
+            OptionA.active = "lost";
+            OptionA.history.push(OptionB.id);
+            console.log("Option B Selected - Incumbent");
           }
         } else {
           console.log("ChangeRank input not working as intended");
