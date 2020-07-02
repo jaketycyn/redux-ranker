@@ -220,9 +220,7 @@ const MovieList = () => {
                     active={movie.active}
                     option={A}
                     combatants={updatedCombatants}
-                    rankedMovies={moviesSortedByRank}
-                    encounter={encounter}
-                    setEncounter={setEncounter}
+                    rankedMovies={newRankedMoviesList}
                   />
                 ))}
               </div>
@@ -234,9 +232,7 @@ const MovieList = () => {
                     id={movie.id}
                     option={B}
                     combatants={updatedCombatants}
-                    rankedMovies={moviesSortedByRank}
-                    encounter={encounter}
-                    setEncounter={setEncounter}
+                    rankedMovies={newRankedMoviesList}
                   />
                 ))}
               </div>
