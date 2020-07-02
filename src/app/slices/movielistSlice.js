@@ -128,13 +128,11 @@ const movielistSlice = createSlice({
             (movies) => movies.rank === OptionB.rank
           );
           OptionA.active = "lost";
-          OptionA.history.push(OptionB.id);
+
           if (OptionA.history.includes(OptionB.id)) {
             console.log(console.log("EXIT THE LOOP WE GOT HIM"));
             delete OptionA.active;
-          }
-          // LOSING TO TOP RANKED ITEM
-          else if (index === 0) {
+          } else if (index === 0) {
             delete OptionA.active;
             console.log("index 0 event loss occured - lost to top dawg");
           } else if (index === rankedMovies.length - 1) {
@@ -144,6 +142,7 @@ const movielistSlice = createSlice({
             const lostNewRank =
               (rankedMovies[index].rank + rankedMovies[index + 1].rank) / 2;
             OptionA.rank = lostNewRank;
+            OptionA.history.push(OptionB.id);
 
             console.log("Option B Selected - Incumbent");
           }
