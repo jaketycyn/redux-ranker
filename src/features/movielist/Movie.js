@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { changeRank } from "../../app/slices/movielistSlice";
-export const Movie = ({ movie, id, option, combatants, rankedItems }) => {
+export const Movie = ({ item, id, option, combatants, rankedItems }) => {
   const dispatch = useDispatch();
 
   function updateRank() {
@@ -22,8 +22,8 @@ export const Movie = ({ movie, id, option, combatants, rankedItems }) => {
 
   return (
     <div>
-      <h2>Title: {movie.title}</h2>
-      <h3>Rank:{movie.rank}</h3>
+      <h2>Title: {item.title}</h2>
+      <h3>Rank:{item.rank}</h3>
       <h4>id: {id}</h4>
       <button
         onClick={
