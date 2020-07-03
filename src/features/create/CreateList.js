@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import jsondata from "../../data.json";
 
 //https://github.com/react-hook-form/react-hook-form/tree/master/examples
 //Using on blur for when users click out of the 'search box' to click on items to add to their unranked list
