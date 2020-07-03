@@ -5,10 +5,9 @@ Major Updates:
         - or connecting to a database
 
 Known Issues
-    - F facing against A twice at the end. 
-    - F facing D skipping vs C
-    - E Facing A and B again (gives wins to everything prior to E appearing then if E wins or losses first fight and the opposite on the subsequent it'll reface its first opponent)
-
+    - E faces A twice
+        . beats A => loses t D => faces A again
+        . C top rank, B bottom Rank in example
 
 
 Possible Drag/Drop functionality for this sorted List
