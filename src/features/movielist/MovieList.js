@@ -122,38 +122,37 @@ const MovieList = () => {
             nextRankedIncumbent
           );
 
-          {
-            return (
+          return (
+            <div>
               <div>
-                <div>
-                  {activeRankedItem.map((item) => (
-                    <Movie
-                      key={item.id}
-                      item={item}
-                      id={item.id}
-                      active={item.active}
-                      option={A}
-                      combatants={updatedCombatants}
-                      rankedItems={newRankedMoviesList}
-                    />
-                  ))}
-                </div>
-                <div>
-                  {nextRankedIncumbent.map((item) => (
-                    <Movie
-                      key={item.id}
-                      item={item}
-                      id={item.id}
-                      option={B}
-                      combatants={updatedCombatants}
-                      rankedItems={newRankedMoviesList}
-                    />
-                  ))}
-                </div>
+                {activeRankedItem.map((item) => (
+                  <Movie
+                    key={item.id}
+                    item={item}
+                    id={item.id}
+                    active={item.active}
+                    option={A}
+                    combatants={updatedCombatants}
+                    rankedItems={newRankedMoviesList}
+                  />
+                ))}
               </div>
-            );
-          }
+              <div>
+                {nextRankedIncumbent.map((item) => (
+                  <Movie
+                    key={item.id}
+                    item={item}
+                    id={item.id}
+                    option={B}
+                    combatants={updatedCombatants}
+                    rankedItems={newRankedMoviesList}
+                  />
+                ))}
+              </div>
+            </div>
+          );
         }
+
         // ! losers bracket
         else if (activeRankedItem[0].active === "lost") {
           console.log("Phase 3.2: ChallengerRanked(Lost) vs Ranked");
