@@ -2,6 +2,7 @@ Major Updates:
 - Adding search/add to unrankedList functionality via looking up data from an internal database. In the future it'll probably be an  API.
 - Design around mobile use/functionality
 - React Router for navigating through the search dashboard, ranking dashboard and fullRankedList Dashboard.
+    -React Router
 
 
 Known Issues
@@ -19,4 +20,6 @@ Comparison button/reranking = allows ranking changes between items that are alre
 
 
 Ideas: 
-   
+    - code splitting 
+        : https://reactrouter.com/web/guides/code-splitting
+    - 
