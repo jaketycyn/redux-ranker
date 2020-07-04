@@ -13,7 +13,7 @@ const RankedItemsDisplay = () => {
     dispatch(fetchMovies());
   }, [dispatch]);
 
-  let rankedMovies = movies.filter((movie) => movie.rank >= 1);
+  let rankedItems = movies.filter((movie) => movie.rank >= 1);
   const sort_by = (field, reverse, primer) => {
     const key = primer
       ? function (x) {
@@ -29,19 +29,19 @@ const RankedItemsDisplay = () => {
     };
   };
 
-  const moviesSortedByRank = rankedMovies
+  const itemsSortedByRank = rankedItems
     .slice()
     .sort(sort_by("rank", false, parseInt));
 
   const DisplayItems = () => {
     console.log("displaying all ranked items in order");
-    console.log(moviesSortedByRank);
+    console.log(itemsSortedByRank);
   };
   return (
     <div>
       <button onClick={DisplayItems}>RankedItemsDisplay</button>
       <div display={false}>
-        {moviesSortedByRank.map((movie) => {
+        {itemsSortedByRank.map((movie) => {
           return <div>{movie.title}</div>;
         })}
       </div>

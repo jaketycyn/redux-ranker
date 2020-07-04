@@ -1,13 +1,17 @@
 Major Updates:
-    1) movielist/ranking rendering logic for 2 already ranked items
+- Adding search/add to unrankedList functionality via looking up data from an internal database. In the future it'll probably be an  API.
+- Design around mobile use/functionality
+- React Router for navigating through the search dashboard, ranking dashboard and fullRankedList Dashboard.
+    -React Router
 
-    2) Actual changes to data based upon selection (updating .json files via redux actions)
-        - or connecting to a database
 
 Known Issues
-    - E faces A twice
+/*
+    ex: - E faces A twice
         . beats A => loses t D => faces A again
         . C top rank, B bottom Rank in example
+*/
+No known issues at this time!
 
 
 Possible Drag/Drop functionality for this sorted List
@@ -16,4 +20,6 @@ Comparison button/reranking = allows ranking changes between items that are alre
 
 
 Ideas: 
-   
+    - code splitting 
+        : https://reactrouter.com/web/guides/code-splitting
+    - 
