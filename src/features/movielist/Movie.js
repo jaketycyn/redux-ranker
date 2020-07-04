@@ -23,17 +23,15 @@ export const Movie = ({ item, id, option, combatants, rankedItems }) => {
 
   return (
     <div>
-      <Card>
-        <h2>Title: {item.title}</h2>
-        <button
-          onClick={
-            combinedUpdater
-            //,() => ( dispatch(changeRank({id: id, option: option, combatants: combatants, rankedMovies: rankedMovies}))    )
-          }
-        >
-          ChangeRank
-        </button>
-      </Card>
+      <h2>Title: {item.title}</h2>
+      <button
+        onClick={
+          combinedUpdater
+          //,() => ( dispatch(changeRank({id: id, option: option, combatants: combatants, rankedMovies: rankedMovies}))    )
+        }
+      >
+        ChangeRank
+      </button>
     </div>
   );
 };
