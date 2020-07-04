@@ -176,7 +176,6 @@ const MovieList = () => {
 
           return (
             <div>
-              <p>Movie lost</p>
               <div>
                 {activeRankedItem.map((item) => (
                   <Movie

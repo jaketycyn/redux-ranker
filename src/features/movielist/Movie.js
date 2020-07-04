@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { changeRank } from "../../app/slices/movielistSlice";
+
 export const Movie = ({ item, id, option, combatants, rankedItems }) => {
   const dispatch = useDispatch();
 
@@ -22,17 +23,17 @@ export const Movie = ({ item, id, option, combatants, rankedItems }) => {
 
   return (
     <div>
-      <h2>Title: {item.title}</h2>
-      <h3>Rank:{item.rank}</h3>
-      <h4>id: {id}</h4>
-      <button
-        onClick={
-          combinedUpdater
-          //,() => ( dispatch(changeRank({id: id, option: option, combatants: combatants, rankedMovies: rankedMovies}))    )
-        }
-      >
-        ChangeRank
-      </button>
+      <Card>
+        <h2>Title: {item.title}</h2>
+        <button
+          onClick={
+            combinedUpdater
+            //,() => ( dispatch(changeRank({id: id, option: option, combatants: combatants, rankedMovies: rankedMovies}))    )
+          }
+        >
+          ChangeRank
+        </button>
+      </Card>
     </div>
   );
 };
