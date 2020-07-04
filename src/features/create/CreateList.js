@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import jsondata from "../../data.json";
 
-import CheckIcon from "@material-ui/icons/Check";
-import { TextField, ToggleButton } from "@material-ui/core";
-
+import AddIcon from "@material-ui/icons/Add";
+import { TextField } from "@material-ui/core";
+import { ToggleButton } from "@material-ui/lab/";
 //https://github.com/react-hook-form/react-hook-form/tree/master/examples
 //Using on blur for when users click out of the 'search box' to click on items to add to their unranked list
 
 function CreateList() {
-  const { handleSubmit, control, reset, errors } = useForm({
+  const { handleSubmit, control, errors } = useForm({
     mode: "onBlur",
   });
 
@@ -29,21 +29,28 @@ function CreateList() {
     console.log("searchlist:" + searchList);
   };
 
-  function ToggleButton() {
+  function StandardToggleButton(props) {
     const [selected, setSelected] = useState(false);
+
+    if (selected === true) {
+      unrankedList.push(props);
+      console.log(unrankedList);
+    }
     return (
       <ToggleButton
-        value="check"
+        value={props.item}
         selected={selected}
+        style={
+          selected ? { background: "lightgreen" } : { background: "white" }
+        }
         onChange={() => {
           setSelected(!selected);
         }}
       >
-        <CheckIcon />
+        <AddIcon />
       </ToggleButton>
     );
   }
-
   function SearchList() {
     return (
       <div>
@@ -52,7 +59,7 @@ function CreateList() {
           return (
             <div>
               <h1>{item.title}</h1>
-              <ToggleButton />
+              <StandardToggleButton value={item} />
             </div>
           );
         })}
