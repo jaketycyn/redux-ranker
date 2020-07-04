@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 import jsondata from "../../data.json";
+
+import { searchAddSelector } from "../../app/slices/searchAddSlice";
 
 import AddIcon from "@material-ui/icons/Add";
 import { TextField } from "@material-ui/core";
@@ -12,6 +15,9 @@ function CreateList() {
   const { handleSubmit, control, errors } = useForm({
     mode: "onBlur",
   });
+
+  const dispatch = useDispatch();
+  const { loading, hasErrors, itemTitles } = useSelector(searchAddSelector);
 
   const [searchList, setSearchList] = useState([]);
   const [unrankedList, setUnrankedList] = useState([]);

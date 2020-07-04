@@ -10,7 +10,9 @@ const searchAddSlice = createSlice({
   name: "searchAdd",
   initialState,
   reducers: {
-    addItem: (state) => {},
+    addItem: (state) => {
+      //action.payload.(PROPS PASSSED VIA STATE)
+    },
   },
 });
 
