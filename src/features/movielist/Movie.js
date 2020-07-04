@@ -17,6 +17,7 @@ export const Movie = ({ item, id, option, combatants, rankedItems }) => {
   }
 
   //function combines
+  //keeping to demonstrate how to combine dispatches for future uses
   function combinedUpdater() {
     updateRank();
   }
