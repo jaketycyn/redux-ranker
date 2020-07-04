@@ -8,6 +8,7 @@ import { searchAddSelector } from "../../app/slices/searchAddSlice";
 import AddIcon from "@material-ui/icons/Add";
 import { TextField } from "@material-ui/core";
 import { ToggleButton } from "@material-ui/lab/";
+
 //https://github.com/react-hook-form/react-hook-form/tree/master/examples
 //Using on blur for when users click out of the 'search box' to click on items to add to their unranked list
 
@@ -17,7 +18,6 @@ function CreateList() {
   });
 
   const dispatch = useDispatch();
-  const { loading, hasErrors, itemTitles } = useSelector(searchAddSelector);
 
   const [searchList, setSearchList] = useState([]);
   const [unrankedList, setUnrankedList] = useState([]);
@@ -28,11 +28,11 @@ function CreateList() {
     const newjsondata = jsondata.filter(
       (item) => item.title === data.TextField
     );
-    console.log("searchlist:" + searchList);
+    //console.log("searchlist:" + searchList);
     setSearchList(newjsondata);
-    console.log(newjsondata);
-    console.log(jsondata);
-    console.log("searchlist:" + searchList);
+    //console.log(newjsondata);
+    //console.log(jsondata);
+    //.log("searchlist:" + searchList);
   };
 
   function StandardToggleButton(props) {
