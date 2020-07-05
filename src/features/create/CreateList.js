@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
-import jsondata from "../../data.json";
 
-import { searchAddSelector } from "../../app/slices/searchAddSlice";
+import jsondata from "../../data.json";
+import {
+  fetchMovies,
+  movielistSelector,
+} from "../../app/slices/movielistSlice";
+import {
+  searchAddSelector,
+  addItem,
+  toggleSelection,
+} from "../../app/slices/searchAddSlice";
 
 import AddIcon from "@material-ui/icons/Add";
 import { TextField } from "@material-ui/core";
@@ -18,18 +26,22 @@ function CreateList() {
   });
 
   const dispatch = useDispatch();
+  const { movies } = useSelector(movielistSelector);
 
   const [searchList, setSearchList] = useState([]);
-  const [unrankedList, setUnrankedList] = useState([]);
+
+  useEffect(() => {
+    dispatch(fetchMovies());
+  }, [dispatch]);
 
   const onSubmit = (data) => {
     //console.log(data.TextField);
 
-    const newjsondata = jsondata.filter(
-      (item) => item.title === data.TextField
-    );
-    //console.log("searchlist:" + searchList);
+    const newjsondata = movies.filter((item) => item.title === data.TextField);
+
+    console.log(movies);
     setSearchList(newjsondata);
+
     //console.log(newjsondata);
     //console.log(jsondata);
     //.log("searchlist:" + searchList);
@@ -38,13 +50,16 @@ function CreateList() {
   function StandardToggleButton(props) {
     const [selected, setSelected] = useState(false);
 
+    const selectedItem = searchList.filter((item) => item.id === selected);
+    console.log("selected item");
+    console.log(selectedItem);
     if (selected === true) {
-      unrankedList.push(props);
-      console.log(unrankedList);
+      dispatch(addItem({ movies }));
     }
+    console.log(searchList);
     return (
       <ToggleButton
-        value={props.item}
+        value={"stuff"}
         selected={selected}
         style={
           selected ? { background: "lightgreen" } : { background: "white" }
