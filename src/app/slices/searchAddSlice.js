@@ -27,14 +27,8 @@ const searchAddSlice = createSlice({
       console.log(state.items);
     },
     addItem: (state, action) => {
+      console.log("actionpayload");
       console.log(action.payload);
-    },
-
-    toggleSelection: (state, action) => {
-      const selectItem = state.find((item) => item.id === action.payload);
-      if (selectItem) {
-        state.selection = !state.selection;
-      }
     },
   },
 });
@@ -45,7 +39,6 @@ export const {
   getItemsSuccess,
   getItemsFailure,
   addItem,
-  updateSelection,
 } = searchAddSlice.actions;
 
 // A selector

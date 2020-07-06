@@ -7,11 +7,7 @@ import {
   fetchMovies,
   movielistSelector,
 } from "../../app/slices/movielistSlice";
-import {
-  searchAddSelector,
-  addItem,
-  toggleSelection,
-} from "../../app/slices/searchAddSlice";
+import { addItem } from "../../app/slices/searchAddSlice";
 
 import AddIcon from "@material-ui/icons/Add";
 import { TextField } from "@material-ui/core";
@@ -37,7 +33,9 @@ function CreateList() {
   const onSubmit = (data) => {
     //console.log(data.TextField);
 
-    const newjsondata = movies.filter((item) => item.title === data.TextField);
+    const newjsondata = movies.filter((item) =>
+      item.title.contains(data.TextField)
+    );
 
     console.log(movies);
     setSearchList(newjsondata);
@@ -47,14 +45,14 @@ function CreateList() {
     //.log("searchlist:" + searchList);
   };
 
-  function StandardToggleButton(props) {
+  function StandardToggleButton() {
     const [selected, setSelected] = useState(false);
 
-    const selectedItem = searchList.filter((item) => item.id === selected);
-    console.log("selected item");
-    console.log(selectedItem);
     if (selected === true) {
-      dispatch(addItem({ movies }));
+      const selectedItem = searchList.filter((item) => item.selected === true);
+      console.log("selected item");
+      console.log(selectedItem);
+      dispatch(addItem({}));
     }
     console.log(searchList);
     return (
