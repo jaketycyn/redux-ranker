@@ -33,9 +33,7 @@ function CreateList() {
   const onSubmit = (data) => {
     //console.log(data.TextField);
 
-    const newjsondata = movies.filter((item) =>
-      item.title.contains(data.TextField)
-    );
+    const newjsondata = movies.filter((item) => item.title === data.TextField);
 
     console.log(movies);
     setSearchList(newjsondata);
