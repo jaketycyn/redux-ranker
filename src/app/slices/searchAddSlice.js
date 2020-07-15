@@ -5,7 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const initialState = {
   loading: false,
   hasErrors: false,
-  itemTitles: [],
+  items: [],
   selection: false,
 };
 
@@ -17,20 +17,18 @@ const searchAddSlice = createSlice({
       state.loading = true;
     },
     getItemsSuccess: (state, { payload }) => {
-      state.itemTitles = payload;
+      state.items = payload;
       state.loading = false;
       state.hasErrors = false;
     },
     getItemsFailure: (state) => {
       state.loading = false;
       state.hasErrors = true;
-      console.log(state.itemTitles);
+      console.log(state.items);
     },
-    addItem: (state) => {
-      //action.payload.(PROPS PASSSED VIA STATE)
-    },
-    updateSelection: (state) => {
-      state.selection = !state.selection;
+    addItem: (state, action) => {
+      console.log("actionpayload");
+      console.log(action.payload);
     },
   },
 });
@@ -41,11 +39,10 @@ export const {
   getItemsSuccess,
   getItemsFailure,
   addItem,
-  updateSelection,
 } = searchAddSlice.actions;
 
 // A selector
-export const searchAddSelector = (state) => state.itemTitles;
+export const searchAddSelector = (state) => state.items;
 
 // The reducer
 export default searchAddSlice.reducer;

@@ -6,24 +6,26 @@ import CreateList from "./features/create/CreateList";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+import { StyledLi } from "./app/display/components/li";
+
 function App() {
   return (
     <Router>
       <div className="App">
         <nav>
           <ul>
-            <li>
+            <StyledLi>
               <Link to="/">Home</Link>
-            </li>
-            <li>
+            </StyledLi>
+            <StyledLi>
               <Link to="/createList">Add to List</Link>
-            </li>
-            <li>
+            </StyledLi>
+            <StyledLi>
               <Link to="/rankList">Rank List</Link>
-            </li>
-            <li>
+            </StyledLi>
+            <StyledLi>
               <Link to="/displayList">Display List</Link>
-            </li>
+            </StyledLi>
           </ul>
         </nav>
 
