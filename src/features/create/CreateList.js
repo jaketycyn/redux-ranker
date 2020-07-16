@@ -3,11 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 
 import jsondata from "../../data.json";
-import {
-  fetchMovies,
-  movielistSelector,
-} from "../../app/slices/movielistSlice";
-import { addItem } from "../../app/slices/searchAddSlice";
+import { fetchMovies, movielistSelector } from "../../slices/movielistSlice";
+import { addItem } from "../../slices/searchAddSlice";
 
 import AddIcon from "@material-ui/icons/Add";
 import { TextField } from "@material-ui/core";

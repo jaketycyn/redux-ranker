@@ -2,11 +2,11 @@ import React from "react";
 
 import MovieList from "./features/movielist/MovieList";
 import RankedItemDisplay from "./features/movielist/RankedItemsDisplay";
-import CreateList from "./features/create/CreateList";
+import CreateUserList from "./features/create/CreateUserList";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import { StyledLi } from "./app/display/components/li";
+import { StyledLi } from "./display/components/li";
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
 
         <Switch>
           <Route path="/createList">
-            <CreateList />
+            <CreateUserList />
           </Route>
           <Route path="/rankList">
             <MovieList />
@@ -43,10 +43,6 @@ function App() {
       </div>
     </Router>
   );
-}
-
-function Home() {
-  return <h2>Home</h2>;
 }
 
 export default App;

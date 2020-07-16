@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import {
-  fetchMovies,
-  movielistSelector,
-} from "../../app/slices/movielistSlice";
+import { fetchMovies, movielistSelector } from "../../slices/movielistSlice";
 import { Movie } from "./Movie";
 import RankedItemsDisplay from "./RankedItemsDisplay";
 
