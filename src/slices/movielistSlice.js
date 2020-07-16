@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import dataJson from "../../data.json";
+import dataJson from "../data.json";
 
 export const initialState = {
   loading: false,

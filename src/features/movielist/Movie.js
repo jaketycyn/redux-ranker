@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { changeRank } from "../../app/slices/movielistSlice";
+import { changeRank } from "../../slices/movielistSlice";
 
 export const Movie = ({ item, id, option, combatants, rankedItems }) => {
   const dispatch = useDispatch();

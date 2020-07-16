@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchMovies,
-  movielistSelector,
-} from "../../app/slices/movielistSlice";
+import { fetchMovies, movielistSelector } from "../../slices/movielistSlice";
 
 const RankedItemsDisplay = () => {
   const dispatch = useDispatch();
