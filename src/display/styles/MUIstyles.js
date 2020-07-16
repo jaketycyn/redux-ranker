@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
+  root: {
+    width: 500,
+  },
 }));
 
 export default useStyles;
