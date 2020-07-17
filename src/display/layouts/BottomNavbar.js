@@ -40,7 +40,7 @@ export default function BottomNavbar() {
           <BottomNavigationAction
             component={Link}
             to="/createList"
-            label="Create"
+            label="Add"
             icon={<AddIcon />}
           />
           <BottomNavigationAction

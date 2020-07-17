@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import jsonData from "../../data.json";
 import ItemGrid from "../../display/components/ItemGrid";
 
 const CreateUserList = () => {

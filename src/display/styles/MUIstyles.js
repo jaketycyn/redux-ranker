@@ -1,15 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  icon: {
-    marginRight: theme.spacing(2),
-  },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
-  },
-  heroButtons: {
-    marginTop: theme.spacing(4),
+  addButton: {
+    padding: "1.5em",
+    margin: "1em",
+    marginTop: "auto",
+    marginBot: "auto",
   },
   cardGrid: {
     paddingTop: theme.spacing(4),
@@ -28,12 +24,13 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   cardMedia: {
-    paddingTop: "80.25%", // 16:9
+    height: "100%", // 16:9
+    width: "100%",
   },
   cardContent: {
     flexGrow: 1,
+    height: "80px",
   },
-
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(1),
@@ -46,12 +43,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
   },
-  addButton: {
-    padding: "1.5em",
-    margin: "1em",
-    marginTop: "auto",
-    marginBot: "auto",
-  },
+
   rankingGrid: {
     display: "flex",
     textAlign: "center",
