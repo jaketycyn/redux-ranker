@@ -1,9 +1,9 @@
 import React from "react";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import RestoreIcon from "@material-ui/icons/Restore";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
+import AddIcon from "@material-ui/icons/Add";
+import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 import useStyles from "../styles/MUIstyles";
 
 import MovieList from "../../features/movielist/MovieList";
@@ -17,33 +17,6 @@ export default function BottomNavbar() {
 
   return (
     <Router>
-      <BottomNavigation
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        showLabels
-        className={classes.root}
-      >
-        <BottomNavigationAction
-          component={Link}
-          to="/createList"
-          label="Add to List"
-          icon={<RestoreIcon />}
-        />
-        <BottomNavigationAction
-          component={Link}
-          to="/rankList"
-          label="Rank List"
-          icon={<FavoriteIcon />}
-        />
-        <BottomNavigationAction
-          component={Link}
-          to="/displayList"
-          label="Display List"
-          icon={<LocationOnIcon />}
-        />
-      </BottomNavigation>
       <Switch>
         <Route path="/createList">
           <CreateUserList />
@@ -55,36 +28,35 @@ export default function BottomNavbar() {
           <RankedItemDisplay />
         </Route>
       </Switch>
+      <div className={classes.footer}>
+        <BottomNavigation
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+          showLabels
+          className={classes.root}
+        >
+          <BottomNavigationAction
+            component={Link}
+            to="/createList"
+            label="Create"
+            icon={<AddIcon />}
+          />
+          <BottomNavigationAction
+            component={Link}
+            to="/rankList"
+            label="Rank"
+            icon={<CompareArrowsIcon />}
+          />
+          <BottomNavigationAction
+            component={Link}
+            to="/displayList"
+            label="Review"
+            icon={<VisibilityIcon />}
+          />
+        </BottomNavigation>
+      </div>
     </Router>
   );
 }
-
-//   <nav>
-//     <ul>
-//       <StyledLi>
-
-//       </StyledLi>
-//       <StyledLi>
-
-//       </StyledLi>
-//       <StyledLi>
-
-//       </StyledLi>
-//       <StyledLi>
-
-//       </StyledLi>
-//     </ul>
-//   </nav>
-//   <BottomNavbar />
-//   <Switch>
-//     <Route path="/createList">
-//       <CreateUserList />
-//     </Route>
-//     <Route path="/rankList">
-//       <MovieList />
-//     </Route>
-//     <Route path="/displayList">
-//       <RankedItemDisplay />
-//     </Route>
-//   </Switch>
-// </Router>;

@@ -12,7 +12,7 @@ const ItemGrid = ({ isLoading, items }) => {
   return isLoading ? (
     <h1>Loading...</h1>
   ) : (
-    <Container className={classes.cardGrid} maxWidth="md">
+    <div className={classes.cardGridRoot}>
       <Grid container space={4}>
         {items.map((item) => (
           <Grid item key={item} xs={12} sm={6} md={4} lg={3}>
@@ -20,7 +20,7 @@ const ItemGrid = ({ isLoading, items }) => {
           </Grid>
         ))}
       </Grid>
-    </Container>
+    </div>
   );
 };
 
