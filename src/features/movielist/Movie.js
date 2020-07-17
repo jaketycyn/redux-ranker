@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { changeRank } from "../../slices/movielistSlice";
+import ItemGridCard from "../../display/components/ItemGridCard";
 
 export const Movie = ({ item, id, option, combatants, rankedItems }) => {
   const dispatch = useDispatch();
@@ -36,3 +37,6 @@ export const Movie = ({ item, id, option, combatants, rankedItems }) => {
     </div>
   );
 };
+
+// add in later once we get the hookup to the api
+//<ItemGridCard title={item.title} backImg={item.poster_path} />
