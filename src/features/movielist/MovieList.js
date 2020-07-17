@@ -5,7 +5,12 @@ import { fetchMovies, movielistSelector } from "../../slices/movielistSlice";
 import { Movie } from "./Movie";
 import RankedItemsDisplay from "./RankedItemsDisplay";
 
+import useStyles from "../../display/styles/MUIstyles";
+import Grid from "@material-ui/core/Grid";
+import Container from "@material-ui/core/Container";
+
 const MovieList = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const { loading, hasErrors, movies } = useSelector(movielistSelector);
 
@@ -241,11 +246,16 @@ const MovieList = () => {
     }
   };
   return (
-    <section>
-      <h1>Movies</h1>
-      {renderMovies()}
-      <RankedItemsDisplay />
-    </section>
+    <div className={classes.rankingGrid}>
+      <Grid container space={3}>
+        <Grid item xs={12}>
+          {renderMovies()}
+        </Grid>
+        <Grid item xs={12}>
+          <RankedItemsDisplay />
+        </Grid>
+      </Grid>
+    </div>
   );
 };
 
