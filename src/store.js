@@ -6,4 +6,5 @@ export default configureStore({
     movies: movielistReducer,
     searchAdd: searchAddReducer,
   },
+  preloadedState: {},
 });
