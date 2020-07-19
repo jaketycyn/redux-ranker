@@ -7,9 +7,23 @@ import CardMedia from "@material-ui/core/CardMedia";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import useStyles from "../styles/MUIstyles";
+import { useDispatch } from "react-redux";
+import { addMovie } from "../../slices/movielistSlice";
 
 const ItemGridCard = ({ title, id, backImg, addItem }) => {
   const classes = useStyles();
+  // const dispatch = useDispatch();
+
+  // const addItem = (id, title, backImg) => {
+
+  //   dispatch(
+  //     addMovie({
+  //       id: id,
+  //       title: title,
+  //       backImg: backImg,
+  //       rank: 0,
+  //     })
+  //   );
 
   return (
     <Card raised className={classes.card} xs={12} sm={12} md={6} lg={4}>

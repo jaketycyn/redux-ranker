@@ -149,7 +149,11 @@ const movielistSlice = createSlice({
         }
       }
     },
-    addMovie: (state, action) => {},
+    addMovie: (state, { payload }) => {
+      state.movies.push(payload);
+      state.loading = false;
+      state.hasErrors = false;
+    },
   },
 });
 
@@ -159,6 +163,7 @@ export const {
   getMoviesSuccess,
   getMoviesFailure,
   changeRank,
+  addMovie,
 } = movielistSlice.actions;
 
 // A selector

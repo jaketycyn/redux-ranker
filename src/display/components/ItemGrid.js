@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { addMovie } from "../../slices/movielistSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addMovie,
+  fetchMovies,
+  movielistSelector,
+} from "../../slices/movielistSlice";
 import ItemGridCard from "./ItemGridCard";
 import Grid from "@material-ui/core/Grid";
 import useStyles from "../styles/MUIstyles";
@@ -9,18 +13,34 @@ import useStyles from "../styles/MUIstyles";
 
 const ItemGrid = ({ isLoading, items }) => {
   const classes = useStyles();
-  const [selectedItems, setSelectedItems] = useState([
-    { id: 11111111, title: "testMovie", backIMG: "/hippo", rank: 0 },
-  ]);
+  const dispatch = useDispatch();
+  const { movies } = useSelector(movielistSelector);
 
-  console.log(selectedItems);
+  useEffect(() => {
+    dispatch(fetchMovies());
+  }, [dispatch]);
 
   const addItem = (id, title, backImg) => {
-    setSelectedItems((oldData) => [
-      ...oldData,
-      { id: id, title: title, backImg: backImg, rank: 0 },
-    ]);
+    //find method prevents repetive movies being added to list
+    if (movies.find((movie) => movie.id === id)) {
+      console.log("movie already in list");
+    } else {
+      dispatch(
+        addMovie({
+          id: id,
+          title: title,
+          backImg: backImg,
+          rank: 0,
+        })
+      );
+    }
   };
+  // const addItem = (id, title, backImg) => {
+  //   setSelectedItems((oldData) => [
+  //     ...oldData,
+  //     { id: id, title: title, backImg: backImg, rank: 0 },
+  //   ]);
+  // };
 
   return isLoading ? (
     <h1>Loading...</h1>
