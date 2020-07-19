@@ -149,6 +149,7 @@ const movielistSlice = createSlice({
         }
       }
     },
+    addMovie: (state, action) => {},
   },
 });
 

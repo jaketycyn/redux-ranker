@@ -12,7 +12,10 @@ const MovieList = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { loading, hasErrors, movies } = useSelector(movielistSelector);
-
+  console.log(JSON.stringify(movies, 2, undefined));
+  useEffect(() => {
+    dispatch(fetchMovies());
+  }, [dispatch]);
   // Reusable sort function from:
   // https://stackoverflow.com/questions/979256/sorting-an-array-of-objects-by-property-values
 
@@ -55,9 +58,6 @@ const MovieList = () => {
     (item) => item.active === "won" || item.active === "lost"
   );
 
-  useEffect(() => {
-    dispatch(fetchMovies());
-  }, [dispatch]);
   //
 
   const renderMovies = () => {
