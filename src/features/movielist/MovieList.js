@@ -13,9 +13,9 @@ const MovieList = () => {
   const dispatch = useDispatch();
   const { loading, hasErrors, movies } = useSelector(movielistSelector);
   console.log(JSON.stringify(movies, 2, undefined));
-  useEffect(() => {
-    dispatch(fetchMovies());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchMovies());
+  // }, [dispatch]);
   // Reusable sort function from:
   // https://stackoverflow.com/questions/979256/sorting-an-array-of-objects-by-property-values
 

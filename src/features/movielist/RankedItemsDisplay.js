@@ -6,9 +6,9 @@ const RankedItemsDisplay = () => {
   const dispatch = useDispatch();
   const { movies } = useSelector(movielistSelector);
 
-  useEffect(() => {
-    dispatch(fetchMovies());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchMovies());
+  // }, [dispatch]);
 
   let rankedItems = movies.filter((movie) => movie.rank >= 1);
   const sort_by = (field, reverse, primer) => {

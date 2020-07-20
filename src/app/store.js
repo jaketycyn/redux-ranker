@@ -11,10 +11,13 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import rootReducer from "./rootReducer";
+import hardSet from "redux-persist/lib/stateReconciler/hardSet";
 
 const persistConfig = {
   key: "root",
+  version: 1,
   storage,
+  stateReconciler: hardSet,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
