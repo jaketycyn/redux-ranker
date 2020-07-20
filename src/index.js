@@ -8,7 +8,6 @@ import * as serviceWorker from "./serviceWorker";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "./app/store";
 import { store } from "./app/store";
-console.log(store);
 
 ReactDOM.render(
   <React.StrictMode>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addMovie,
+  deleteMovie,
   fetchMovies,
   movielistSelector,
 } from "../../slices/movielistSlice";
@@ -16,13 +17,15 @@ const ItemGrid = ({ isLoading, items }) => {
   const dispatch = useDispatch();
   const { movies } = useSelector(movielistSelector);
 
-  useEffect(() => {
-    dispatch(fetchMovies());
-  }, [dispatch]);
+  //!!disabled useEffect for now cause i'm not retrieving anything from an api or external db
+  // useEffect(() => {
+  //   dispatch(fetchMovies());
+  // }, [dispatch]);
 
   const addItem = (id, title, backImg) => {
     //find method prevents repetive movies being added to list
     if (movies.find((movie) => movie.id === id)) {
+      prompt("Movie is already added");
       console.log("movie already in list");
     } else {
       dispatch(
@@ -30,18 +33,14 @@ const ItemGrid = ({ isLoading, items }) => {
           id: id,
           title: title,
           backImg: backImg,
-          rank: 0,
         })
       );
     }
   };
-  // const addItem = (id, title, backImg) => {
-  //   setSelectedItems((oldData) => [
-  //     ...oldData,
-  //     { id: id, title: title, backImg: backImg, rank: 0 },
-  //   ]);
-  // };
 
+  const deleteItem = (id) => {
+    dispatch(deleteMovie((id: id)));
+  };
   return isLoading ? (
     <h1>Loading...</h1>
   ) : (
@@ -54,6 +53,7 @@ const ItemGrid = ({ isLoading, items }) => {
               id={item.id}
               backImg={item.poster_path}
               addItem={addItem}
+              deleteItem={deleteItem}
             />
           </Grid>
         ))}

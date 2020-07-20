@@ -1,15 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import dataJson from "../data.json";
 
-export const initialState = {
-  loading: false,
-  hasErrors: false,
-  movies: [],
-};
-
-const movielistSlice = createSlice({
+export const movielistSlice = createSlice({
   name: "movielist",
-  initialState,
+  initialState: {
+    loading: false,
+    hasErrors: false,
+    movies: [],
+  },
   reducers: {
     getMovies: (state) => {
       state.loading = true;
@@ -149,10 +147,20 @@ const movielistSlice = createSlice({
         }
       }
     },
-    addMovie: (state, { payload }) => {
-      state.movies.push(payload);
-      state.loading = false;
-      state.hasErrors = false;
+    addMovie: {
+      reducer: (state, action) => {
+        //push is an array method but we're dealing with an object
+        // state.push(payload);
+        const { id, title, backImg } = action.payload;
+        state.movies.push({ id, title, backImg, rank: 0 });
+      },
+    },
+    deleteMovie: (state, { payload }) => {
+      const index = state.movies.findIndex((movie) => movie.id === payload);
+      console.log(index);
+      if (index !== -1) {
+        state.movies.splice(index, 1);
+      }
     },
   },
 });
@@ -164,6 +172,7 @@ export const {
   getMoviesFailure,
   changeRank,
   addMovie,
+  deleteMovie,
 } = movielistSlice.actions;
 
 // A selector
@@ -179,19 +188,21 @@ export default movielistSlice.reducer;
 //   return response;
 // }
 
+//disabled useEffect for now cause i'm not retrieving anything from an api or external db
+
 //Async thunk action
-export function fetchMovies() {
-  return async (dispatch) => {
-    dispatch(getMovies());
+// export function fetchMovies() {
+//   return async (dispatch) => {
+//     dispatch(getMovies());
 
-    try {
-      // let response = await fetch("../../datafd.json");
-      // handleErrors(response);
-      // const data = await response.json();
+//     try {
+//       // let response = await fetch("../../datafd.json");
+//       // handleErrors(response);
+//       // const data = await response.json();
 
-      dispatch(getMoviesSuccess(dataJson));
-    } catch (error) {
-      dispatch(getMoviesFailure());
-    }
-  };
-}
+//       dispatch(getMoviesSuccess([]));
+//     } catch (error) {
+//       dispatch(getMoviesFailure(error));
+//     }
+//   };
+// }
