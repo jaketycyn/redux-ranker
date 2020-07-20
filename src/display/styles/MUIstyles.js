@@ -24,8 +24,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   cardMedia: {
-    height: "100%", // 16:9
+    // 16:9
     width: "100%",
+    height: "100%",
   },
   cardContent: {
     flexGrow: 1,
@@ -57,6 +58,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     width: 500,
+  },
+  search: {
+    textAlign: "center",
+    // border: "1px solid grey",
+    borderRadius: "5px",
+    height: "20px",
+    width: "100%",
+    padding: "2px 23px 2px 30px",
+    outline: 0,
   },
 }));
 

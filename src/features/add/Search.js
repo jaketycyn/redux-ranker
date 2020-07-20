@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import useStyles from "../../display/styles/MUIstyles";
 
 const Search = ({ getQuery }) => {
+  const classes = useStyles();
   const [text, setText] = useState("");
 
   const onChange = (q) => {
@@ -9,11 +11,11 @@ const Search = ({ getQuery }) => {
   };
 
   return (
-    <div>
+    <div className={classes.search}>
       <form>
         <input
           type="text"
-          placeholder="search text"
+          placeholder="Search movies..."
           value={text}
           onChange={(e) => onChange(e.target.value)}
           autoFocus

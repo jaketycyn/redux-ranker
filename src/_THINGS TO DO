@@ -1,16 +1,16 @@
-Major Updates:
-- Adding search/add to unrankedList functionality via looking up data from an internal database. In the future it'll probably be an  API.
-- Design around mobile use/functionality
-- React Router for navigating through the search dashboard, ranking dashboard and fullRankedList Dashboard.
-    -React Router
+Can search through api on instant change of text query.
+
+Potential concerns:
+- How data intensive will it be query searching on every letter change?
+- Since the search is by keyword lots of titles without images are being shown - should we block those types of films from being rendered?
+- Should there be some sort of wait between searches?
 
 
-Known Issues
-/*
-    ex: - E faces A twice
-        . beats A => loses t D => faces A again
-        . C top rank, B bottom Rank in example
-*/
+Presentation improvements:
+-Flipping of the itemGridCard to allow information such as release year, director, actors, etc to be displayed.
+- Changing Search state from react to redux to allow redux-persist to save a user's search for when they switch between `ADD` and `RANK`
+
+
 No known issues at this time!
 
 

@@ -239,7 +239,10 @@ const MovieList = () => {
       } else {
         console.log("Phase 6: RANKING COMPLETE");
         return (
-          <p>All movies ranked. Feel free to look through your sorted list </p>
+          <p>
+            All movies ranked. Feel free to look through your ranked movie list
+            or click Add and find more movies to rank against your current list{" "}
+          </p>
         );
       }
     }
