@@ -10,6 +10,7 @@ import ItemGridCard from "./ItemGridCard";
 import Grid from "@material-ui/core/Grid";
 import useStyles from "../styles/MUIstyles";
 
+import Spinner from "./Spinner";
 //passdown via props specific information needed by the ItemGridCard for displaying
 
 const ItemGrid = ({ isLoading, items }) => {
@@ -42,7 +43,7 @@ const ItemGrid = ({ isLoading, items }) => {
     dispatch(deleteMovie((id: id)));
   };
   return isLoading ? (
-    <h1>Loading...</h1>
+    <Spinner />
   ) : (
     <div className={classes.cardGridRoot}>
       <Grid container spacing={1}>

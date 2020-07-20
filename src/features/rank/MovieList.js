@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { fetchMovies, movielistSelector } from "../../slices/movielistSlice";
 import { Movie } from "./Movie";
-import RankedItemsDisplay from "./RankedItemsDisplay";
+import RankedItemsDisplay from "../review/RankedItemsDisplay";
 
 import useStyles from "../../display/styles/MUIstyles";
 import Grid from "@material-ui/core/Grid";
