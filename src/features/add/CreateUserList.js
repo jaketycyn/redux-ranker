@@ -5,7 +5,7 @@ import Search from "./Search";
 
 const CreateUserList = () => {
   const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [itemQuery, setItemQuery] = useState("");
 
   useEffect(() => {

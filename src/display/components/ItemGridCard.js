@@ -17,7 +17,7 @@ const ItemGridCard = ({ id, title, backImg, addItem, deleteItem }) => {
   return (
     <Card raised className={classes.card} xs={12} sm={12} md={6} lg={4}>
       <CardMedia
-        image={"https://image.tmdb.org/t/p/w220_and_h330_face/" + backImg}
+        image={"https://image.tmdb.org/t/p/original" + backImg}
         title={title}
         className={classes.cardMedia}
       />
