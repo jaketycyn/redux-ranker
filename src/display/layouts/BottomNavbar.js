@@ -1,4 +1,6 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import AddIcon from "@material-ui/icons/Add";
@@ -6,10 +8,9 @@ import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import useStyles from "../styles/MUIstyles";
 
-import MovieList from "../../features/movielist/MovieList";
-import RankedItemDisplay from "../../features/movielist/RankedItemsDisplay";
-import CreateUserList from "../../features/create/CreateUserList";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import CreateUserList from "../../features/add/CreateUserList";
+import MovieList from "../../features/rank/MovieList";
+import RankedItemDisplay from "../../features/review/RankedItemsDisplay";
 
 export default function BottomNavbar() {
   const classes = useStyles();
