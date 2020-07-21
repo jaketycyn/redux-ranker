@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import useStyles from "../../display/styles/MUIstyles";
 
 const Search = ({ getQuery }) => {
-  const classes = useStyles();
   const [text, setText] = useState("");
 
   const onChange = (q) => {
