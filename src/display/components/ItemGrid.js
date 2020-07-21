@@ -7,14 +7,11 @@ import {
   movielistSelector,
 } from "../../slices/movielistSlice";
 import ItemGridCard from "./ItemGridCard";
-import Grid from "@material-ui/core/Grid";
-import useStyles from "../styles/MUIstyles";
 
 import Spinner from "./Spinner";
 //passdown via props specific information needed by the ItemGridCard for displaying
 
 const ItemGrid = ({ isLoading, items }) => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const { movies } = useSelector(movielistSelector);
 
@@ -40,25 +37,21 @@ const ItemGrid = ({ isLoading, items }) => {
   };
 
   const deleteItem = (id) => {
-    dispatch(deleteMovie((id: id)));
+    dispatch(deleteMovie(id));
   };
   return isLoading ? (
     <Spinner />
   ) : (
-    <div className={classes.cardGridRoot}>
-      <Grid container spacing={1}>
-        {items.map((item) => (
-          <Grid item key={item.id} xs={12} sm={6} md={4} lg={3}>
-            <ItemGridCard
-              title={item.title}
-              id={item.id}
-              backImg={item.poster_path}
-              addItem={addItem}
-              deleteItem={deleteItem}
-            />
-          </Grid>
-        ))}
-      </Grid>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {items.map((item) => (
+        <ItemGridCard
+          title={item.title}
+          id={item.id}
+          backImg={item.poster_path}
+          addItem={addItem}
+          deleteItem={deleteItem}
+        />
+      ))}
     </div>
   );
 };

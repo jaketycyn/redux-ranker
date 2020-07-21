@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import { fetchMovies, movielistSelector } from "../../slices/movielistSlice";
 import { Movie } from "./Movie";
 import RankedItemsDisplay from "../review/RankedItemsDisplay";
-
 import useStyles from "../../display/styles/MUIstyles";
 import Grid from "@material-ui/core/Grid";
 
@@ -239,20 +237,24 @@ const MovieList = () => {
       } else {
         console.log("Phase 6: RANKING COMPLETE");
         return (
-          <p>
-            All movies ranked. Feel free to look through your ranked movie list
-            or click Add and find more movies to rank against your current list{" "}
-          </p>
+          <div class="bg-gray-100">
+            <p>
+              All movies ranked. Feel free to look through your ranked movie
+              list or click Add and find more movies to rank against your
+              current list
+            </p>
+          </div>
         );
       }
     }
   };
   return (
-    <div className={classes.rankingGrid}>
+    <div className="text-3xl bg-blue-300">
       <Grid container space={3}>
         <Grid item xs={12}>
           {renderMovies()}
         </Grid>
+
         <Grid item xs={12}>
           <RankedItemsDisplay />
         </Grid>
