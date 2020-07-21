@@ -12,8 +12,9 @@ import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-import { addMovie, deleteMovie } from "../../slices/movielistSlice";
+import { deleteMovie } from "../../slices/movielistSlice";
 import useStyles from "../../display/styles/MUIstyles";
+import { Button } from "../../display/components/Buttons";
 
 export const Movie = ({ item, id, option, combatants, rankedItems }) => {
   const dispatch = useDispatch();
@@ -54,14 +55,9 @@ export const Movie = ({ item, id, option, combatants, rankedItems }) => {
           {item.title}
         </Typography>
         {/* Delete Button - later on add styling for choosing when to display which one - both shouldnt' show at the same time */}
-        <IconButton
-          className={classes.addButton}
-          color="default"
-          size="medium"
-          onClick={combinedUpdater}
-        >
-          <AddIcon fontSize="inherit" />
-        </IconButton>
+        <Button primary>
+          <AddIcon onClick={updateRank} fontSize="inherit" />
+        </Button>
 
         <IconButton
           className={classes.addButton}
