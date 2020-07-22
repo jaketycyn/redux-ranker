@@ -20,5 +20,3 @@ const theme = {
 };
 
 export default theme;
-
-When carefree Nyles and reluctant maid of honor Sarah have a chance encounter at a Palm Springs wedding, things get complicated when they find themselves
