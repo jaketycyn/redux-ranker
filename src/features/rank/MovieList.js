@@ -10,7 +10,7 @@ const MovieList = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { loading, hasErrors, movies } = useSelector(movielistSelector);
-  console.log(JSON.stringify(movies, 2, undefined));
+  //console.log(JSON.stringify(movies, 2, undefined));
   // useEffect(() => {
   //   dispatch(fetchMovies());
   // }, [dispatch]);
@@ -65,7 +65,7 @@ const MovieList = () => {
     //unranked matchup display 2 unranked movies - after one is selected, both get assigned ranks
     if (rankedItems.length === 0) {
       const unRankedMatchup = unrankedItems.slice(0, 2);
-      console.log("Phase !: Unranked vs Unranked");
+      console.log("Phase 1: Unranked vs Unranked");
       return (
         <div>
           <div>
