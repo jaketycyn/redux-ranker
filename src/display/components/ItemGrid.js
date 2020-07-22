@@ -7,6 +7,7 @@ import {
   movielistSelector,
 } from "../../slices/movielistSlice";
 import ItemGridCard from "./ItemGridCard";
+import { GreaterGrid } from "./Divs";
 
 import Spinner from "./Spinner";
 //passdown via props specific information needed by the ItemGridCard for displaying
@@ -42,17 +43,19 @@ const ItemGrid = ({ isLoading, items }) => {
   return isLoading ? (
     <Spinner />
   ) : (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <GreaterGrid name="greaterGrid">
       {items.map((item) => (
         <ItemGridCard
           title={item.title}
           id={item.id}
           backImg={item.poster_path}
+          releaseYear={item.release_date}
+          overview={item.overview}
           addItem={addItem}
           deleteItem={deleteItem}
         />
       ))}
-    </div>
+    </GreaterGrid>
   );
 };
 
