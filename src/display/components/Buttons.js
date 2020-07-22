@@ -41,30 +41,30 @@ const StyledButton = styled.button`
       padding: 1rem;
     `}
   
-    ${({ details }) =>
-      details &&
-      css`
-        background-color: red;
-        font-size: 900;
-        margin: 0.25rem;
-      `}
+  ${({ details }) =>
+    details &&
+    css`
+      background-color: red;
+      font-size: 900;
+      margin: 0.25rem;
+    `}
 
-      ${({ choose }) =>
-        choose &&
-        css`
-          background-color: magenta;
-          font-size: 900;
-          margin: 0.25rem;
-        `}
+  ${({ choose }) =>
+    choose &&
+    css`
+      background-color: magenta;
+      font-size: 900;
+      margin: 0.25rem;
+    `}
 
 
-      ${({ remove }) =>
-        remove &&
-        css`
-          background-color: yellow;
-          font-size: 900;
-          margin: 0.25rem;
-        `}
+  ${({ remove }) =>
+    remove &&
+    css`
+      background-color: yellow;
+      font-size: 900;
+      margin: 0.25rem;
+    `}
 
 `;
 
