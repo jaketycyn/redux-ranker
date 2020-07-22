@@ -38,6 +38,7 @@ const StyledButton = styled.button`
       background-color: lightgreen;
       font-size: 900;
       margin: 0.25rem;
+      padding: 1rem;
     `}
   
     ${({ details }) =>
@@ -47,14 +48,42 @@ const StyledButton = styled.button`
         font-size: 900;
         margin: 0.25rem;
       `}
+
+      ${({ choose }) =>
+        choose &&
+        css`
+          background-color: magenta;
+          font-size: 900;
+          margin: 0.25rem;
+        `}
+
+
+      ${({ remove }) =>
+        remove &&
+        css`
+          background-color: yellow;
+          font-size: 900;
+          margin: 0.25rem;
+        `}
+
 `;
 
-export const Button = ({ primary, add, details, children, onClick }) => {
+export const Button = ({
+  primary,
+  add,
+  details,
+  choose,
+  remove,
+  children,
+  onClick,
+}) => {
   return (
     <StyledButton
       add={add}
       primary={primary}
       details={details}
+      choose={choose}
+      remove={remove}
       onClick={onClick}
     >
       {children}

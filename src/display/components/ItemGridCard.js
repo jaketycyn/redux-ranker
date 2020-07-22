@@ -41,7 +41,7 @@ const StyledImg = styled.img`
 
 const StyledContentDiv = styled.div`
   display: grid;
-  grid-template-columns: 3;
+  grid-template-columns: 33% 33% 33%;
   grid-template-rows: 35% 45% 20%;
   max-height: 250px;
 `;
