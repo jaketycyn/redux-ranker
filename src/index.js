@@ -8,13 +8,20 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "./app/store";
 import { store } from "./app/store";
 
+import { ThemeProvider } from "styled-components";
+import theme from "./display/utils/theme";
+import GlobalStyles from "./display/utils/global";
+
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <App />
-      </PersistGate>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+          <GlobalStyles />
+        </PersistGate>
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

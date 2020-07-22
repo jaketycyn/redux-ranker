@@ -8,49 +8,145 @@ import React from "react";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-import { useDispatch } from "react-redux";
-import { addMovie } from "../../slices/movielistSlice";
 import useStyles from "../styles/MUIstyles";
 
-const ItemGridCard = ({ id, title, backImg, addItem, deleteItem }) => {
-  // const classes = useStyles();
+import { Button } from "./Buttons";
+
+import styled from "styled-components";
+
+const StyledCard = styled.div`
+  display: flex;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 0.25rem 0.25rem;
+  height: 250px;
+`;
+
+const StyledBaseDiv = styled.div`
+  display: grid;
+  grid-template-columns: minmax(150px, 40%) 1fr;
+  max-height: 250px;
+  margin: 0.25rem;
+  overflow: hidden;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.25);
+  }
+`;
+
+const StyledImg = styled.img`
+  position: relative;
+  width: 100%;
+`;
+
+const StyledContentDiv = styled.div`
+  display: grid;
+  grid-template-columns: 3;
+  grid-template-rows: 35% 45% 20%;
+  max-height: 250px;
+`;
+
+const StyledTitle = styled.h1`
+  display: grid;
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row: 1;
+  align-items: center;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: black;
+  margin: 4px;
+  padding: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+`;
+//use in the details
+// const StyledYear = styled.span`
+//   display: grid;
+//   grid-column: 1/3;
+//   grid-row: 2/3;
+//   justify-content: center;
+//   font-size: 1.25rem;
+//   font-weight: 700;
+// `;
+// <StyledYear> {movieYear}</StyledYear>
+
+const StyledOverview = styled.p`
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row: 2;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: black;
+  margin: 1rem;
+  padding: 0.5rem;
+  overflow: hidden;
+`;
+
+const StyledBottomDivLeftButton = styled.div`
+  display: grid;
+  grid-column: 1;
+  justify-items: end;
+  grid-row: 3;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 2rem;
+`;
+
+const StyledBottomDivRightButton = styled.div`
+  display: grid;
+  grid-column: 3;
+  justify-items: start;
+  grid-row: 3;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 2rem;
+`;
+
+const ItemGridCard = ({
+  id,
+  title,
+  backImg,
+  releaseYear,
+  overview,
+  addItem,
+  deleteItem,
+}) => {
+  const movieYear = releaseYear.slice(0, 4);
+
+  const newOverview = overview.slice(0, 125);
+  console.log(newOverview);
+  const newOverviewIndex = newOverview.lastIndexOf(" ");
+  const resliceOverview = newOverview.slice(0, newOverviewIndex);
+  const finalOverview = resliceOverview.concat("...");
+  console.log(finalOverview);
+  //const newText = overview.find(" ")
   return (
-    <div className="flex shadow-lg mx-1 my-1 h-40 md:h-56 lg:h-64  ">
-      <img
+    <StyledBaseDiv name="BaseDiv">
+      <StyledImg
         src={"https://image.tmdb.org/t/p/w500" + backImg}
         title={title}
-        className="h-auto w-5/12 object-scale-down"
         alt="movie image"
       />
-      <div className="py-12 px-6 max-w-xl">
-        <h2 className="text-xl text-gray-800 font-bold mr-auto text-center ">
-          {title}
-        </h2>
-        <p>hi</p>
-      </div>
-    </div>
-
-    // <div class="md:flex shadow-lg  mx-6 md:mx-auto my-40 max-w-lg md:max-w-2xl h-64">
-    // <img class="h-full w-full md:w-1/3  object-cover rounded-lg rounded-r-none pb-5/6" src="https://ik.imagekit.io/q5edmtudmz/FB_IMG_15658659197157667_wOd8n5yFyXI.jpg" alt="bag">
-    // <div class="w-full md:w-2/3 px-4 py-4 bg-white rounded-lg">
-    //    <div class="flex items-center">
-    //       <h2 class="text-xl text-gray-800 font-medium mr-auto">Your Travel Buddy</h2>
-    //       <p class="text-gray-800 font-semibold tracking-tighter">
-    //          only
-    //          <i class="text-gray-600 line-through">60$</i>
-    //          48$
-    //       </p>
-    //    </div>
-    //    <p class="text-sm text-gray-700 mt-4">
-    //       Lorem, ipsum dolor sit amet consectetur Amet veritatis ipsam reiciendis numquam tempore commodi ipsa suscipit laboriosam, sit earum at sequ adipisicing elit. Amet veritatis ipsam reiciendis numquam tempore commodi ipsa suscipit laboriosam, sit earum at sequi.
-    //    </p>
-    //    <div class="flex items-center justify-end mt-4 top-auto">
-    //       <button class="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline">Delete</button>
-    //       <button class=" bg-gray-200 text-blue-600 px-2 py-2 rounded-md mr-2">Edit</button>
-    //       <button class=" bg-blue-600 text-gray-200 px-2 py-2 rounded-md ">Publish</button>
-    //    </div>
-    // </div>
-    // </div>
+      <StyledContentDiv>
+        <StyledTitle>{title}</StyledTitle>
+        <StyledOverview>{finalOverview}</StyledOverview>
+        <StyledBottomDivLeftButton>
+          <Button add onClick={(e) => addItem(id, title, backImg)}>
+            Add
+          </Button>
+        </StyledBottomDivLeftButton>
+        <StyledBottomDivRightButton>
+          <Button details onClick={() => console.log("give me more deats")}>
+            Details
+          </Button>
+        </StyledBottomDivRightButton>
+      </StyledContentDiv>
+    </StyledBaseDiv>
 
     // <Card raised className={classes.card} xs={12} sm={12} md={6} lg={4}>
     //   <CardMedia

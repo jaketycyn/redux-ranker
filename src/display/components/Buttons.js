@@ -1,17 +1,15 @@
 import React from "react";
 import styled, { css } from "styled-components";
 const StyledButton = styled.button`
-  border: none;
+  /* border: none; */
   background: #ffffff;
   color: #404040 !important;
-  font-weight: 100;
-  padding: 20px;
+  font-weight: 300;
   text-transform: uppercase;
   border-radius: 6px;
-  display: inline-block;
+  padding: 1.5rem 2.5rem;
   -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.2);
   -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.2);
-  transition: all 0.3s ease 0s;
   /* example for changing one style property based on a property call of an item in this case primary:
   background-color: ${(props) => (props.primary ? "red" : "white")}; */
   
@@ -28,16 +26,38 @@ const StyledButton = styled.button`
   &:hover {
     color: #f8efe8 !important;
     background-color: #8dccd3 !important;
-  font-weight: 700 !important;
-  letter-spacing: 3px;
   background: none;
   -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
   -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-  transition: all 0.3s ease 0s;
-}
   
+}
+
+  ${({ add }) =>
+    add &&
+    css`
+      background-color: lightgreen;
+      font-size: 900;
+      margin: 0.25rem;
+    `}
+  
+    ${({ details }) =>
+      details &&
+      css`
+        background-color: red;
+        font-size: 900;
+        margin: 0.25rem;
+      `}
 `;
 
-export const Button = ({ primary, children }) => {
-  return <StyledButton primary={primary}>{children}</StyledButton>;
+export const Button = ({ primary, add, details, children, onClick }) => {
+  return (
+    <StyledButton
+      add={add}
+      primary={primary}
+      details={details}
+      onClick={onClick}
+    >
+      {children}
+    </StyledButton>
+  );
 };
