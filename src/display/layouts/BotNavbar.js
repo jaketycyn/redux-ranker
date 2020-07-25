@@ -6,13 +6,18 @@ import CreateUserList from "../../features/add/CreateUserList";
 import MovieList from "../../features/rank/MovieList";
 import RankedItemDisplay from "../../features/review/RankedItemsDisplay";
 
-const NavMain = styled.div`
-  max-width: 1010px;
+const BotNavWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1em;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+
   padding: 26px 20px;
   width: 100%;
-  display: flex;
-  align-items: center;
-  margin: 0 auto;
+
+  overflow: hidden;
 
   /* For anchoring it to the bottom of the page */
   position: absolute;
@@ -30,11 +35,11 @@ const NavMain = styled.div`
 const StyledLink = styled(Link)`
   color: green;
   font-weight: bold;
-  margin: 5rem;
-  display: flex;
+  margin: 1rem;
   align-items: center;
-  justify-content: space-between;
-  border: 3px solid;
+  justify-content: center;
+  border: 3px none;
+  width: %;
 `;
 
 const BotNavbar = () => {
@@ -52,7 +57,7 @@ const BotNavbar = () => {
           <RankedItemDisplay />
         </Route>
       </Switch>
-      <NavMain
+      <BotNavWrapper
         name="NavMain"
         // value={value}
         // onChange={(event, newValue) => {
@@ -60,9 +65,10 @@ const BotNavbar = () => {
         // }}
       >
         <StyledLink to="/createList">Add</StyledLink>
+
         <StyledLink to="/rankList">Rank</StyledLink>
         <StyledLink to="/displayList">Review</StyledLink>
-      </NavMain>
+      </BotNavWrapper>
     </Router>
   );
 };
