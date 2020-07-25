@@ -18,6 +18,9 @@ Possible Drag/Drop functionality for this sorted List
 
 Comparison button/reranking = allows ranking changes between items that are already ranked. 
 
+- Buttons - popular, pregen lists
+- Item add function (tinder add to list function - feeling lucky?)
+
 
 Ideas: 
     - code splitting 

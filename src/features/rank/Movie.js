@@ -31,34 +31,29 @@ export const Movie = ({ item, id, option, combatants, rankedItems }) => {
   };
 
   return (
-    <StyledMovieCardDiv>
+    <StyledMovieCardDiv name="StyledMovieCard">
       <StyledImg
         src={"https://image.tmdb.org/t/p/w500" + item.backImg}
         title={item.title}
         alt="movie image"
       />
-      <ButtonLeft>
+      <ButtonDiv name="ButtonDiv">
         <Button choose>Choose</Button>
-      </ButtonLeft>
-      <ButtonRight>
-        <Button remove>remove</Button>
-      </ButtonRight>
+      </ButtonDiv>
     </StyledMovieCardDiv>
   );
 };
 
 const StyledMovieCardDiv = styled.div`
   display: grid;
-  grid-template-rows: 40% 40% 20%;
-  grid-template-areas:
-    "posterImg" "posterImg"
-    "posterImg" "posterImg"
-    "buttonLeft" "buttonRight";
-
+  grid-template-rows: 80% 20%;
   align-items: center;
+  justify-content: center;
   margin: 0.25rem;
+  padding: 2rem;
   overflow: hidden;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  max-height: 400px;
 
   &:hover {
     box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.25);
@@ -68,17 +63,16 @@ const StyledMovieCardDiv = styled.div`
 const StyledImg = styled.img`
   display: grid;
   grid-area: "posterImg";
+  overflow: hidden;
 `;
 
-const ButtonLeft = styled.div`
-  display: grid;
+const ButtonDiv = styled.div`
   grid-area: "buttonLeft";
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 `;
 
-const ButtonRight = styled.div`
-  display: grid;
-  grid-area: "buttonRight";
-`;
 //copied over ItemGridCard w/ overview
 // <StyledBaseDiv name="BaseDiv">
 //       <StyledImg
@@ -187,13 +181,3 @@ const StyledBottomDivRightButton = styled.div`
   justify-content: space-between;
   margin-right: 2rem;
 `;
-
-// const ItemGridCard = ({
-//   id,
-//   title,
-//   backImg,
-//   releaseYear,
-//   overview,
-//   addItem,
-//   deleteItem,
-// }) => {
