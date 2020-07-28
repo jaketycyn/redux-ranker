@@ -6,24 +6,27 @@ import CreateUserList from "../../features/add/CreateUserList";
 import MovieList from "../../features/rank/MovieList";
 import RankedItemDisplay from "../../features/review/RankedItemsDisplay";
 
+const MainDivWrapper = styled.div`
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+`;
+
 const BotNavWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1em;
+  grid-gap: 0.5em;
   align-items: center;
   justify-content: space-between;
-  margin: 0 auto;
-
-  padding: 26px 20px;
+  margin: 0;
+  background-color: lightpink;
   width: 100%;
-
-  overflow: hidden;
+  height: 5rem;
 
   /* For anchoring it to the bottom of the page */
-  position: absolute;
+  position: fixed;
   left: 0;
   bottom: 0;
-  right: 0;
 `;
 
 //Styling Link from React Router
@@ -33,43 +36,52 @@ const BotNavWrapper = styled.div`
 // );
 
 const StyledLink = styled(Link)`
-  color: green;
-  font-weight: bold;
-  margin: 1rem;
+  display: flex;
   align-items: center;
   justify-content: center;
+  color: green;
+  font-weight: bold;
+  padding: 0.5rem;
+  font-size: 3em;
   border: 3px none;
-  width: %;
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 5px;
+
+  width: 100%;
 `;
 
 const BotNavbar = () => {
   const [value, setValue] = useState(0);
   return (
-    <Router>
-      <Switch>
-        <Route path="/createList">
-          <CreateUserList />
-        </Route>
-        <Route path="/rankList">
-          <MovieList />
-        </Route>
-        <Route path="/displayList">
-          <RankedItemDisplay />
-        </Route>
-      </Switch>
-      <BotNavWrapper
-        name="NavMain"
-        // value={value}
-        // onChange={(event, newValue) => {
-        //   setValue(newValue);
-        // }}
-      >
-        <StyledLink to="/createList">Add</StyledLink>
+    <MainDivWrapper>
+      <Router>
+        <Switch>
+          <Route path="/createList">
+            <CreateUserList />
+          </Route>
+          <Route path="/rankList">
+            <MovieList />
+          </Route>
+          <Route path="/displayList">
+            <RankedItemDisplay />
+          </Route>
+        </Switch>
+        <BotNavWrapper
+          name="NavMain"
+          // value={value}
+          // onChange={(event, newValue) => {
+          //   setValue(newValue);
+          // }}
+        >
+          <StyledLink to="/createList">Add</StyledLink>
 
-        <StyledLink to="/rankList">Rank</StyledLink>
-        <StyledLink to="/displayList">Review</StyledLink>
-      </BotNavWrapper>
-    </Router>
+          <StyledLink to="/rankList">Rank</StyledLink>
+          <StyledLink to="/displayList">Review</StyledLink>
+        </BotNavWrapper>
+      </Router>
+    </MainDivWrapper>
   );
 };
 

@@ -37,6 +37,14 @@ export default createGlobalStyle`
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     line-height: 1.6;
+
+    /* Hide scrollbar for IE and Edge */
+    -ms-overflow-style: none;
+    /* Hide scrollbar for Chrome, Safari and Opera */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+ 
   }
   a, button {
     cursor: pointer;
