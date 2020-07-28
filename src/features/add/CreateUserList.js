@@ -30,10 +30,10 @@ const CreateUserList = () => {
 
     fetchItems();
   }, [itemQuery]);
-
+  // component that use to be below taking out to test css scaling
+  //<Search getQuery={(q) => setItemQuery(q)} />
   return (
     <div>
-      <Search getQuery={(q) => setItemQuery(q)} />
       <ItemGrid isLoading={isLoading} items={items} />
     </div>
   );
