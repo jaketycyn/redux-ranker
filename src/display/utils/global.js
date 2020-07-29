@@ -26,12 +26,7 @@ export default createGlobalStyle`
     --color-white: ${(props) => props.theme.colors.whiteColor};
     --color-errorRed: ${(props) => props.theme.colors.errorRed};
     --shadow: ${(props) => props.theme.colors.shadow};
-    @media ${(props) => props.theme.mediaQueries.small} {
-      font-size: 60%;
-    }
-    @media ${(props) => props.theme.mediaQueries.smallest} {
-      font-size: 55%;
-    }
+   
   }
   body {
     font-family: 'Roboto', sans-serif;

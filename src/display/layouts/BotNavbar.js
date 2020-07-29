@@ -19,9 +19,9 @@ const MainDivWrapper = styled.div`
 const BotNavWrapper = styled.div`
   display: grid;
   width: 100%;
-  height: 5em;
+  height: 3em;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 0.5em;
+  grid-gap: 0.25em;
   align-items: center;
   justify-content: space-between;
   margin: 0;
@@ -43,12 +43,12 @@ const StyledLink = styled(Link)`
   width: 100%;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem;
+  padding: 0.25rem;
   border: 3px none;
   border-radius: 5px;
 
   color: ${(props) => props.theme.colors.whiteColor};
-  font-size: 3em;
+  font-size: 2em;
   text-transform: uppercase;
   text-decoration: none;
   font-weight: bold;

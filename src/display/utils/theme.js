@@ -15,8 +15,8 @@ const theme = {
   mediaQueries: {
     sm: `only screen and (min-width: 36em)`,
     md: `only screen and (min-width: 48em)`,
-    lg: `only screen and (max-width: 62em)`,
-    xl: `only screen and (max-width: 75em)`,
+    lg: `only screen and (min-width: 62em)`,
+    xl: `only screen and (min-width: 75em)`,
   },
 };
 

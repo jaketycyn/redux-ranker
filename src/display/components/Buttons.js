@@ -4,12 +4,12 @@ const StyledButton = styled.button`
   /* border: none; */
   text-align:center ;
   line-height: 1em;
-
-  border-radius: 6px;
-  padding: 1.5em 2.5em;
+  border-radius: .25em;
+  padding: .5em 1em;
   background: #ffffff;
   color: #404040 !important;
   font-weight: 800;
+  font-size: .5rem;
   text-transform: uppercase;
   -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.2);
   -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.2);
@@ -37,25 +37,34 @@ const StyledButton = styled.button`
   ${({ add }) =>
     add &&
     css`
-      width: 10em;
-      height: 3em;
-      margin: 0.25em;
+      width: 5rem;
+      height: 1rem;
+      margin: 0.25rem;
       padding: 1em;
       background-color: ${(props) => props.theme.colors.secondary};
       font-size: 900;
       font-weight: 800;
+      margin-left: auto;
+      display: grid;
+      align-items: center;
+      align-self: center;
+      justify-self: center;
     `}
   
   ${({ details }) =>
     details &&
     css`
-      width: 10em;
-      height: 3em;
+      width: 5rem;
+      height: 1em;
       margin: 0.25em;
       padding: 1em;
-      background-color: red;
+      background-color: ${(props) => props.theme.colors.main};
       font-size: 900;
       font-weight: 800;
+      display: grid;
+      align-items: center;
+      align-self: center;
+      justify-self: center;
     `}
 
   ${({ choose }) =>
