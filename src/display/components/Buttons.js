@@ -2,17 +2,19 @@ import React from "react";
 import styled, { css } from "styled-components";
 const StyledButton = styled.button`
   /* border: none; */
+  text-align:center ;
+  line-height: 1em;
+
+  border-radius: 6px;
+  padding: 1.5em 2.5em;
   background: #ffffff;
   color: #404040 !important;
-  font-weight: 300;
+  font-weight: 800;
   text-transform: uppercase;
-  border-radius: 6px;
-  padding: 1.5rem 2.5rem;
   -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.2);
   -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.2);
   /* example for changing one style property based on a property call of an item in this case primary:
   background-color: ${(props) => (props.primary ? "red" : "white")}; */
-  
 
 /* example for other ways if you need multiple properties changed via a props.primary/secondary etc
   ${({ primary }) =>
@@ -35,18 +37,25 @@ const StyledButton = styled.button`
   ${({ add }) =>
     add &&
     css`
-      background-color: lightgreen;
+      width: 10em;
+      height: 3em;
+      margin: 0.25em;
+      padding: 1em;
+      background-color: ${(props) => props.theme.colors.secondary};
       font-size: 900;
-      margin: 0.25rem;
-      padding: 1rem;
+      font-weight: 800;
     `}
   
   ${({ details }) =>
     details &&
     css`
+      width: 10em;
+      height: 3em;
+      margin: 0.25em;
+      padding: 1em;
       background-color: red;
       font-size: 900;
-      margin: 0.25rem;
+      font-weight: 800;
     `}
 
   ${({ choose }) =>
@@ -54,7 +63,7 @@ const StyledButton = styled.button`
     css`
       background-color: magenta;
       font-size: 900;
-      margin: 0.25rem;
+      margin: 0.25em;
     `}
 
 

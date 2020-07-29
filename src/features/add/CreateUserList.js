@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import ItemGrid from "../../display/components/ItemGrid";
+import BotNavbar from "../../display/layouts/BotNavbar";
 import Search from "./Search";
 
 const CreateUserList = () => {
@@ -35,6 +36,7 @@ const CreateUserList = () => {
   return (
     <div>
       <ItemGrid isLoading={isLoading} items={items} />
+      <BotNavbar />
     </div>
   );
 };

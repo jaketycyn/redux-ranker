@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
+import { AddToList } from "@styled-icons/entypo";
 import CreateUserList from "../../features/add/CreateUserList";
 import MovieList from "../../features/rank/MovieList";
 import RankedItemDisplay from "../../features/review/RankedItemsDisplay";
+
+//!Potential Issues
+// https://styled-components.com/docs/basics#styling-any-component
+// taking Link from react router then turning it into a styled component that is further turned into another
 
 const MainDivWrapper = styled.div`
   overflow-y: scroll;
@@ -14,15 +18,14 @@ const MainDivWrapper = styled.div`
 
 const BotNavWrapper = styled.div`
   display: grid;
+  width: 100%;
+  height: 5em;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 0.5em;
   align-items: center;
   justify-content: space-between;
   margin: 0;
-  background-color: lightpink;
-  width: 100%;
-  height: 5rem;
-
+  background-color: ${(props) => props.theme.colors.mainDark};
   /* For anchoring it to the bottom of the page */
   position: fixed;
   left: 0;
@@ -37,50 +40,42 @@ const BotNavWrapper = styled.div`
 
 const StyledLink = styled(Link)`
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: center;
-  color: green;
-  font-weight: bold;
   padding: 0.5rem;
-  font-size: 3em;
   border: 3px none;
-  color: #fff !important;
-  text-transform: uppercase;
-  text-decoration: none;
   border-radius: 5px;
 
-  width: 100%;
+  color: ${(props) => props.theme.colors.whiteColor};
+  font-size: 3em;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: bold;
+`;
+
+//gives button props to the link
+const StyledButton = styled(StyledLink)`
+  color: ${(props) => props.theme.colors.errorRed};
 `;
 
 const BotNavbar = () => {
-  const [value, setValue] = useState(0);
   return (
     <MainDivWrapper>
-      <Router>
-        <Switch>
-          <Route path="/createList">
-            <CreateUserList />
-          </Route>
-          <Route path="/rankList">
-            <MovieList />
-          </Route>
-          <Route path="/displayList">
-            <RankedItemDisplay />
-          </Route>
-        </Switch>
-        <BotNavWrapper
-          name="NavMain"
-          // value={value}
-          // onChange={(event, newValue) => {
-          //   setValue(newValue);
-          // }}
-        >
-          <StyledLink to="/createList">Add</StyledLink>
-
-          <StyledLink to="/rankList">Rank</StyledLink>
-          <StyledLink to="/displayList">Review</StyledLink>
-        </BotNavWrapper>
-      </Router>
+      <BotNavWrapper
+        name="NavMain"
+        // value={value}
+        // onChange={(event, newValue) => {
+        //   setValue(newValue);
+        // }}
+      >
+        <StyledButton to="/createList">
+          <AddToList />
+          Add
+        </StyledButton>
+        <StyledButton to="/rankList">Rank</StyledButton>
+        <StyledButton to="/displayList">Review</StyledButton>
+      </BotNavWrapper>
     </MainDivWrapper>
   );
 };

@@ -1,21 +1,22 @@
 const theme = {
   colors: {
-    main: "#003459",
-    mainDark: "#21283e",
-    mainLight: "#2c3247",
-    mainLighter: "#2f82b8",
+    main: "#b28774",
+    mainDark: "#5f4339",
+    mainLight: "#ddc6b8",
+    mainLigher: "#eae1da",
+    secondary: "#98b1ae",
+    secondaryLighter: "#ceddd8",
     textColor: "#333",
-    whiteColor: "#fff",
+    whiteColor: "#e9ebea",
     errorRed: "#ff5757",
     shadow: "rgba(0,0,0,.2)",
   },
 
   mediaQueries: {
-    smallest: `only screen and (max-width: 600px)`,
-    small: `only screen and (max-width: 700px)`,
-    medium: `only screen and (max-width: 900px)`,
-    large: `only screen and (max-width: 1100px)`,
-    largest: `only screen and (max-width: 4000px)`,
+    sm: `only screen and (min-width: 36em)`,
+    md: `only screen and (min-width: 48em)`,
+    lg: `only screen and (max-width: 62em)`,
+    xl: `only screen and (max-width: 75em)`,
   },
 };
 

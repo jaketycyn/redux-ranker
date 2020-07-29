@@ -16,7 +16,7 @@ export default createGlobalStyle`
   outline: none;
   }
   html {
-    font-size: 62.5%;
+    font-size: 16px;
     box-sizing: border-box;
     --color-main: ${(props) => props.theme.colors.main}
     --color-mainDark: ${(props) => props.theme.colors.mainDark};

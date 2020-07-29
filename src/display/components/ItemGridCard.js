@@ -32,6 +32,10 @@ const StyledBaseDiv = styled.div`
   &:hover {
     box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.25);
   }
+
+  @media ${(props) => props.theme.mediaQueries.medium} {
+    grid-template-columns: minmax(100px, 20%) 1fr;
+  }
 `;
 
 const StyledImg = styled.img`
@@ -116,14 +120,14 @@ const ItemGridCard = ({
   addItem,
   deleteItem,
 }) => {
-  const movieYear = releaseYear.slice(0, 4);
+  //const movieYear = releaseYear.slice(0, 4);
 
   const newOverview = overview.slice(0, 125);
-  console.log(newOverview);
+  //console.log(newOverview);
   const newOverviewIndex = newOverview.lastIndexOf(" ");
   const resliceOverview = newOverview.slice(0, newOverviewIndex);
   const finalOverview = resliceOverview.concat("...");
-  console.log(finalOverview);
+  //console.log(finalOverview);
   //const newText = overview.find(" ")
   return (
     <StyledBaseDiv name="BaseDiv">

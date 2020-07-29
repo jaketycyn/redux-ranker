@@ -22,17 +22,15 @@
     "react-scripts": "3.4.1",
     "redux-persist": "^6.0.0",
     "styled-components": "^5.1.1",
-    "styled-icons": "^10.11.0",
+    "styled-icons": "^10.13.0",
     "tailwindcss": "^1.5.1",
     "whatwg-fetch": "^3.0.0"
   },
   "scripts": {
-    "start": "npm run watch:css && react-scripts start",
-    "build": "npm run build:css && react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "build:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
-    "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
