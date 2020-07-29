@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import useStyles from "../../display/styles/MUIstyles";
-import "../../assets/main.css";
 
 const Search = ({ getQuery }) => {
   const classes = useStyles();
