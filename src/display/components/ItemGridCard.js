@@ -17,7 +17,7 @@ import styled from "styled-components";
 const StyledBaseDiv = styled.div`
   display: grid;
   grid-template-columns: minmax(6.25em, 20%) 1fr;
-  margin: 0.25rem;
+  margin: 0.1rem;
   overflow: hidden;
   background-color: ${(props) => props.theme.colors.mainLight};
   width: 100%;

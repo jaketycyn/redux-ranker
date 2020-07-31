@@ -14,7 +14,8 @@ const UnRankedWrapper = styled.div`
   background-color: pink;
   align-items: center;
   justify-items: center;
-  padding-bottom: 3em;
+  padding-bottom: 2em;
+  height: 100vh;
 `;
 
 const styledH1 = styled.h1`

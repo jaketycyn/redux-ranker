@@ -14,7 +14,6 @@ export const BaseDiv = ({ primary, children }) => {
 export const GreaterGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-gap: 0.25rem;
   padding-bottom: 2em;
 
   @media ${(props) => props.theme.mediaQueries.md} {
