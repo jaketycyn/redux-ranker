@@ -12,3 +12,5 @@ Current Tasks:
         - I think most if/not all has been removed.
 
 Issues:
+    - Scrolling on smaller screen displays on the "ADD" page causes the bottom navbar to change sizes slightly. Initially it displays a little smaller then it ends up when scrolling. Also shifts a tiny bit.
+        * It could be related to the button arguments or divs. The navbar wrapper itself should be fine. 

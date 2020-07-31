@@ -5,6 +5,35 @@ import { Movie } from "./Movie";
 import RankedItemsDisplay from "../review/RankedItemsDisplay";
 import useStyles from "../../display/styles/MUIstyles";
 import Grid from "@material-ui/core/Grid";
+import styled from "styled-components";
+
+const UnRankedWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1;
+  grid-template-rows: 6% 47% 47%;
+  background-color: pink;
+  align-items: center;
+  justify-items: center;
+  padding-bottom: 3em;
+`;
+
+const styledH1 = styled.h1`
+  display: grid;
+  grid-row: 1;
+`;
+
+const CombatantOneWrapper = styled.div`
+  display: grid;
+  grid-row: 2;
+  background-color: darkgoldenrod;
+  margin: 2em;
+`;
+const CombatantTwoWrapper = styled.div`
+  display: grid;
+  grid-row: 3;
+  background-color: darkblue;
+  margin: 2em;
+`;
 
 const MovieList = () => {
   const classes = useStyles();
@@ -67,8 +96,9 @@ const MovieList = () => {
       const unRankedMatchup = unrankedItems.slice(0, 2);
       console.log("Phase 1: Unranked vs Unranked");
       return (
-        <div>
-          <div>
+        <UnRankedWrapper name="UnRankedWrapper">
+          <styledH1>Which is better?</styledH1>
+          <CombatantOneWrapper name="CombatantOneWrapper">
             {unRankedMatchup.slice(0, 1).map((item) => (
               <Movie
                 key={item.id}
@@ -78,8 +108,8 @@ const MovieList = () => {
                 combatants={unRankedMatchup}
               />
             ))}
-          </div>
-          <div>
+          </CombatantOneWrapper>
+          <CombatantTwoWrapper name="CombatantTwoWrapper">
             {unRankedMatchup.slice(1, 2).map((item) => (
               <Movie
                 key={item.id}
@@ -89,8 +119,8 @@ const MovieList = () => {
                 combatants={unRankedMatchup}
               />
             ))}
-          </div>
-        </div>
+          </CombatantTwoWrapper>
+        </UnRankedWrapper>
       );
     } else if (rankedItems.length >= 1) {
       if (activeRankedItem.length === 1) {
@@ -248,18 +278,11 @@ const MovieList = () => {
       }
     }
   };
-  return (
-    <div className="text-3xl bg-blue-300">
-      <Grid container space={3}>
-        <Grid item xs={12}>
-          {renderMovies()}
-        </Grid>
-        <Grid item xs={12}>
-          <RankedItemsDisplay />
-        </Grid>
-      </Grid>
-    </div>
-  );
+  return <renderMoviesDiv>{renderMovies()}</renderMoviesDiv>;
 };
+
+const renderMoviesDiv = styled.div`
+  height: 100vh;
+`;
 
 export default MovieList;

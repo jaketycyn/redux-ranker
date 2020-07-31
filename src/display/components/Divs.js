@@ -14,6 +14,15 @@ export const BaseDiv = ({ primary, children }) => {
 export const GreaterGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-gap: 1em;
-  padding-bottom: 3em;
+  grid-gap: 0.25rem;
+  padding-bottom: 2em;
+
+  @media ${(props) => props.theme.mediaQueries.md} {
+    grid-template-columns: repeat(auto-fill, minmax(19em, 1fr));
+  }
+  @media ${(props) => props.theme.mediaQueries.lg} {
+    grid-template-columns: repeat(auto-fill, minmax(28em, 1fr));
+  }
+  @media ${(props) => props.theme.mediaQueries.xl} {
+  }
 `;
