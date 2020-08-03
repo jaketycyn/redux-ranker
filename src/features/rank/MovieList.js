@@ -296,9 +296,8 @@ const MovieList = () => {
           <EncombantWrapper>
             <StyledFinishedText>
               <p>
-                All movies ranked. Feel free to look through your ranked movie
-                list or click Add and find more movies to rank against your
-                current list
+                All movies ranked! Click <b>'Add'</b> below to add more items to
+                rank or <b>'Review'</b> to see your rankings.
               </p>
             </StyledFinishedText>
           </EncombantWrapper>

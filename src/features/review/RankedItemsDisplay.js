@@ -1,6 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchMovies, movielistSelector } from "../../slices/movielistSlice";
+import {
+  fetchMovies,
+  deleteMovie,
+  reRankMovie,
+  movielistSelector,
+} from "../../slices/movielistSlice";
 import styled from "styled-components";
 
 import { Button } from "../../display/components/Buttons";
@@ -42,6 +47,20 @@ const RankedItemsDisplay = () => {
     .slice()
     .sort(sort_by("rank", false, parseInt));
 
+  //custom remove prompt
+
+  const reRankItem = (id) => {
+    if (window.confirm("Do you want to rerank this item?")) {
+      dispatch(reRankMovie(id));
+    }
+  };
+
+  const removeItem = (id) => {
+    if (window.confirm("Remove this item?")) {
+      dispatch(deleteMovie(id));
+    }
+  };
+
   return (
     <RankedItemWrapper>
       <div display={false}>
@@ -56,15 +75,12 @@ const RankedItemsDisplay = () => {
               <StyledContentDiv>
                 <StyledTitle>{movie.title}</StyledTitle>
                 <StyledBottomDivLeftButton>
-                  <Button reRank onClick={() => console.log("Rerank time")}>
+                  <Button reRank onClick={() => reRankItem(movie.id)}>
                     ReRank
                   </Button>
                 </StyledBottomDivLeftButton>
                 <StyledBottomDivRightButton>
-                  <Button
-                    remove
-                    onClick={() => console.log("delete this shit")}
-                  >
+                  <Button remove onClick={() => removeItem(movie.id)}>
                     Remove
                   </Button>
                 </StyledBottomDivRightButton>
