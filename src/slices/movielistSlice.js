@@ -161,6 +161,12 @@ export const movielistSlice = createSlice({
         state.movies.splice(index, 1);
       }
     },
+    reRankMovie: (state, { payload }) => {
+      const index = state.movies.findIndex((movie) => movie.id === payload);
+      console.log(index);
+
+      state.movies[index].rank = 0;
+    },
   },
 });
 
@@ -172,6 +178,7 @@ export const {
   changeRank,
   addMovie,
   deleteMovie,
+  reRankMovie,
 } = movielistSlice.actions;
 
 // A selector
