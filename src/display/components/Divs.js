@@ -25,3 +25,10 @@ export const GreaterGrid = styled.div`
   @media ${(props) => props.theme.mediaQueries.xl} {
   }
 `;
+
+export const ItemGridWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  text-align: center;
+  justify-content: center;
+`;
