@@ -47,6 +47,18 @@ const EncombantWrapper = styled.div`
   height: 100vh;
 `;
 
+const RenderMoviesDiv = styled.div`
+  height: 100vh;
+`;
+
+const StyledFinishedText = styled.div`
+  margin: 20%;
+  position: absolute;
+  align-items: center;
+  justify-items: center;
+  padding-bottom: 2em;
+`;
+
 const MovieList = () => {
   const dispatch = useDispatch();
   const { loading, hasErrors, movies } = useSelector(movielistSelector);
@@ -281,22 +293,20 @@ const MovieList = () => {
       } else {
         console.log("Phase 6: RANKING COMPLETE");
         return (
-          <div class="bg-gray-100">
-            <p>
-              All movies ranked. Feel free to look through your ranked movie
-              list or click Add and find more movies to rank against your
-              current list
-            </p>
-          </div>
+          <EncombantWrapper>
+            <StyledFinishedText>
+              <p>
+                All movies ranked. Feel free to look through your ranked movie
+                list or click Add and find more movies to rank against your
+                current list
+              </p>
+            </StyledFinishedText>
+          </EncombantWrapper>
         );
       }
     }
   };
-  return <renderMoviesDiv>{renderMovies()}</renderMoviesDiv>;
+  return <RenderMoviesDiv>{renderMovies()}</RenderMoviesDiv>;
 };
-
-const renderMoviesDiv = styled.div`
-  height: 100vh;
-`;
 
 export default MovieList;

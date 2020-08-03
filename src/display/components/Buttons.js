@@ -49,6 +49,17 @@ const StyledButton = styled.button`
       justify-self: center;
     `}
   
+    ${({ choose }) =>
+      choose &&
+      css`
+        width: 7rem;
+        height: 3rem;
+        background-color: ${(props) => props.theme.colors.secondary};
+        font-size: 900;
+        margin-top: 5em;
+        margin: 1em;
+      `}
+
   ${({ details }) =>
     details &&
     css`
@@ -64,25 +75,27 @@ const StyledButton = styled.button`
       justify-self: center;
     `}
 
-  ${({ choose }) =>
-    choose &&
+  ${({ remove }) =>
+    remove &&
     css`
       width: 7rem;
       height: 3rem;
-      background-color: ${(props) => props.theme.colors.secondary};
+      background-color: red;
       font-size: 900;
       margin-top: 5em;
       margin: 1em;
     `}
 
-
-  ${({ remove }) =>
-    remove &&
-    css`
-      background-color: yellow;
-      font-size: 900;
-      margin: 0.25rem;
-    `}
+    ${({ reRank }) =>
+      reRank &&
+      css`
+        width: 7rem;
+        height: 3rem;
+        background-color: green;
+        font-size: 900;
+        margin-top: 5em;
+        margin: 1em;
+      `}
 
 `;
 
@@ -92,6 +105,7 @@ export const Button = ({
   details,
   choose,
   remove,
+  reRank,
   children,
   onClick,
 }) => {
@@ -102,6 +116,7 @@ export const Button = ({
       details={details}
       choose={choose}
       remove={remove}
+      reRank={reRank}
       onClick={onClick}
     >
       {children}

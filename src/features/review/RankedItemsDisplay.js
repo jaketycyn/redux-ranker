@@ -56,16 +56,16 @@ const RankedItemsDisplay = () => {
               <StyledContentDiv>
                 <StyledTitle>{movie.title}</StyledTitle>
                 <StyledBottomDivLeftButton>
-                  <Button add onClick={() => console.log("hi")}>
-                    Add
+                  <Button reRank onClick={() => console.log("Rerank time")}>
+                    ReRank
                   </Button>
                 </StyledBottomDivLeftButton>
                 <StyledBottomDivRightButton>
                   <Button
-                    details
-                    onClick={() => console.log("give me more deats")}
+                    remove
+                    onClick={() => console.log("delete this shit")}
                   >
-                    Details
+                    Remove
                   </Button>
                 </StyledBottomDivRightButton>
               </StyledContentDiv>
