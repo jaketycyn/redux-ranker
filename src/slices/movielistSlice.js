@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import dataJson from "../data.json";
 
 export const movielistSlice = createSlice({
   name: "movielist",

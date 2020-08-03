@@ -1,18 +1,68 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import { fetchMovies, movielistSelector } from "../../slices/movielistSlice";
 import { Movie } from "./Movie";
-import RankedItemsDisplay from "./RankedItemsDisplay";
-
+import RankedItemsDisplay from "../review/RankedItemsDisplay";
 import useStyles from "../../display/styles/MUIstyles";
 import Grid from "@material-ui/core/Grid";
+import styled from "styled-components";
+
+const UnRankedWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1;
+  grid-template-rows: 6% 47% 47%;
+  background-color: pink;
+  align-items: center;
+  justify-items: center;
+  padding-bottom: 2em;
+  height: 100vh;
+`;
+
+const styledH1 = styled.h1`
+  display: grid;
+  grid-row: 1;
+`;
+
+const CombatantOneWrapper = styled.div`
+  display: grid;
+  grid-row: 2;
+  /* background-color: darkgoldenrod; */
+  margin: 2em;
+`;
+const CombatantTwoWrapper = styled.div`
+  display: grid;
+  grid-row: 3;
+  /* background-color: darkblue; */
+  margin: 2em;
+`;
+
+const EncombantWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1;
+  grid-template-rows: 6% 47% 47%;
+  /* background-color: pink; */
+  align-items: center;
+  justify-items: center;
+  padding-bottom: 2em;
+  height: 100vh;
+`;
+
+const RenderMoviesDiv = styled.div`
+  height: 100vh;
+`;
+
+const StyledFinishedText = styled.div`
+  margin: 20%;
+  position: absolute;
+  align-items: center;
+  justify-items: center;
+  padding-bottom: 2em;
+`;
 
 const MovieList = () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const { loading, hasErrors, movies } = useSelector(movielistSelector);
-  console.log(JSON.stringify(movies, 2, undefined));
+  //console.log(JSON.stringify(movies, 2, undefined));
   // useEffect(() => {
   //   dispatch(fetchMovies());
   // }, [dispatch]);
@@ -67,10 +117,11 @@ const MovieList = () => {
     //unranked matchup display 2 unranked movies - after one is selected, both get assigned ranks
     if (rankedItems.length === 0) {
       const unRankedMatchup = unrankedItems.slice(0, 2);
-      console.log("Phase !: Unranked vs Unranked");
+      console.log("Phase 1: Unranked vs Unranked");
       return (
-        <div>
-          <div>
+        <UnRankedWrapper name="UnRankedWrapper">
+          <styledH1>Which is better?</styledH1>
+          <CombatantOneWrapper name="CombatantOneWrapper">
             {unRankedMatchup.slice(0, 1).map((item) => (
               <Movie
                 key={item.id}
@@ -80,8 +131,8 @@ const MovieList = () => {
                 combatants={unRankedMatchup}
               />
             ))}
-          </div>
-          <div>
+          </CombatantOneWrapper>
+          <CombatantTwoWrapper name="CombatantTwoWrapper">
             {unRankedMatchup.slice(1, 2).map((item) => (
               <Movie
                 key={item.id}
@@ -91,8 +142,8 @@ const MovieList = () => {
                 combatants={unRankedMatchup}
               />
             ))}
-          </div>
-        </div>
+          </CombatantTwoWrapper>
+        </UnRankedWrapper>
       );
     } else if (rankedItems.length >= 1) {
       if (activeRankedItem.length === 1) {
@@ -124,8 +175,9 @@ const MovieList = () => {
           );
 
           return (
-            <div>
-              <div>
+            <EncombantWrapper>
+              <styledH1>Which is better?</styledH1>
+              <CombatantOneWrapper name="CombatantOneWrapper">
                 {activeRankedItem.map((item) => (
                   <Movie
                     key={item.id}
@@ -137,8 +189,8 @@ const MovieList = () => {
                     rankedItems={newRankedMoviesList}
                   />
                 ))}
-              </div>
-              <div>
+              </CombatantOneWrapper>
+              <CombatantTwoWrapper name="CombatantTwoWrapper">
                 {nextRankedIncumbent.map((item) => (
                   <Movie
                     key={item.id}
@@ -149,8 +201,8 @@ const MovieList = () => {
                     rankedItems={newRankedMoviesList}
                   />
                 ))}
-              </div>
-            </div>
+              </CombatantTwoWrapper>
+            </EncombantWrapper>
           );
         }
 
@@ -176,8 +228,9 @@ const MovieList = () => {
           );
 
           return (
-            <div>
-              <div>
+            <EncombantWrapper>
+              <styledH1>Which is better?</styledH1>
+              <CombatantOneWrapper name="CombatantOneWrapper">
                 {activeRankedItem.map((item) => (
                   <Movie
                     key={item.id}
@@ -189,8 +242,8 @@ const MovieList = () => {
                     rankedItems={newRankedMoviesList}
                   />
                 ))}
-              </div>
-              <div>
+              </CombatantOneWrapper>
+              <CombatantTwoWrapper name="CombatantTwoWrapper">
                 {nextRankedIncumbent.map((item) => (
                   <Movie
                     key={item.id}
@@ -201,15 +254,16 @@ const MovieList = () => {
                     rankedItems={newRankedMoviesList}
                   />
                 ))}
-              </div>
-            </div>
+              </CombatantTwoWrapper>
+            </EncombantWrapper>
           );
         }
       } else if (unrankedItems.length >= 1) {
         console.log("Phase 2: Unranked vs Ranked");
         return (
-          <div>
-            <div>
+          <EncombantWrapper>
+            <styledH1>Which is better?</styledH1>
+            <CombatantOneWrapper name="CombatantOneWrapper">
               {unrankedCombatant.map((item) => (
                 <Movie
                   key={item.id}
@@ -221,8 +275,8 @@ const MovieList = () => {
                   rankedItems={rankSortedItems}
                 />
               ))}
-            </div>
-            <div>
+            </CombatantOneWrapper>
+            <CombatantTwoWrapper name="CombatantTwoWrapper">
               {rankedIncumbent.map((item) => (
                 <Movie
                   key={item.id}
@@ -233,29 +287,26 @@ const MovieList = () => {
                   rankedItems={rankSortedItems}
                 />
               ))}
-            </div>
-          </div>
+            </CombatantTwoWrapper>
+          </EncombantWrapper>
         );
       } else {
         console.log("Phase 6: RANKING COMPLETE");
         return (
-          <p>All movies ranked. Feel free to look through your sorted list </p>
+          <EncombantWrapper>
+            <StyledFinishedText>
+              <p>
+                All movies ranked. Feel free to look through your ranked movie
+                list or click Add and find more movies to rank against your
+                current list
+              </p>
+            </StyledFinishedText>
+          </EncombantWrapper>
         );
       }
     }
   };
-  return (
-    <div className={classes.rankingGrid}>
-      <Grid container space={3}>
-        <Grid item xs={12}>
-          {renderMovies()}
-        </Grid>
-        <Grid item xs={12}>
-          <RankedItemsDisplay />
-        </Grid>
-      </Grid>
-    </div>
-  );
+  return <RenderMoviesDiv>{renderMovies()}</RenderMoviesDiv>;
 };
 
 export default MovieList;

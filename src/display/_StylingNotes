@@ -1,0 +1,21 @@
+Principles:
+    - Reusuable UI components/styling
+    - Cohesive Design both visually and functionally
+    - Reusuable components within the display/component folders under their own files:
+        * ex: divs in Divs.js, buttons in Buttons.js
+        - Wrappers will be contained at the local level since that is where the css grid preferences will be determined and where we can incase reusable components for placement. Most components will be center all around and can be manipulated via divs/wrappers.
+
+Current Tasks:
+    1.  Finish up the prototype design for all 3 main parts of project (Add, Rank, Review)
+    2.  Cleaning up those files and moving reusable components from the local level to their appropriate design component folder.
+    3.  Removing Old css libraries from project (tailwind)
+        - I think most if/not all has been removed.
+
+Issues:
+    - Presentation we would want horizontal/wide posters for films and not vertical (find an api that supports this?)
+
+
+
+    - Scrolling on smaller screen displays on the "ADD" page causes the bottom navbar to change sizes slightly. Initially it displays a little smaller then it ends up when scrolling. Also shifts a tiny bit.
+        * It could be related to the button arguments or divs. The navbar wrapper itself should be fine. 
+
