@@ -29,22 +29,21 @@ export const Movie = ({ item, id, option, combatants, rankedItems }) => {
   const deleteItem = (id) => {
     dispatch(deleteMovie((id: id)));
   };
-  if (combatants[1].rank === 0) {
-    return (
-      <StyledMovieCardDiv name="StyledMovieCard">
-        <StyledImg
-          src={"https://image.tmdb.org/t/p/w500" + item.backImg}
-          title={item.title}
-          alt="movie image"
-        />
-        <ButtonWrapper>
-          <Button choose>Choose</Button>
-        </ButtonWrapper>
-      </StyledMovieCardDiv>
-    );
-  } else {
-    return <p>hi</p>;
-  }
+
+  return (
+    <StyledMovieCardDiv name="StyledMovieCard">
+      <StyledImg
+        src={"https://image.tmdb.org/t/p/w500" + item.backImg}
+        title={item.title}
+        alt="movie image"
+      />
+      <ButtonWrapper>
+        <Button choose onClick={updateRank}>
+          Choose
+        </Button>
+      </ButtonWrapper>
+    </StyledMovieCardDiv>
+  );
 };
 
 const StyledMovieCardDiv = styled.div`
@@ -53,7 +52,7 @@ const StyledMovieCardDiv = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0.25rem;
-  padding: 2rem;
+
   overflow: hidden;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
 

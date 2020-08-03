@@ -67,9 +67,12 @@ const StyledButton = styled.button`
   ${({ choose }) =>
     choose &&
     css`
-      background-color: magenta;
+      width: 7rem;
+      height: 3rem;
+      background-color: ${(props) => props.theme.colors.secondary};
       font-size: 900;
-      margin: 0.25em;
+      margin-top: 5em;
+      margin: 1em;
     `}
 
 

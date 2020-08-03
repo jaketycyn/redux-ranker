@@ -26,18 +26,28 @@ const styledH1 = styled.h1`
 const CombatantOneWrapper = styled.div`
   display: grid;
   grid-row: 2;
-  background-color: darkgoldenrod;
+  /* background-color: darkgoldenrod; */
   margin: 2em;
 `;
 const CombatantTwoWrapper = styled.div`
   display: grid;
   grid-row: 3;
-  background-color: darkblue;
+  /* background-color: darkblue; */
   margin: 2em;
 `;
 
+const EncombantWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1;
+  grid-template-rows: 6% 47% 47%;
+  /* background-color: pink; */
+  align-items: center;
+  justify-items: center;
+  padding-bottom: 2em;
+  height: 100vh;
+`;
+
 const MovieList = () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const { loading, hasErrors, movies } = useSelector(movielistSelector);
   //console.log(JSON.stringify(movies, 2, undefined));
@@ -153,8 +163,9 @@ const MovieList = () => {
           );
 
           return (
-            <div>
-              <div>
+            <EncombantWrapper>
+              <styledH1>Which is better?</styledH1>
+              <CombatantOneWrapper name="CombatantOneWrapper">
                 {activeRankedItem.map((item) => (
                   <Movie
                     key={item.id}
@@ -166,8 +177,8 @@ const MovieList = () => {
                     rankedItems={newRankedMoviesList}
                   />
                 ))}
-              </div>
-              <div>
+              </CombatantOneWrapper>
+              <CombatantTwoWrapper name="CombatantTwoWrapper">
                 {nextRankedIncumbent.map((item) => (
                   <Movie
                     key={item.id}
@@ -178,8 +189,8 @@ const MovieList = () => {
                     rankedItems={newRankedMoviesList}
                   />
                 ))}
-              </div>
-            </div>
+              </CombatantTwoWrapper>
+            </EncombantWrapper>
           );
         }
 
@@ -205,8 +216,9 @@ const MovieList = () => {
           );
 
           return (
-            <div>
-              <div>
+            <EncombantWrapper>
+              <styledH1>Which is better?</styledH1>
+              <CombatantOneWrapper name="CombatantOneWrapper">
                 {activeRankedItem.map((item) => (
                   <Movie
                     key={item.id}
@@ -218,8 +230,8 @@ const MovieList = () => {
                     rankedItems={newRankedMoviesList}
                   />
                 ))}
-              </div>
-              <div>
+              </CombatantOneWrapper>
+              <CombatantTwoWrapper name="CombatantTwoWrapper">
                 {nextRankedIncumbent.map((item) => (
                   <Movie
                     key={item.id}
@@ -230,15 +242,16 @@ const MovieList = () => {
                     rankedItems={newRankedMoviesList}
                   />
                 ))}
-              </div>
-            </div>
+              </CombatantTwoWrapper>
+            </EncombantWrapper>
           );
         }
       } else if (unrankedItems.length >= 1) {
         console.log("Phase 2: Unranked vs Ranked");
         return (
-          <div>
-            <div>
+          <EncombantWrapper>
+            <styledH1>Which is better?</styledH1>
+            <CombatantOneWrapper name="CombatantOneWrapper">
               {unrankedCombatant.map((item) => (
                 <Movie
                   key={item.id}
@@ -250,8 +263,8 @@ const MovieList = () => {
                   rankedItems={rankSortedItems}
                 />
               ))}
-            </div>
-            <div>
+            </CombatantOneWrapper>
+            <CombatantTwoWrapper name="CombatantTwoWrapper">
               {rankedIncumbent.map((item) => (
                 <Movie
                   key={item.id}
@@ -262,8 +275,8 @@ const MovieList = () => {
                   rankedItems={rankSortedItems}
                 />
               ))}
-            </div>
-          </div>
+            </CombatantTwoWrapper>
+          </EncombantWrapper>
         );
       } else {
         console.log("Phase 6: RANKING COMPLETE");
