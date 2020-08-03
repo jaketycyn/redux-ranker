@@ -2,11 +2,11 @@ import React from "react";
 import styled, { css } from "styled-components";
 const StyledButton = styled.button`
   /* border: none; */
-  text-align:center ;
-  line-height: 1em;
-  border-radius: .25em;
-  padding: .5em 1em;
+  width: 7em;
+  height: 2em;
+  text-align:center;
   background: #ffffff;
+  line-height: 0;
   color: #404040 !important;
   font-weight: 800;
   font-size: .5rem;
@@ -37,52 +37,65 @@ const StyledButton = styled.button`
   ${({ add }) =>
     add &&
     css`
-      width: 5rem;
-      height: 1rem;
-      margin: 0.25rem;
+      width: 7em;
+      height: 2em;
+      margin: 0.25em;
       padding: 1em;
       background-color: ${(props) => props.theme.colors.secondary};
       font-size: 900;
       font-weight: 800;
-      margin-left: auto;
-      display: grid;
       align-items: center;
       align-self: center;
       justify-self: center;
     `}
   
+    ${({ choose }) =>
+      choose &&
+      css`
+        width: 7rem;
+        height: 3rem;
+        background-color: ${(props) => props.theme.colors.secondary};
+        font-size: 900;
+        margin-top: 5em;
+        margin: 1em;
+      `}
+
   ${({ details }) =>
     details &&
     css`
-      width: 5rem;
-      height: 1em;
+      width: 7em;
+      height: 2em;
       margin: 0.25em;
       padding: 1em;
       background-color: ${(props) => props.theme.colors.main};
       font-size: 900;
       font-weight: 800;
-      display: grid;
       align-items: center;
       align-self: center;
       justify-self: center;
     `}
 
-  ${({ choose }) =>
-    choose &&
-    css`
-      background-color: magenta;
-      font-size: 900;
-      margin: 0.25em;
-    `}
-
-
   ${({ remove }) =>
     remove &&
     css`
-      background-color: yellow;
+      width: 7rem;
+      height: 3rem;
+      background-color: red;
       font-size: 900;
-      margin: 0.25rem;
+      margin-top: 5em;
+      margin: 1em;
     `}
+
+    ${({ reRank }) =>
+      reRank &&
+      css`
+        width: 7rem;
+        height: 3rem;
+        background-color: green;
+        font-size: 900;
+        margin-top: 5em;
+        margin: 1em;
+      `}
 
 `;
 
@@ -92,6 +105,7 @@ export const Button = ({
   details,
   choose,
   remove,
+  reRank,
   children,
   onClick,
 }) => {
@@ -102,6 +116,7 @@ export const Button = ({
       details={details}
       choose={choose}
       remove={remove}
+      reRank={reRank}
       onClick={onClick}
     >
       {children}

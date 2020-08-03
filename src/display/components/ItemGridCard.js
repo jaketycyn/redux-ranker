@@ -16,9 +16,10 @@ import styled from "styled-components";
 
 const StyledBaseDiv = styled.div`
   display: grid;
-  grid-template-columns: minmax(100px, 20%) 1fr;
-  margin: 0.25rem;
+  grid-template-columns: minmax(6.25em, 20%) 1fr;
+  margin: 0.1rem;
   overflow: hidden;
+  background-color: ${(props) => props.theme.colors.mainLight};
   width: 100%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
 
@@ -26,16 +27,20 @@ const StyledBaseDiv = styled.div`
     box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.25);
   }
 
+  @media ${(props) => props.theme.mediaQueries.sm} {
+    grid-template-columns: minmax(7em, 40%) 1fr;
+  }
+
   @media ${(props) => props.theme.mediaQueries.md} {
-    grid-template-columns: minmax(150px, 20%) 1fr;
+    grid-template-columns: minmax(9em, 40%) 1fr;
   }
 
   @media ${(props) => props.theme.mediaQueries.lg} {
-    grid-template-columns: minmax(155px, 20%) 1fr;
+    grid-template-columns: minmax(12.5em, 40%) 1fr;
   }
 
   @media ${(props) => props.theme.mediaQueries.xl} {
-    grid-template-columns: minmax(300px, 40%) 1fr;
+    grid-template-columns: minmax(16em, 40%) 1fr;
   }
 `;
 
@@ -62,7 +67,7 @@ const StyledImg = styled.img`
 const StyledContentDiv = styled.div`
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: 60% 40%;
+  grid-template-rows: 65% 35%;
   max-height: 30em;
 `;
 
@@ -71,6 +76,7 @@ const StyledTitle = styled.h1`
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row: 1;
+  margin: 0.5em;
   align-items: center;
   text-align: center;
   justify-self: center;
@@ -79,22 +85,15 @@ const StyledTitle = styled.h1`
   color: black;
   padding-top: 0.5rem;
   overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
 
-  @media ${(props) => props.theme.mediaQueries.sm} {
+  @media ${(props) => props.theme.mediaQueries.md} {
     font-size: 1.25rem;
   }
-  @media ${(props) => props.theme.mediaQueries.md} {
+  @media ${(props) => props.theme.mediaQueries.lg} {
     font-size: 1.5rem;
   }
-  @media ${(props) => props.theme.mediaQueries.lg} {
-    font-size: 2rem;
-  }
   @media ${(props) => props.theme.mediaQueries.xl} {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 `;
 
@@ -114,27 +113,17 @@ const StyledOverview = styled.p`
   }
 `;
 
-//might be able to do styling just within the buttons themselves and ignore the need for divs/wrappers for the buttons
+const StyledBottomDivLeftButton = styled.div`
+  display: grid;
+  grid-column: 1;
+  grid-row: 2;
+`;
 
-// const StyledBottomDivLeftButton = styled.div`
-//   display: grid;
-//   grid-column: 1;
-//   justify-items: end;
-//   grid-row: 2;
-//   align-items: center;
-//   justify-content: space-between;
-//   margin-left: 0.5rem;
-// `;
-
-// const StyledBottomDivRightButton = styled.div`
-//   display: grid;
-//   grid-column: 2;
-//   justify-items: start;
-//   grid-row: 2;
-//   align-items: center;
-//   justify-content: space-between;
-//   margin-right: 0.5rem;
-// `;
+const StyledBottomDivRightButton = styled.div`
+  display: grid;
+  grid-column: 2;
+  grid-row: 2;
+`;
 
 const ItemGridCard = ({
   id,
@@ -146,66 +135,78 @@ const ItemGridCard = ({
   deleteItem,
 }) => {
   //const movieYear = releaseYear.slice(0, 4);
+
+  //adding ellipsesis for multiple line overviews
+
   const newOverview = overview.slice(0, 125);
   //console.log(newOverview);
   const newOverviewIndex = newOverview.lastIndexOf(" ");
   const resliceOverview = newOverview.slice(0, newOverviewIndex);
   const finalOverview = resliceOverview.concat("...");
+
+  //adding Ellipsis for multiple line titles
+
+  const newTitle = title.slice(0, 45);
+  //console.log(newOverview);
+  const newTitleIndex = newTitle.lastIndexOf(" ");
+  const resliceTitle = newTitle.slice(0, newOverviewIndex);
+  const ellipsisTitle = resliceTitle.concat("...");
+
   //console.log(finalOverview);
   //const newText = overview.find(" ")
 
   /* removed for now can add back in on backside of card or when i want to add in more sizes/showing txt only on desktop
   <StyledOverview>{finalOverview}</StyledOverview> */
-
-  return (
-    <StyledBaseDiv name="BaseDiv">
-      <StyledImg
-        src={"https://image.tmdb.org/t/p/w500" + backImg}
-        title={title}
-        alt="movie image"
-      />
-      <StyledContentDiv>
-        <StyledTitle>{title}</StyledTitle>
-        <Button add onClick={(e) => addItem(id, title, backImg)}>
-          Add
-        </Button>
-        <Button details onClick={() => console.log("give me more deats")}>
-          Details
-        </Button>
-      </StyledContentDiv>
-    </StyledBaseDiv>
-
-    // <Card raised className={classes.card} xs={12} sm={12} md={6} lg={4}>
-    //   <CardMedia
-    //     image={"https://image.tmdb.org/t/p/original" + backImg}
-    //     title={title}
-    //     className={classes.cardMedia}
-    //   />
-    //   <CardContent className={classes.cardContent}>
-    //     <Typography noWrap variant="h5" component="h5">
-    //       {title}
-    //     </Typography>
-    //     {/* Delete Button - later on add styling for choosing when to display which one - both shouldnt' show at the same time */}
-    //     <IconButton
-    //       className={classes.addButton}
-    //       color="default"
-    //       size="medium"
-    //       onClick={() => addItem(id, title, backImg)}
-    //     >
-    //       <AddIcon fontSize="inherit" />
-    //     </IconButton>
-
-    //     <IconButton
-    //       className={classes.addButton}
-    //       color="default"
-    //       size="medium"
-    //       onClick={() => deleteItem(id)}
-    //     >
-    //       <DeleteIcon fontSize="inherit" />
-    //     </IconButton>
-    //   </CardContent>
-    // </Card>
-  );
+  const renderItemCard = () => {
+    if (title.length >= 45) {
+      return (
+        <StyledBaseDiv name="BaseDiv">
+          <StyledImg
+            src={"https://image.tmdb.org/t/p/w500" + backImg}
+            title={title}
+            alt="movie image"
+          />
+          <StyledContentDiv>
+            <StyledTitle>{ellipsisTitle}</StyledTitle>
+            <StyledBottomDivLeftButton>
+              <Button add onClick={(e) => addItem(id, title, backImg)}>
+                Add
+              </Button>
+            </StyledBottomDivLeftButton>
+            <StyledBottomDivRightButton>
+              <Button details onClick={() => console.log("give me more deats")}>
+                Details
+              </Button>
+            </StyledBottomDivRightButton>
+          </StyledContentDiv>
+        </StyledBaseDiv>
+      );
+    } else {
+      return (
+        <StyledBaseDiv name="BaseDiv">
+          <StyledImg
+            src={"https://image.tmdb.org/t/p/w500" + backImg}
+            title={title}
+            alt="movie image"
+          />
+          <StyledContentDiv>
+            <StyledTitle>{title}</StyledTitle>
+            <StyledBottomDivLeftButton>
+              <Button add onClick={(e) => addItem(id, title, backImg)}>
+                Add
+              </Button>
+            </StyledBottomDivLeftButton>
+            <StyledBottomDivRightButton>
+              <Button details onClick={() => console.log("give me more deats")}>
+                Details
+              </Button>
+            </StyledBottomDivRightButton>
+          </StyledContentDiv>
+        </StyledBaseDiv>
+      );
+    }
+  };
+  return <div>{renderItemCard()}</div>;
 };
 
 export default ItemGridCard;
