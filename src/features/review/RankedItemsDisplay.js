@@ -5,12 +5,15 @@ import {
   deleteMovie,
   reRankMovie,
   movielistSelector,
-} from "../../slices/movielistSlice";
+} from "../../redux/slices/movielistSlice";
 import styled from "styled-components";
 
 import { Button } from "../../display/components/Buttons";
+import { StyledBaseDiv, StyledContentDiv } from "../../display/components/Divs";
+import { StyledImg } from "../../display/components/Imgs";
+import { StyledTitle } from "../../display/components/Text";
 
-const RankedItemWrapper = styled.div`
+const RankedReviewGridWrapper = styled.div`
   display: grid;
   grid-template-columns: 1;
   background-color: lightseagreen;
@@ -19,9 +22,34 @@ const RankedItemWrapper = styled.div`
   padding-bottom: 2em;
 `;
 
+const RankedItemWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 5% 95%;
+  background-color: pink;
+`;
+
+const StyledBottomDivLeftButton = styled.div`
+  display: grid;
+  grid-column: 1;
+  grid-row: 2;
+`;
+
+const StyledBottomDivRightButton = styled.div`
+  display: grid;
+  grid-column: 2;
+  grid-row: 2;
+`;
+
+const StyledRankingNum = styled.h1`
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-column: 1;
+`;
 const RankedItemsDisplay = () => {
   const dispatch = useDispatch();
   const { movies } = useSelector(movielistSelector);
+  const [view, setView] = useState(false);
 
   // useEffect(() => {
   //   dispatch(fetchMovies());
@@ -61,149 +89,79 @@ const RankedItemsDisplay = () => {
     }
   };
 
+  const toggleListView = () => {
+    setView(!view);
+    console.log(view);
+  };
+
+  let ranking = 1;
+
+  if (view) {
+    return (
+      <RankedReviewGridWrapper>
+        <button onClick={() => toggleListView()}>Show Images</button>
+        <div display={false}>
+          {itemsSortedByRank.map((movie) => {
+            return (
+              <RankedItemWrapper>
+                <StyledRankingNum>{ranking++}</StyledRankingNum>
+                <StyledBaseDiv>
+                  <StyledTitle>{movie.title}</StyledTitle>
+                  <StyledBottomDivLeftButton>
+                    <Button reRank onClick={() => reRankItem(movie.id)}>
+                      ReRank
+                    </Button>
+                  </StyledBottomDivLeftButton>
+                  <StyledBottomDivRightButton>
+                    <Button remove onClick={() => removeItem(movie.id)}>
+                      Remove
+                    </Button>
+                  </StyledBottomDivRightButton>
+                </StyledBaseDiv>
+              </RankedItemWrapper>
+            );
+          })}
+        </div>
+      </RankedReviewGridWrapper>
+    );
+  }
+
   return (
-    <RankedItemWrapper>
+    <RankedReviewGridWrapper>
+      <button onClick={() => toggleListView()}>Hide Images</button>
       <div display={false}>
         {itemsSortedByRank.map((movie) => {
           return (
-            <StyledBaseDiv name="BaseDiv">
-              <StyledImg
-                src={"https://image.tmdb.org/t/p/w500" + movie.backImg}
-                title={movie.title}
-                alt="movie image"
-              />
-              <StyledContentDiv>
-                <StyledTitle>{movie.title}</StyledTitle>
-                <StyledBottomDivLeftButton>
-                  <Button reRank onClick={() => reRankItem(movie.id)}>
-                    ReRank
-                  </Button>
-                </StyledBottomDivLeftButton>
-                <StyledBottomDivRightButton>
-                  <Button remove onClick={() => removeItem(movie.id)}>
-                    Remove
-                  </Button>
-                </StyledBottomDivRightButton>
-              </StyledContentDiv>
-            </StyledBaseDiv>
+            <RankedItemWrapper>
+              <StyledRankingNum>{ranking++}</StyledRankingNum>
+              <StyledBaseDiv>
+                <StyledImg
+                  src={"https://image.tmdb.org/t/p/w500" + movie.backImg}
+                  title={movie.title}
+                  alt="movie image"
+                />
+                <StyledContentDiv>
+                  <StyledTitle>{movie.title}</StyledTitle>
+                  <StyledBottomDivLeftButton>
+                    <Button reRank onClick={() => reRankItem(movie.id)}>
+                      ReRank
+                    </Button>
+                  </StyledBottomDivLeftButton>
+                  <StyledBottomDivRightButton>
+                    <Button remove onClick={() => removeItem(movie.id)}>
+                      Remove
+                    </Button>
+                  </StyledBottomDivRightButton>
+                </StyledContentDiv>
+              </StyledBaseDiv>
+            </RankedItemWrapper>
           );
         })}
       </div>
-    </RankedItemWrapper>
+    </RankedReviewGridWrapper>
   );
 };
 
 export default RankedItemsDisplay;
 
 //! taken from ItemGrid Card with some changes to props and references. Will need to move these/restructure into a proper components folder for better reference.
-
-const StyledBaseDiv = styled.div`
-  display: grid;
-  grid-template-columns: minmax(6.25em, 20%) 1fr;
-  margin: 0.1rem;
-  overflow: hidden;
-  background-color: ${(props) => props.theme.colors.mainLight};
-  width: 100%;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-
-  &:hover {
-    box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.25);
-  }
-
-  @media ${(props) => props.theme.mediaQueries.sm} {
-    grid-template-columns: minmax(7em, 40%) 1fr;
-  }
-
-  @media ${(props) => props.theme.mediaQueries.md} {
-    grid-template-columns: minmax(9em, 40%) 1fr;
-  }
-
-  @media ${(props) => props.theme.mediaQueries.lg} {
-    grid-template-columns: minmax(12.5em, 40%) 1fr;
-  }
-
-  @media ${(props) => props.theme.mediaQueries.xl} {
-    grid-template-columns: minmax(16em, 40%) 1fr;
-  }
-`;
-
-const StyledImg = styled.img`
-  width: 100%;
-  height: auto;
-  margin: 2px;
-  max-width: 12em;
-  display: flex;
-
-  @media ${(props) => props.theme.mediaQueries.md} {
-    max-width: 14em;
-  }
-
-  @media ${(props) => props.theme.mediaQueries.lg} {
-    max-width: 16em;
-  }
-
-  @media ${(props) => props.theme.mediaQueries.xl} {
-    max-width: 18em;
-  }
-`;
-
-const StyledContentDiv = styled.div`
-  display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 65% 35%;
-  max-height: 30em;
-`;
-
-const StyledTitle = styled.h1`
-  display: grid;
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row: 1;
-  margin: 0.5em;
-  align-items: center;
-  text-align: center;
-  justify-self: center;
-  font-size: 1rem;
-  font-weight: 700;
-  color: black;
-  padding-top: 0.5rem;
-  overflow: hidden;
-
-  @media ${(props) => props.theme.mediaQueries.md} {
-    font-size: 1.25rem;
-  }
-  @media ${(props) => props.theme.mediaQueries.lg} {
-    font-size: 1.5rem;
-  }
-  @media ${(props) => props.theme.mediaQueries.xl} {
-    font-size: 2rem;
-  }
-`;
-
-const StyledOverview = styled.p`
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row: 2;
-  font-size: 1rem;
-  font-weight: 600;
-  color: black;
-  padding: 0.5rem;
-  overflow: hidden;
-  display: none;
-
-  @media ${(props) => props.theme.mediaQueries.lg} {
-    display: flex;
-  }
-`;
-
-const StyledBottomDivLeftButton = styled.div`
-  display: grid;
-  grid-column: 1;
-  grid-row: 2;
-`;
-
-const StyledBottomDivRightButton = styled.div`
-  display: grid;
-  grid-column: 2;
-  grid-row: 2;
-`;

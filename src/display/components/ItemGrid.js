@@ -5,7 +5,7 @@ import {
   deleteMovie,
   fetchMovies,
   movielistSelector,
-} from "../../slices/movielistSlice";
+} from "../../redux/slices/movielistSlice";
 import ItemGridCard from "./ItemGridCard";
 import { GreaterGrid } from "./Divs";
 

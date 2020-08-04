@@ -1,14 +1,60 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const StyledBaseDiv = styled.div`
+const StyleBaseDiv = styled.div`
   display: grid;
-  grid-template-columns: minmax(450px, 40%) 1fr;
+  grid-template-columns: minmax(6.25em, 20%) 1fr;
+  margin: 0.1rem;
+  overflow: hidden;
+  background-color: ${(props) => props.theme.colors.mainLight};
+  width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  @media ${(props) => props.theme.mediaQueries.sm} {
+    grid-template-columns: minmax(7em, 40%) 1fr;
+  }
+
+  @media ${(props) => props.theme.mediaQueries.md} {
+    grid-template-columns: minmax(9em, 40%) 1fr;
+  }
+
+  @media ${(props) => props.theme.mediaQueries.lg} {
+    grid-template-columns: minmax(12.5em, 40%) 1fr;
+  }
+
+  @media ${(props) => props.theme.mediaQueries.xl} {
+    grid-template-columns: minmax(16em, 40%) 1fr;
+  }
+
+  ${({ reviewPage }) =>
+    reviewPage &&
+    css`
+      grid-template-columns: 5% 40% 55%;
+    `}
 `;
 
-export const BaseDiv = ({ primary, children }) => {
-  return <StyledBaseDiv primary={primary}>{children}</StyledBaseDiv>;
+export const StyledBaseDiv = ({ primary, reviewPage, children }) => {
+  return (
+    <StyleBaseDiv
+      primary={primary}
+      reviewPage={reviewPage}
+      name="StyledBaseDiv"
+    >
+      {children}
+    </StyleBaseDiv>
+  );
 };
+
+export const StyledContentDiv = styled.div`
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 65% 35%;
+  max-height: 30em;
+`;
 
 // padding bottom must always = the height of BotNavWrapper
 export const GreaterGrid = styled.div`

@@ -4,7 +4,7 @@ Potential concerns:
 - How data intensive will it be query searching on every letter change?
 - Since the search is by keyword lots of titles without images are being shown - should we block those types of films from being rendered?
 - Should there be some sort of wait between searches?
-
+- Toggle between showing images/ranks only.
 
 Presentation improvements:
 -Flipping of the itemGridCard to allow information such as release year, director, actors, etc to be displayed.
