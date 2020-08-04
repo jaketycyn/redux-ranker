@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchMovies, movielistSelector } from "../../slices/movielistSlice";
+import {
+  fetchMovies,
+  movielistSelector,
+} from "../../redux/slices/movielistSlice";
 import { Movie } from "./Movie";
 import RankedItemsDisplay from "../review/RankedItemsDisplay";
 import useStyles from "../../display/styles/MUIstyles";

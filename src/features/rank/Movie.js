@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { changeRank, deleteMovie } from "../../slices/movielistSlice";
+import { changeRank, deleteMovie } from "../../redux/slices/movielistSlice";
 import styled from "styled-components";
 
 import { Button } from "../../display/components/Buttons";
