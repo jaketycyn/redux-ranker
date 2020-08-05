@@ -8,7 +8,7 @@ import {
 } from "../../redux/slices/movielistSlice";
 import styled from "styled-components";
 
-import { Button } from "../../display/components/Buttons";
+import { ReviewPageButton, Button } from "../../display/components/Buttons";
 import { StyledBaseDiv, StyledContentDiv } from "../../display/components/Divs";
 import { StyledImg } from "../../display/components/Imgs";
 import { StyledTitle } from "../../display/components/Text";
@@ -32,12 +32,16 @@ const StyledBottomDivLeftButton = styled.div`
   display: grid;
   grid-column: 1;
   grid-row: 2;
+  align-items: center;
+  justify-items: center;
 `;
 
 const StyledBottomDivRightButton = styled.div`
   display: grid;
   grid-column: 2;
   grid-row: 2;
+  align-items: center;
+  justify-items: center;
 `;
 
 const StyledRankingNum = styled.h1`
@@ -113,9 +117,12 @@ const RankedItemsDisplay = () => {
                     </Button>
                   </StyledBottomDivLeftButton>
                   <StyledBottomDivRightButton>
-                    <Button remove onClick={() => removeItem(movie.id)}>
+                    <ReviewPageButton
+                      remove
+                      onClick={() => removeItem(movie.id)}
+                    >
                       Remove
-                    </Button>
+                    </ReviewPageButton>
                   </StyledBottomDivRightButton>
                 </StyledBaseDiv>
               </RankedItemWrapper>
@@ -143,14 +150,20 @@ const RankedItemsDisplay = () => {
                 <StyledContentDiv>
                   <StyledTitle>{movie.title}</StyledTitle>
                   <StyledBottomDivLeftButton>
-                    <Button reRank onClick={() => reRankItem(movie.id)}>
+                    <ReviewPageButton
+                      reRank
+                      onClick={() => reRankItem(movie.id)}
+                    >
                       ReRank
-                    </Button>
+                    </ReviewPageButton>
                   </StyledBottomDivLeftButton>
                   <StyledBottomDivRightButton>
-                    <Button remove onClick={() => removeItem(movie.id)}>
+                    <ReviewPageButton
+                      remove
+                      onClick={() => removeItem(movie.id)}
+                    >
                       Remove
-                    </Button>
+                    </ReviewPageButton>
                   </StyledBottomDivRightButton>
                 </StyledContentDiv>
               </StyledBaseDiv>
