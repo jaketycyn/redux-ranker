@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
+
 const StyledButton = styled.button`
   /* border: none; */
   width: 7em;
@@ -24,6 +25,7 @@ const StyledButton = styled.button`
       color: white;
       box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0, 0.8);
     `} */
+  
 
   &:hover {
     color: #f8efe8 !important;
@@ -75,28 +77,9 @@ const StyledButton = styled.button`
       justify-self: center;
     `}
 
-  ${({ remove }) =>
-    remove &&
-    css`
-      width: 7rem;
-      height: 3rem;
-      background-color: red;
-      font-size: 900;
-      margin-top: 5em;
-      margin: 1em;
-    `}
 
-    ${({ reRank }) =>
-      reRank &&
-      css`
-        width: 7rem;
-        height: 3rem;
-        background-color: green;
-        font-size: 900;
-        margin-top: 5em;
-        margin: 1em;
-      `}
-
+/*Media Queries */
+    
 `;
 
 export const Button = ({
@@ -104,8 +87,6 @@ export const Button = ({
   add,
   details,
   choose,
-  remove,
-  reRank,
   children,
   onClick,
 }) => {
@@ -115,11 +96,73 @@ export const Button = ({
       primary={primary}
       details={details}
       choose={choose}
-      remove={remove}
-      reRank={reRank}
       onClick={onClick}
     >
       {children}
     </StyledButton>
+  );
+};
+
+const StyledReviewButton = styled.button`
+  /* border: none; */
+  width: 5rem;
+  height: 2rem;
+  text-align: center;
+  background: white;
+  line-height: 0;
+  color: #404040 !important;
+  font-weight: 800;
+  font-size: 0.5rem;
+  text-transform: uppercase;
+  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    color: #f8efe8 !important;
+    background-color: #8dccd3 !important;
+    background: none;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  }
+
+  @media ${(props) => props.theme.mediaQueries.md} {
+    width: 6rem;
+    height: 2.25rem;
+  }
+
+  @media ${(props) => props.theme.mediaQueries.lg} {
+    width: 8rem;
+    height: 3rem;
+  }
+
+  @media ${(props) => props.theme.mediaQueries.xl} {
+    width: 8rem;
+    height: 3rem;
+  }
+
+  ${({ remove }) =>
+    remove &&
+    css`
+      background-color: red;
+      font-size: 900;
+      margin-top: 5em;
+      margin: 1em;
+    `}
+
+  ${({ reRank }) =>
+    reRank &&
+    css`
+      background-color: green;
+      font-size: 900;
+      margin-top: 5em;
+      margin: 1em;
+    `}
+`;
+
+export const ReviewPageButton = ({ remove, reRank, children }) => {
+  return (
+    <StyledReviewButton remove={remove} reRank={reRank}>
+      {children}
+    </StyledReviewButton>
   );
 };

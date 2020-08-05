@@ -21,11 +21,6 @@ const UnRankedWrapper = styled.div`
   height: 100vh;
 `;
 
-const styledH1 = styled.h1`
-  display: grid;
-  grid-row: 1;
-`;
-
 const CombatantOneWrapper = styled.div`
   display: grid;
   grid-row: 2;
