@@ -134,7 +134,7 @@ const RankedItemsDisplay = () => {
           return (
             <RankedItemWrapper>
               <StyledRankingNum>{ranking++}</StyledRankingNum>
-              <StyledBaseDiv>
+              <StyledBaseDiv reviewPage>
                 <StyledImg
                   src={"https://image.tmdb.org/t/p/w500" + movie.backImg}
                   title={movie.title}

@@ -33,7 +33,21 @@ const StyleBaseDiv = styled.div`
   ${({ reviewPage }) =>
     reviewPage &&
     css`
-      grid-template-columns: 5% 40% 55%;
+      @media ${(props) => props.theme.mediaQueries.sm} {
+        grid-template-columns: minmax(7em, 40%) 1fr;
+      }
+
+      @media ${(props) => props.theme.mediaQueries.md} {
+        grid-template-columns: minmax(9em, 30%) 1fr;
+      }
+
+      @media ${(props) => props.theme.mediaQueries.lg} {
+        grid-template-columns: minmax(12.5em, 25%) 1fr;
+      }
+
+      @media ${(props) => props.theme.mediaQueries.xl} {
+        grid-template-columns: minmax(16em, 20%) 1fr;
+      }
     `}
 `;
 

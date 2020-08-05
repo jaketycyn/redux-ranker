@@ -78,8 +78,8 @@ const StyledButton = styled.button`
   ${({ remove }) =>
     remove &&
     css`
-      width: 7rem;
-      height: 3rem;
+      width: 7em;
+      height: 3em;
       background-color: red;
       font-size: 900;
       margin-top: 5em;
@@ -89,8 +89,8 @@ const StyledButton = styled.button`
     ${({ reRank }) =>
       reRank &&
       css`
-        width: 7rem;
-        height: 3rem;
+        width: 7em;
+        height: 3em;
         background-color: green;
         font-size: 900;
         margin-top: 5em;
