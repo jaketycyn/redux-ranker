@@ -24,7 +24,7 @@ const BotNavWrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
   justify-content: space-between;
-  background-color: ${(props) => props.theme.colors.mainDark};
+  background-color: ${(props) => props.theme.colors.mainBlack};
   /* For anchoring it to the bottom of the page */
   position: fixed;
   left: 0;
@@ -51,11 +51,16 @@ const StyledLink = styled(Link)`
   text-transform: uppercase;
   text-decoration: none;
   font-weight: bold;
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.mainLighter};
+    color: ${(props) => props.theme.colors.mainBlack};
+  }
 `;
 
 //gives button props to the link
 const StyledButton = styled(StyledLink)`
-  color: ${(props) => props.theme.colors.errorRed};
+  color: ${(props) => props.theme.colors.whiteColor};
 `;
 
 const BotNavbar = () => {

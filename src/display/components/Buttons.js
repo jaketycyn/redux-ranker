@@ -8,12 +8,13 @@ const StyledButton = styled.button`
   text-align:center;
   background: #ffffff;
   line-height: 0;
-  color: #404040 !important;
+  color: black !important;
   font-weight: 800;
   font-size: .5rem;
   text-transform: uppercase;
   -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.2);
   -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.2);
+  background-color: ${(props) => props.theme.colors.whiteColor};
   /* example for changing one style property based on a property call of an item in this case primary:
   background-color: ${(props) => (props.primary ? "red" : "white")}; */
 
@@ -28,9 +29,8 @@ const StyledButton = styled.button`
   
 
   &:hover {
-    color: #f8efe8 !important;
-    background-color: #8dccd3 !important;
-  background: none;
+    color: ${(props) => props.theme.colors.mainBlack}; 
+    background-color: ${(props) => props.theme.colors.main};
   -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
   -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
   
@@ -43,7 +43,7 @@ const StyledButton = styled.button`
       height: 2em;
       margin: 0.25em;
       padding: 1em;
-      background-color: ${(props) => props.theme.colors.secondary};
+
       font-size: 900;
       font-weight: 800;
       align-items: center;
@@ -56,7 +56,7 @@ const StyledButton = styled.button`
       css`
         width: 7rem;
         height: 3rem;
-        background-color: ${(props) => props.theme.colors.secondary};
+
         font-size: 900;
         margin-top: 5em;
         margin: 1em;
@@ -69,7 +69,7 @@ const StyledButton = styled.button`
       height: 2em;
       margin: 0.25em;
       padding: 1em;
-      background-color: ${(props) => props.theme.colors.main};
+
       font-size: 900;
       font-weight: 800;
       align-items: center;
@@ -110,7 +110,8 @@ const StyledReviewButton = styled.button`
   text-align: center;
   background: white;
   line-height: 0;
-  color: #404040 !important;
+  color: black !important;
+  background-color: ${(props) => props.theme.colors.whiteColor};
   font-weight: 800;
   font-size: 0.5rem;
   text-transform: uppercase;
@@ -118,8 +119,8 @@ const StyledReviewButton = styled.button`
   -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.2);
 
   &:hover {
-    color: #f8efe8 !important;
-    background-color: #8dccd3 !important;
+    color: ${(props) => props.theme.colors.mainBlack} !important;
+    background-color: ${(props) => props.theme.colors.main} !important;
     background: none;
     -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
     -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
@@ -143,8 +144,6 @@ const StyledReviewButton = styled.button`
   ${({ remove }) =>
     remove &&
     css`
-      background-color: red;
-      font-size: 900;
       margin-top: 5em;
       margin: 1em;
     `}
@@ -152,16 +151,14 @@ const StyledReviewButton = styled.button`
   ${({ reRank }) =>
     reRank &&
     css`
-      background-color: green;
-      font-size: 900;
       margin-top: 5em;
       margin: 1em;
     `}
 `;
 
-export const ReviewPageButton = ({ remove, reRank, children }) => {
+export const ReviewPageButton = ({ remove, reRank, onClick, children }) => {
   return (
-    <StyledReviewButton remove={remove} reRank={reRank}>
+    <StyledReviewButton remove={remove} reRank={reRank} onClick={onClick}>
       {children}
     </StyledReviewButton>
   );

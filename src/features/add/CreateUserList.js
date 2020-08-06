@@ -24,7 +24,15 @@ const CreateUserList = () => {
         //c32b7d32a9f8362ea4ff9e65f33225d1
       );
 
-      setItems(result.data.results);
+      //simple filter to remove non image results
+      const APIresults = result.data.results;
+      const filteredResults = APIresults.filter(
+        (item) => item.poster_path !== null
+      );
+      // console.log(filteredResults);
+      // console.log("api results");
+      // console.log(APIresults);
+      setItems(filteredResults);
       setIsLoading(false);
     };
 
@@ -32,6 +40,7 @@ const CreateUserList = () => {
   }, [itemQuery]);
   // component that use to be below taking out to test css scaling
   //<Search getQuery={(q) => setItemQuery(q)} />
+  console.log(items);
   return (
     <ItemGridWrapper>
       <Search getQuery={(q) => setItemQuery(q)} />

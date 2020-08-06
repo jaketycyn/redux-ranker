@@ -52,7 +52,7 @@ const StyledMovieCardDiv = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0.25rem;
-
+  background-color: ${(props) => props.theme.colors.whiteColor};
   overflow: hidden;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
 

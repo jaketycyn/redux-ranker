@@ -4,9 +4,10 @@ import styled, { css } from "styled-components";
 const StyleBaseDiv = styled.div`
   display: grid;
   grid-template-columns: minmax(6.25em, 20%) 1fr;
+  grid-gap: 2px;
   margin: 0.1rem;
   overflow: hidden;
-  background-color: ${(props) => props.theme.colors.mainLight};
+  background-color: ${(props) => props.theme.colors.whiteColor};
   width: 100%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
 
@@ -75,6 +76,7 @@ export const GreaterGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   padding-bottom: 2em;
+  background-color: ${(props) => props.theme.colors.mainBlack};
 
   @media ${(props) => props.theme.mediaQueries.md} {
     grid-template-columns: repeat(auto-fill, minmax(19em, 1fr));
