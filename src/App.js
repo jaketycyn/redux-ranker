@@ -31,6 +31,8 @@ function App() {
 const AppWrapper = styled.div`
   display: block;
   grid-template-columns: 95% 5%;
+  background-color: ${(props) => props.theme.colors.mainBlack};
+  height: 100vh;
 `;
 
 export default App;

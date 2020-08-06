@@ -16,7 +16,7 @@ import { StyledTitle } from "../../display/components/Text";
 const RankedReviewGridWrapper = styled.div`
   display: grid;
   grid-template-columns: 1;
-  background-color: lightseagreen;
+  background-color: ${(props) => props.theme.colors.mainBlack};
   align-items: center;
   justify-items: center;
   padding-bottom: 2em;
@@ -25,7 +25,7 @@ const RankedReviewGridWrapper = styled.div`
 const RankedItemWrapper = styled.div`
   display: grid;
   grid-template-columns: 5% 95%;
-  background-color: pink;
+  background-color: ${(props) => props.theme.colors.mainLighter};
 `;
 
 const StyledBottomDivLeftButton = styled.div`

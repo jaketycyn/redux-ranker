@@ -5,20 +5,21 @@ import {
   movielistSelector,
 } from "../../redux/slices/movielistSlice";
 import { Movie } from "./Movie";
-import RankedItemsDisplay from "../review/RankedItemsDisplay";
-import useStyles from "../../display/styles/MUIstyles";
-import Grid from "@material-ui/core/Grid";
 import styled from "styled-components";
 
 const UnRankedWrapper = styled.div`
   display: grid;
   grid-template-columns: 1;
   grid-template-rows: 6% 47% 47%;
-  background-color: pink;
   align-items: center;
   justify-items: center;
   padding-bottom: 2em;
   height: 100vh;
+  color: #e9ebea;
+`;
+
+const styledH1 = styled.h1`
+  color: #e9ebea;
 `;
 
 const CombatantOneWrapper = styled.div`
@@ -43,6 +44,7 @@ const EncombantWrapper = styled.div`
   justify-items: center;
   padding-bottom: 2em;
   height: 100vh;
+  color: #e9ebea;
 `;
 
 const RenderMoviesDiv = styled.div`
@@ -50,11 +52,15 @@ const RenderMoviesDiv = styled.div`
 `;
 
 const StyledFinishedText = styled.div`
-  margin: 20%;
+  margin-top: 25%;
+  margin-left: 25%;
+  margin-right: 25%;
   position: absolute;
+  text-align: center;
   align-items: center;
   justify-items: center;
   padding-bottom: 2em;
+  color: #e9ebea;
 `;
 
 const MovieList = () => {

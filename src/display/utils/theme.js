@@ -3,7 +3,7 @@ const theme = {
     main: "#d09760",
     mainDark: "#915f2d",
     mainLight: "#e2b080",
-    mainLigher: "#f0b676",
+    mainLighter: "#FDC693",
     mainBlack: "#232222",
     darkMain: "#292730",
     darkDarker: "#2b2929",
