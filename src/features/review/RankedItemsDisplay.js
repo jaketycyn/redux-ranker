@@ -99,7 +99,7 @@ const RankedItemsDisplay = () => {
   };
 
   let ranking = 1;
-
+//test//
   if (view) {
     return (
       <RankedReviewGridWrapper>
