@@ -112,9 +112,9 @@ const RankedItemsDisplay = () => {
                 <StyledBaseDiv>
                   <StyledTitle>{movie.title}</StyledTitle>
                   <StyledBottomDivLeftButton>
-                    <Button reRank onClick={() => reRankItem(movie.id)}>
+                    <ReviewPageButton reRank onClick={() => reRankItem(movie.id)}>
                       ReRank
-                    </Button>
+                    </ReviewPageButton>
                   </StyledBottomDivLeftButton>
                   <StyledBottomDivRightButton>
                     <ReviewPageButton
