@@ -23,7 +23,7 @@ export const StyledBaseTitle = styled.h1`
     font-size: 1.5rem;
   }
   @media ${(props) => props.theme.mediaQueries.xl} {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
 `;
 

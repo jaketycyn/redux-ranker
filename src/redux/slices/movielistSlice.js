@@ -31,8 +31,8 @@ export const movielistSlice = createSlice({
       const OptionB = state.movies.find(
         (element) => element.id === action.payload.combatants[1].id
       );
-      const startTopRank = 1000;
-      const startBotRank = 10000;
+      const startTopRank = 100000;
+      const startBotRank = 1000000000;
       //already sorted and passed in via props sorted by rank
       const rankedItems = action.payload.rankedItems;
       //removes proxy

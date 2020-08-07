@@ -48,7 +48,7 @@ const ItemGridCard = ({
 
   //adding Ellipsis for multiple line titles
 
-  const newTitle = title.slice(0, 45);
+  const newTitle = title.slice(0, 46);
   //console.log(newOverview);
   const newTitleIndex = newTitle.lastIndexOf(" ");
   const resliceTitle = newTitle.slice(0, newOverviewIndex);
@@ -56,11 +56,10 @@ const ItemGridCard = ({
 
   //console.log(finalOverview);
   //const newText = overview.find(" ")
-
   /* removed for now can add back in on backside of card or when i want to add in more sizes/showing txt only on desktop
   <StyledOverview>{finalOverview}</StyledOverview> */
   const renderItemCard = () => {
-    if (title.length >= 45) {
+    if (title.length >= 46) {
       return (
         <StyledBaseDiv name="BaseDiv">
           <StyledImg

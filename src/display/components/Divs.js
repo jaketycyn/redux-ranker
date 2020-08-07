@@ -67,7 +67,7 @@ export const StyledBaseDiv = ({ primary, reviewPage, children }) => {
 export const StyledContentDiv = styled.div`
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: 65% 35%;
+  grid-template-rows: 70% 30%;
   max-height: 30em;
 `;
 
