@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // import Card from "@material-ui/core/Card";
 // import CardContent from "@material-ui/core/CardContent";
 // import CardMedia from "@material-ui/core/CardMedia";
@@ -12,6 +12,7 @@ import { Button } from "./Buttons";
 import { StyledBaseDiv, StyledContentDiv } from "./Divs";
 import { StyledImg } from "./Imgs";
 import { StyledTitle } from "./Text";
+import { deleteMovie } from "../../redux/slices/movielistSlice";
 
 import styled from "styled-components";
 
@@ -36,9 +37,16 @@ const ItemGridCard = ({
   addItem,
   deleteItem,
 }) => {
+  const [added, setAdded] = useState(false);
   //const movieYear = releaseYear.slice(0, 4);
 
   //adding ellipsesis for multiple line overviews
+  const addItemToList = () => {
+    addItem(id, title, backImg);
+    setAdded(!added);
+    console.log(added);
+    console.log("hey");
+  };
 
   const newOverview = overview.slice(0, 125);
   //console.log(newOverview);
@@ -70,7 +78,12 @@ const ItemGridCard = ({
           <StyledContentDiv>
             <StyledTitle>{ellipsisTitle}</StyledTitle>
             <StyledBottomDivLeftButton>
-              <Button add onClick={(e) => addItem(id, title, backImg)}>
+              <Button
+                add
+                added={added}
+                onClick={(e) => addItemToList}
+                style={{ backgroundColor: "red" }}
+              >
                 Add
               </Button>
             </StyledBottomDivLeftButton>
@@ -93,9 +106,23 @@ const ItemGridCard = ({
           <StyledContentDiv>
             <StyledTitle>{title}</StyledTitle>
             <StyledBottomDivLeftButton>
-              <Button add onClick={(e) => addItem(id, title, backImg)}>
-                Add
-              </Button>
+              {added ? (
+                <Button
+                  add
+                  onClick={(e) => addItemToList(id, title, backImg)}
+                  added={added}
+                >
+                  Delete
+                </Button>
+              ) : (
+                <Button
+                  add
+                  onClick={(e) => addItemToList(id, title, backImg)}
+                  added={added}
+                >
+                  Add
+                </Button>
+              )}
             </StyledBottomDivLeftButton>
             <StyledBottomDivRightButton>
               <Button details onClick={() => console.log("give me more deats")}>
