@@ -91,6 +91,7 @@ const MovieList = () => {
   const A = "A";
   const B = "B";
 
+  //movies pulls from the Redux state list that comprises of all movies
   const unrankedItems = movies.filter((item) => item.rank === 0);
   const rankedItems = movies.filter((item) => item.rank >= 1);
   const rankSortedItems = rankedItems
@@ -103,6 +104,7 @@ const MovieList = () => {
 
   const unrankedCombatant = unrankedItems.slice(0, 1);
 
+  //these are deprecated variables for early checks/potential ways of using props to disperse information
   const rankedIncumbent = rankSortedItems.slice(
     nextChallengerIndex,
     nextChallengerIndex + 1
@@ -120,6 +122,7 @@ const MovieList = () => {
     if (hasErrors) return <p>Unable to display movies</p>;
 
     //unranked matchup display 2 unranked movies - after one is selected, both get assigned ranks
+
     if (rankedItems.length === 0) {
       const unRankedMatchup = unrankedItems.slice(0, 2);
       console.log("Phase 1: Unranked vs Unranked");
@@ -150,13 +153,17 @@ const MovieList = () => {
           </CombatantTwoWrapper>
         </UnRankedWrapper>
       );
-    } else if (rankedItems.length >= 1) {
+    }
+    //As soon as an item has any rank the intial ranking will be done in the 'Unranked' vs 'Ranked' matchup.
+    else if (rankedItems.length >= 1) {
       //dont know why this really exists - investigate later
       if (activeItem.length === 1) {
         // const activeRankedMovieBotBoundIndex = rankSortedItems.findIndex(
         //   (movies) => movies.rank === activeItem[0].botBound
         // );
         // ! winners bracket
+        // .active denotes the current item being ranked's status
+        // when .active is removed it'll no longer going through ranking as its rank is set
         if (activeItem[0].active === "won") {
           console.log("Phase 3.1: ChallengerRanked(Won) vs Ranked");
 
@@ -310,6 +317,9 @@ const MovieList = () => {
               (item) => item.rank === activeItem[0].botBound
             );
 
+            console.log("botBoundIndex");
+            console.log(botBoundIndex);
+
             const newRankedMoviesList = rankSortedItems.slice(
               topBoundIndex + 1,
               botBoundIndex
@@ -324,7 +334,10 @@ const MovieList = () => {
             console.log("nextRankedIncumbentIndex");
             console.log(nextRankedIncumbentIndex);
 
-            if (nextRankedIncumbentIndex === 0) {
+            if (
+              nextRankedIncumbentIndex === 0 ||
+              nextRankedIncumbentIndex === 1
+            ) {
               let nextRankedIncumbent = newRankedMoviesList.slice(
                 nextRankedIncumbentIndex,
                 nextRankedIncumbentIndex + 1

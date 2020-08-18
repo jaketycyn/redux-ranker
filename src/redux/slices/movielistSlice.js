@@ -22,6 +22,8 @@ export const movielistSlice = createSlice({
       console.log(state.movies);
     },
     changeRank: (state, action, id) => {
+      //Items are now assigned a potential rank comprised from the actual ranks of items it faces against. Once an item reaches an exit point it is assigned a rank = to its potential rank.
+
       // payload
       // console.log("Redux action.payload:  ");
       // console.log(action.payload);
