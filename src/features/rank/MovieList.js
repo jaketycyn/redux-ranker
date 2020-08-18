@@ -309,6 +309,8 @@ const MovieList = () => {
             const botBoundIndex = rankSortedItems.findIndex(
               (item) => item.rank === activeItem[0].botBound
             );
+            console.log("botBoundIndex");
+            console.log(botBoundIndex);
 
             const newRankedMoviesList = rankSortedItems.slice(
               topBoundIndex + 1,
@@ -324,7 +326,7 @@ const MovieList = () => {
             console.log("nextRankedIncumbentIndex");
             console.log(nextRankedIncumbentIndex);
 
-            if (nextRankedIncumbentIndex === 0) {
+            if (nextRankedIncumbentIndex === 0  || nextRankedIncumbentIndex === 1) {
               let nextRankedIncumbent = newRankedMoviesList.slice(
                 nextRankedIncumbentIndex,
                 nextRankedIncumbentIndex + 1
