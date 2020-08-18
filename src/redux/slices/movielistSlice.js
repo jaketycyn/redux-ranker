@@ -31,12 +31,17 @@ export const movielistSlice = createSlice({
       const OptionB = state.movies.find(
         (element) => element.id === action.payload.combatants[1].id
       );
-      const startTopRank = 100000;
-      const startBotRank = 1000000000;
+      const startTopRank = 1000;
+      const startBotRank = 9999;
       //already sorted and passed in via props sorted by rank
       const rankedItems = action.payload.rankedItems;
-      //removes proxy
+      const totalRankedItems = action.payload.totalRankedItems;
 
+      //removes proxy
+      console.log("ranked items below");
+      console.log(rankedItems);
+      console.log("totalRankedItems  below");
+      console.log(totalRankedItems);
       // console.log(JSON.stringify(OptionA, undefined, 2));
       // console.log(JSON.stringify(OptionB, undefined, 2));
 
@@ -44,75 +49,145 @@ export const movielistSlice = createSlice({
 
       if (OptionA.rank === 0 && OptionB.rank === 0)
         if (action.payload.option === "A") {
-          console.log("INITIAL RANKING: Option A selected");
+          console.log(
+            "ORIGINAL INITIAL RANKING: " +
+              OptionA.title +
+              " beat " +
+              OptionB.title
+          );
           OptionA.rank = startTopRank;
           OptionB.rank = startBotRank;
         } else if (action.payload.option === "B") {
-          console.log("INITIAL RANKING: Option B selected");
+          console.log(
+            "ORIGINAL INITIAL RANKING: " +
+              OptionB.title +
+              " beat " +
+              OptionA.title
+          );
           OptionA.rank = startBotRank;
           OptionB.rank = startTopRank;
         } else {
-          console.log("INITIAL RANKING ERROR!!!");
+          console.log("ERROR DURING INITIAL RANKING!!!");
         }
       //SUBSEQUENT RANKINGS - UNRANKED VS RANKED
-      else if (OptionA.rank === 0 && OptionB.rank !== 0) {
-        const index = rankedItems.findIndex(
+      //Only assign a rank here as this is the initial ranking point - only ever change the rank from this point onwards as an item is exiting from 'active' status
+      else if (
+        OptionA.rank === 0 &&
+        OptionB.rank !== 0 &&
+        OptionA.potentialRank === 0
+      ) {
+        const bIndex = rankedItems.findIndex(
           (movies) => movies.rank === OptionB.rank
         );
         OptionA.history = [];
         OptionA.history.push(OptionB.id);
         if (action.payload.option === "A") {
           //CHALLENGER SELECTED
-          console.log("SUBSEQUENT RANKING: Option A Selected - Challenger");
+          console.log(
+            "SUBSEQUENT INITIAL RANKING: " +
+              OptionA.title +
+              " beat " +
+              OptionB.title
+          );
           const newRank =
-            (rankedItems[index - 1].rank + rankedItems[index].rank) / 2;
-          OptionA.rank = newRank;
+            (rankedItems[bIndex - 1].rank + rankedItems[bIndex].rank) / 2;
+          OptionA.potentialRank = newRank;
           OptionA.active = "won";
+          OptionA.botBound = OptionB.rank;
         }
         //INCUMBENT SELECTED
         else if (action.payload.option === "B") {
-          console.log("SUBSEQUENT RANKING: Option B Selected - Incumbent");
-          OptionA.active = "lost";
-          if (rankedItems.length === index + 1) {
+          if (rankedItems.length === bIndex + 1) {
             console.log(
-              "Max Index reached - this item is the new bottom ranked - EXIT LOOP"
+              "SUBSEQUENT INITIAL RANKING: Max Index reached - this item, " +
+                OptionA.title +
+                " is the new bottom ranked item- EXIT LOOP"
             );
-            OptionA.rank = rankedItems[index].rank * 2;
+            OptionA.rank = rankedItems[bIndex].rank * 2;
             delete OptionA.active;
           } else {
+            console.log(
+              "SUBSEQUENT INITIAL RANKING: " +
+                OptionB.title +
+                " beat " +
+                OptionA.title
+            );
+            OptionA.active = "lost";
             const lostNewRank =
-              (rankedItems[index].rank + rankedItems[index + 1].rank) / 2;
-            OptionA.rank = lostNewRank;
+              (rankedItems[bIndex].rank + rankedItems[bIndex + 1].rank) / 2;
+            OptionA.potentialRank = lostNewRank;
+            OptionA.topBound = OptionB.rank;
           }
         } else {
           console.log("SUBSEQUENT RANKING: ERROR!!!");
         }
       }
       // RANKED vs RANKED
-      else if (OptionA.rank > 0 && OptionB.rank > 0) {
-        const index = rankedItems.findIndex(
+      else if (OptionA.potentialRank > 0 && OptionB.rank > 0) {
+        const bIndex = rankedItems.findIndex(
           (movies) => movies.rank === OptionB.rank
         );
+        console.log("bIndex");
+        console.log(bIndex);
+
+        const bTotalIndex = totalRankedItems.findIndex(
+          (movies) => movies.rank === OptionB.rank
+        );
+
+        console.log("bTotalIndex");
+        console.log(bTotalIndex);
+
         if (action.payload.option === "A") {
           // ! A SELECTED
           console.log("RANKED VS RANKED: A SELECTED -->");
           OptionA.active = "won";
-          if (OptionA.history.includes(OptionB.id)) {
-            console.log(console.log("EXIT THE LOOP WE GOT HIM"));
-            delete OptionA.active;
-          } else if (index === 0) {
-            const newTopRank = rankedItems[index].rank / 2;
+          OptionA.botBound = OptionB.rank;
+          //EXIT
+          if (
+            bIndex === 0 &&
+            OptionA.potentialRank < totalRankedItems[1].rank
+          ) {
+            const newTopRank = rankedItems[bIndex].rank / 2;
             OptionA.rank = newTopRank;
             delete OptionA.active;
-          } else if (rankedItems[0].rank === OptionA.rank) {
-            console.log("WE SHOULD KICK THIS OUT OF THE LOOP - redux slice");
+            console.log(
+              "SUBSEQUENT INITIAL RANKING: Max Index reached - this item, " +
+                OptionA.title +
+                " is the new top ranked item- EXIT LOOP"
+            );
+          } else if (bIndex === 0) {
+            OptionA.rank = OptionA.potentialRank;
             delete OptionA.active;
-          } else {
+            console.log(
+              "SUBSEQUENT RANKING - NEXT OPPONENT ALREADY FACED EXITING LOOP: " +
+                OptionA.title +
+                " beat " +
+                OptionB.title
+            );
+
+            // bIndex = 0 now prevents facing previous "bound" opponents due to removing the ranking of our 'incumbent' until it has exited the loop of ranking
+          }
+          // else if (aIndex === 0) {
+          //   //EXIT
+          //   const newTopRank = rankedItems[bIndex].rank / 2;
+          //   OptionA.rank = newTopRank;
+          //   delete OptionA.active;
+          //   console.log(
+          //     "SUBSEQUENT RANKING - NEXT OPPONENT ALREADY FACED EXITING LOOP: " +
+          //       OptionA.title +
+          //       " beat " +
+          //       OptionB.title
+          //   );
+          // }
+          else {
             const newRank =
-              (rankedItems[index - 1].rank + rankedItems[index].rank) / 2;
-            OptionA.rank = newRank;
+              (rankedItems[bIndex - 1].rank + rankedItems[bIndex].rank) / 2;
+            OptionA.potentialRank = newRank;
+            OptionA.botBound = OptionB.rank;
             OptionA.history.push(OptionB.id);
-            console.log("Option A Selected - Challenger");
+            console.log(
+              "SUBSEQUENT RANKING: " + OptionA.title + " beat " + OptionB.title
+            );
           }
         }
         // ! B SELECTED
@@ -120,26 +195,67 @@ export const movielistSlice = createSlice({
           console.log("RANKED VS RANKED: B SELECTED -->");
           console.log(rankedItems);
           OptionA.active = "lost";
-          if (OptionA.history.includes(OptionB.id)) {
-            console.log(console.log("EXIT THE LOOP WE GOT HIM"));
+          OptionA.topBound = OptionB.rank;
+          //
+          if (
+            bIndex === 0 &&
+            OptionA.potentialRank < totalRankedItems[1].rank
+          ) {
+            OptionA.rank = OptionA.potentialRank;
             delete OptionA.active;
-          } else if (index === 0) {
+            console.log(
+              "SUBSEQUENT RANKING - LOSING TO TOP RANK: " +
+                OptionB.title +
+                " beat " +
+                OptionA.title
+            );
+          } else if (
+            OptionB.rank === totalRankedItems[totalRankedItems.length - 1].rank
+          ) {
             delete OptionA.active;
-            console.log("index 0 event loss occured - lost to top dawg");
-          } else if (index === rankedItems.length - 1) {
-            delete OptionA.active;
-            OptionA.rank = rankedItems[index].rank * 2;
-          }
-          // if OptionA.rank is the bottom of the ranked items then delete active
-          else if (rankedItems[rankedItems.length - 1].rank === OptionA.rank) {
-            console.log("BOTTOM RANKED ITEM KICK IT OUT");
-            delete OptionA.active;
-          } else {
+            OptionA.rank = rankedItems[bIndex].rank * 2;
+            console.log(
+              "SUBSEQUENT RANKING - LOST TO BOTTOM RANKING: " +
+                OptionB.title +
+                " beat " +
+                OptionA.title
+            );
+          } else if (bIndex === 0) {
             const lostNewRank =
-              (rankedItems[index].rank + rankedItems[index + 1].rank) / 2;
+              (totalRankedItems[bTotalIndex].rank +
+                totalRankedItems[bTotalIndex + 1].rank) /
+              2;
             OptionA.rank = lostNewRank;
+            delete OptionA.active;
+            console.log(
+              "SUBSEQUENT RANKING - NEXT OPPONENT ALREADY FACED EXITING LOOP: " +
+                OptionB.title +
+                " beat " +
+                OptionA.title
+            );
+          }
+          //else if (
+          //   // if OptionA.rank is the bottom of the ranked items then delete active
+          //   aIndex - bIndex === 1 &&
+          //   rankedItems[rankedItems.length - 1].rank === OptionA.rank
+          // ) {
+          //   console.log(
+          //     "SUBSEQUENT RANKING - FOUND ITS SPOT - FACED ALL MATCHUPS: " +
+          //       OptionB.title +
+          //       " beat " +
+          //       OptionA.title
+          //   );
+          //   delete OptionA.active;
+          // }
+          else {
+            const lostNewRank =
+              (rankedItems[bIndex].rank + rankedItems[bIndex + 1].rank) / 2;
+            OptionA.potentialRank = lostNewRank;
+            OptionA.topBound = OptionB.rank;
             OptionA.history.push(OptionB.id);
-            console.log("Option B Selected - Incumbent");
+            console.log(
+              "SUBSEQUENT RANKING: " + OptionB.title + " beat " + OptionA.title
+            );
           }
         } else {
           console.log("ChangeRank input not working as intended");
@@ -151,7 +267,7 @@ export const movielistSlice = createSlice({
         //push is an array method but we're dealing with an object
         // state.push(payload);
         const { id, title, backImg } = action.payload;
-        state.movies.push({ id, title, backImg, rank: 0 });
+        state.movies.push({ id, title, backImg, rank: 0, potentialRank: 0 });
       },
     },
     deleteMovie: (state, { payload }) => {
@@ -161,11 +277,20 @@ export const movielistSlice = createSlice({
         state.movies.splice(index, 1);
       }
     },
+    deleteAllMovies: (state, { payload }) => {
+      const movieListLength = state.movies.length;
+      state.movies.splice(0, movieListLength);
+    },
     reRankMovie: (state, { payload }) => {
       const index = state.movies.findIndex((movie) => movie.id === payload);
       console.log(index);
 
       state.movies[index].rank = 0;
+      state.movies[index].potentialRank = 0;
+      state.movies[index].botBound = null;
+      state.movies[index].topBound = null;
+      state.movies[index].active = null;
+      state.movies[index].history = [];
     },
   },
 });
@@ -178,6 +303,7 @@ export const {
   changeRank,
   addMovie,
   deleteMovie,
+  deleteAllMovies,
   reRankMovie,
 } = movielistSlice.actions;
 

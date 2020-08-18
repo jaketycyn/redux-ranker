@@ -5,7 +5,14 @@ import styled from "styled-components";
 
 import { Button } from "../../display/components/Buttons";
 
-export const Movie = ({ item, id, option, combatants, rankedItems }) => {
+export const Movie = ({
+  item,
+  id,
+  option,
+  combatants,
+  rankedItems,
+  totalRankedItems,
+}) => {
   const dispatch = useDispatch();
 
   function updateRank() {
@@ -15,6 +22,7 @@ export const Movie = ({ item, id, option, combatants, rankedItems }) => {
         option: option,
         combatants: combatants,
         rankedItems: rankedItems,
+        totalRankedItems: totalRankedItems,
       })
     );
   }

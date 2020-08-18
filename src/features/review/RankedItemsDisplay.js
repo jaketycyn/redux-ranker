@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   fetchMovies,
   deleteMovie,
+  deleteAllMovies,
   reRankMovie,
   movielistSelector,
 } from "../../redux/slices/movielistSlice";
@@ -81,6 +82,12 @@ const RankedItemsDisplay = () => {
 
   //custom remove prompt
 
+  const deleteEverything = () => {
+    if (window.confirm("Do you want to delete everything?")) {
+      dispatch(deleteAllMovies());
+    }
+  };
+
   const reRankItem = (id) => {
     if (window.confirm("Do you want to rerank this item?")) {
       dispatch(reRankMovie(id));
@@ -99,7 +106,7 @@ const RankedItemsDisplay = () => {
   };
 
   let ranking = 1;
-//test//
+  //test//
   if (view) {
     return (
       <RankedReviewGridWrapper>
@@ -112,7 +119,10 @@ const RankedItemsDisplay = () => {
                 <StyledBaseDiv>
                   <StyledTitle>{movie.title}</StyledTitle>
                   <StyledBottomDivLeftButton>
-                    <ReviewPageButton reRank onClick={() => reRankItem(movie.id)}>
+                    <ReviewPageButton
+                      reRank
+                      onClick={() => reRankItem(movie.id)}
+                    >
                       ReRank
                     </ReviewPageButton>
                   </StyledBottomDivLeftButton>
@@ -136,6 +146,8 @@ const RankedItemsDisplay = () => {
   return (
     <RankedReviewGridWrapper>
       <button onClick={() => toggleListView()}>Hide Images</button>
+      <button onClick={() => deleteEverything()}>Delete Everything</button>
+
       <div display={false}>
         {itemsSortedByRank.map((movie) => {
           return (

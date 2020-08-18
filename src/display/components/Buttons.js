@@ -54,11 +54,10 @@ const StyledButton = styled.button`
     ${({ choose }) =>
       choose &&
       css`
-        width: 7rem;
-        height: 3rem;
-
+        width: 7em;
+        height: 3em;
         font-size: 900;
-        margin-top: 5em;
+        margin-top: 0.25em;
         margin: 1em;
       `}
 
@@ -76,6 +75,8 @@ const StyledButton = styled.button`
       align-self: center;
       justify-self: center;
     `}
+
+    
 
 
 /*Media Queries */
