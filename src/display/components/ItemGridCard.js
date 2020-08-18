@@ -81,7 +81,7 @@ const ItemGridCard = ({
               <Button
                 add
                 added={added}
-                onClick={(e) => addItemToList}
+                onClick={(e) => addItemToList(id, title, backImg)}
                 style={{ backgroundColor: "red" }}
               >
                 Add

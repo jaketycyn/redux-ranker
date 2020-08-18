@@ -18,7 +18,7 @@ const UnRankedWrapper = styled.div`
   color: #e9ebea;
 `;
 
-const styledH1 = styled.h1`
+const StyledH1 = styled.h1`
   color: #e9ebea;
 `;
 
@@ -97,7 +97,8 @@ const MovieList = () => {
     .slice()
     // false = reversed order ; lowest # is highest rank
     .sort(sort_by("rank", false, parseInt));
-
+  console.log("ranked sorted items:");
+  console.log(rankSortedItems);
   const nextChallengerIndex = Math.floor(rankSortedItems.length / 2);
 
   const unrankedCombatant = unrankedItems.slice(0, 1);
@@ -108,7 +109,7 @@ const MovieList = () => {
   );
   const combatants = unrankedCombatant.concat(rankedIncumbent);
 
-  const activeRankedItem = rankSortedItems.filter(
+  const activeItem = unrankedItems.filter(
     (item) => item.active === "won" || item.active === "lost"
   );
 
@@ -150,39 +151,120 @@ const MovieList = () => {
         </UnRankedWrapper>
       );
     } else if (rankedItems.length >= 1) {
-      if (activeRankedItem.length === 1) {
-        const activeRankedMovieIndex = rankSortedItems.findIndex(
-          (movies) => movies.rank === activeRankedItem[0].rank
-        );
-        console.log("active rank movie index: " + activeRankedMovieIndex);
-
+      //dont know why this really exists - investigate later
+      if (activeItem.length === 1) {
+        // const activeRankedMovieBotBoundIndex = rankSortedItems.findIndex(
+        //   (movies) => movies.rank === activeItem[0].botBound
+        // );
         // ! winners bracket
-        if (activeRankedItem[0].active === "won") {
+        if (activeItem[0].active === "won") {
           console.log("Phase 3.1: ChallengerRanked(Won) vs Ranked");
+
+          const botBoundIndex = rankSortedItems.findIndex(
+            (item) => item.rank === activeItem[0].botBound
+          );
+
+          console.log("botBoundIndex");
+          console.log(botBoundIndex);
+
+          if (activeItem[0].topBound) {
+            const topBoundIndex = rankSortedItems.findIndex(
+              (item) => item.rank === activeItem[0].topBound
+            );
+
+            const newRankedMoviesList = rankSortedItems.slice(
+              topBoundIndex + 1,
+              botBoundIndex
+            );
+
+            console.log("newRankedMoviesList");
+            console.log(newRankedMoviesList);
+
+            const nextRankedIncumbentIndex = Math.round(
+              newRankedMoviesList.length / 2
+            );
+
+            console.log("nextRankedIncumbentIndex");
+            console.log(nextRankedIncumbentIndex);
+
+            const nextRankedIncumbent = newRankedMoviesList.slice(
+              nextRankedIncumbentIndex - 1,
+              nextRankedIncumbentIndex
+            );
+            console.log("nextRankedIncumbent");
+            console.log(nextRankedIncumbent);
+
+            const updatedCombatants = activeItem.concat(nextRankedIncumbent);
+
+            console.log("updatedCombatants");
+            console.log(updatedCombatants);
+
+            return (
+              <EncombantWrapper>
+                <styledH1>Which is better?</styledH1>
+                <CombatantOneWrapper name="CombatantOneWrapper">
+                  {activeItem.map((item) => (
+                    <Movie
+                      key={item.id}
+                      item={item}
+                      id={item.id}
+                      active={item.active}
+                      option={A}
+                      combatants={updatedCombatants}
+                      rankedItems={newRankedMoviesList}
+                      totalRankedItems={rankSortedItems}
+                    />
+                  ))}
+                </CombatantOneWrapper>
+                <CombatantTwoWrapper name="CombatantTwoWrapper">
+                  {nextRankedIncumbent.map((item) => (
+                    <Movie
+                      key={item.id}
+                      item={item}
+                      id={item.id}
+                      option={B}
+                      combatants={updatedCombatants}
+                      rankedItems={newRankedMoviesList}
+                      totalRankedItems={rankSortedItems}
+                    />
+                  ))}
+                </CombatantTwoWrapper>
+              </EncombantWrapper>
+            );
+          }
 
           const newRankedMoviesList = rankSortedItems.slice(
             0,
-            activeRankedMovieIndex + 1
+            botBoundIndex + 1
           );
+
+          console.log("newRankedMoviesList");
+          console.log(newRankedMoviesList);
 
           const nextRankedIncumbentIndex = Math.round(
             newRankedMoviesList.length / 2
           );
 
+          console.log("nextRankedIncumbentIndex");
+          console.log(nextRankedIncumbentIndex);
+
           const nextRankedIncumbent = newRankedMoviesList.slice(
             nextRankedIncumbentIndex - 1,
             nextRankedIncumbentIndex
           );
+          console.log("nextRankedIncumbent");
+          console.log(nextRankedIncumbent);
 
-          const updatedCombatants = activeRankedItem.concat(
-            nextRankedIncumbent
-          );
+          const updatedCombatants = activeItem.concat(nextRankedIncumbent);
+
+          console.log("updatedCombatants");
+          console.log(updatedCombatants);
 
           return (
             <EncombantWrapper>
               <styledH1>Which is better?</styledH1>
               <CombatantOneWrapper name="CombatantOneWrapper">
-                {activeRankedItem.map((item) => (
+                {activeItem.map((item) => (
                   <Movie
                     key={item.id}
                     item={item}
@@ -191,6 +273,7 @@ const MovieList = () => {
                     option={A}
                     combatants={updatedCombatants}
                     rankedItems={newRankedMoviesList}
+                    totalRankedItems={rankSortedItems}
                   />
                 ))}
               </CombatantOneWrapper>
@@ -203,6 +286,7 @@ const MovieList = () => {
                     option={B}
                     combatants={updatedCombatants}
                     rankedItems={newRankedMoviesList}
+                    totalRankedItems={rankSortedItems}
                   />
                 ))}
               </CombatantTwoWrapper>
@@ -211,56 +295,236 @@ const MovieList = () => {
         }
 
         // ! losers bracket
-        else if (activeRankedItem[0].active === "lost") {
+        else if (activeItem[0].active === "lost") {
           console.log("Phase 3.2: ChallengerRanked(Lost) vs Ranked");
+
+          const topBoundIndex = rankSortedItems.findIndex(
+            (item) => item.rank === activeItem[0].topBound
+          );
+
+          console.log("topBoundIndex");
+          console.log(topBoundIndex);
+
+          if (activeItem[0].botBound) {
+            const botBoundIndex = rankSortedItems.findIndex(
+              (item) => item.rank === activeItem[0].botBound
+            );
+
+            const newRankedMoviesList = rankSortedItems.slice(
+              topBoundIndex + 1,
+              botBoundIndex
+            );
+
+            console.log("newRankedMoviesList");
+            console.log(newRankedMoviesList);
+
+            const nextRankedIncumbentIndex = Math.floor(
+              newRankedMoviesList.length / 2
+            );
+            console.log("nextRankedIncumbentIndex");
+            console.log(nextRankedIncumbentIndex);
+
+            if (nextRankedIncumbentIndex === 0) {
+              let nextRankedIncumbent = newRankedMoviesList.slice(
+                nextRankedIncumbentIndex,
+                nextRankedIncumbentIndex + 1
+              );
+              console.log("nextRankedIncumbent");
+              console.log(nextRankedIncumbent);
+
+              const updatedCombatants = activeItem.concat(nextRankedIncumbent);
+
+              console.log("updatedCombatants");
+              console.log(updatedCombatants);
+
+              return (
+                <EncombantWrapper>
+                  <StyledH1>Which is better?</StyledH1>
+                  <CombatantOneWrapper name="CombatantOneWrapper">
+                    {activeItem.map((item) => (
+                      <Movie
+                        key={item.id}
+                        item={item}
+                        id={item.id}
+                        active={item.active}
+                        option={A}
+                        combatants={updatedCombatants}
+                        rankedItems={newRankedMoviesList}
+                        totalRankedItems={rankSortedItems}
+                      />
+                    ))}
+                  </CombatantOneWrapper>
+                  <CombatantTwoWrapper name="CombatantTwoWrapper">
+                    {nextRankedIncumbent.map((item) => (
+                      <Movie
+                        key={item.id}
+                        item={item}
+                        id={item.id}
+                        option={B}
+                        combatants={updatedCombatants}
+                        rankedItems={newRankedMoviesList}
+                        totalRankedItems={rankSortedItems}
+                      />
+                    ))}
+                  </CombatantTwoWrapper>
+                </EncombantWrapper>
+              );
+            } else {
+              let nextRankedIncumbent = newRankedMoviesList.slice(
+                nextRankedIncumbentIndex + 1,
+                nextRankedIncumbentIndex + 2
+              );
+              console.log("nextRankedIncumbent");
+              console.log(nextRankedIncumbent);
+
+              const updatedCombatants = activeItem.concat(nextRankedIncumbent);
+
+              console.log("updatedCombatants");
+              console.log(updatedCombatants);
+
+              return (
+                <EncombantWrapper>
+                  <StyledH1>Which is better?</StyledH1>
+                  <CombatantOneWrapper name="CombatantOneWrapper">
+                    {activeItem.map((item) => (
+                      <Movie
+                        key={item.id}
+                        item={item}
+                        id={item.id}
+                        active={item.active}
+                        option={A}
+                        combatants={updatedCombatants}
+                        rankedItems={newRankedMoviesList}
+                        totalRankedItems={rankSortedItems}
+                      />
+                    ))}
+                  </CombatantOneWrapper>
+                  <CombatantTwoWrapper name="CombatantTwoWrapper">
+                    {nextRankedIncumbent.map((item) => (
+                      <Movie
+                        key={item.id}
+                        item={item}
+                        id={item.id}
+                        option={B}
+                        combatants={updatedCombatants}
+                        rankedItems={newRankedMoviesList}
+                        totalRankedItems={rankSortedItems}
+                      />
+                    ))}
+                  </CombatantTwoWrapper>
+                </EncombantWrapper>
+              );
+            }
+          }
+
           const newRankedMoviesList = rankSortedItems.slice(
-            activeRankedMovieIndex,
+            topBoundIndex + 1,
             rankSortedItems.length
           );
+
+          console.log("newRankedMoviesList");
+          console.log(newRankedMoviesList);
 
           const nextRankedIncumbentIndex = Math.floor(
             newRankedMoviesList.length / 2
           );
+          console.log("nextRankedIncumbentIndex");
+          console.log(nextRankedIncumbentIndex);
 
-          const nextRankedIncumbent = newRankedMoviesList.slice(
-            nextRankedIncumbentIndex,
-            nextRankedIncumbentIndex + 1
-          );
+          if (
+            nextRankedIncumbentIndex === 0 ||
+            nextRankedIncumbentIndex === 1
+          ) {
+            let nextRankedIncumbent = newRankedMoviesList.slice(
+              nextRankedIncumbentIndex,
+              nextRankedIncumbentIndex + 1
+            );
+            console.log("nextRankedIncumbent");
+            console.log(nextRankedIncumbent);
 
-          const updatedCombatants = activeRankedItem.concat(
-            nextRankedIncumbent
-          );
+            const updatedCombatants = activeItem.concat(nextRankedIncumbent);
 
-          return (
-            <EncombantWrapper>
-              <styledH1>Which is better?</styledH1>
-              <CombatantOneWrapper name="CombatantOneWrapper">
-                {activeRankedItem.map((item) => (
-                  <Movie
-                    key={item.id}
-                    item={item}
-                    id={item.id}
-                    active={item.active}
-                    option={A}
-                    combatants={updatedCombatants}
-                    rankedItems={newRankedMoviesList}
-                  />
-                ))}
-              </CombatantOneWrapper>
-              <CombatantTwoWrapper name="CombatantTwoWrapper">
-                {nextRankedIncumbent.map((item) => (
-                  <Movie
-                    key={item.id}
-                    item={item}
-                    id={item.id}
-                    option={B}
-                    combatants={updatedCombatants}
-                    rankedItems={newRankedMoviesList}
-                  />
-                ))}
-              </CombatantTwoWrapper>
-            </EncombantWrapper>
-          );
+            console.log("updatedCombatants");
+            console.log(updatedCombatants);
+
+            return (
+              <EncombantWrapper>
+                <StyledH1>Which is better?</StyledH1>
+                <CombatantOneWrapper name="CombatantOneWrapper">
+                  {activeItem.map((item) => (
+                    <Movie
+                      key={item.id}
+                      item={item}
+                      id={item.id}
+                      active={item.active}
+                      option={A}
+                      combatants={updatedCombatants}
+                      rankedItems={newRankedMoviesList}
+                      totalRankedItems={rankSortedItems}
+                    />
+                  ))}
+                </CombatantOneWrapper>
+                <CombatantTwoWrapper name="CombatantTwoWrapper">
+                  {nextRankedIncumbent.map((item) => (
+                    <Movie
+                      key={item.id}
+                      item={item}
+                      id={item.id}
+                      option={B}
+                      combatants={updatedCombatants}
+                      rankedItems={newRankedMoviesList}
+                      totalRankedItems={rankSortedItems}
+                    />
+                  ))}
+                </CombatantTwoWrapper>
+              </EncombantWrapper>
+            );
+          } else {
+            let nextRankedIncumbent = newRankedMoviesList.slice(
+              nextRankedIncumbentIndex + 1,
+              nextRankedIncumbentIndex + 2
+            );
+            console.log("nextRankedIncumbent");
+            console.log(nextRankedIncumbent);
+
+            const updatedCombatants = activeItem.concat(nextRankedIncumbent);
+
+            console.log("updatedCombatants");
+            console.log(updatedCombatants);
+
+            return (
+              <EncombantWrapper>
+                <StyledH1>Which is better?</StyledH1>
+                <CombatantOneWrapper name="CombatantOneWrapper">
+                  {activeItem.map((item) => (
+                    <Movie
+                      key={item.id}
+                      item={item}
+                      id={item.id}
+                      active={item.active}
+                      option={A}
+                      combatants={updatedCombatants}
+                      rankedItems={newRankedMoviesList}
+                      totalRankedItems={rankSortedItems}
+                    />
+                  ))}
+                </CombatantOneWrapper>
+                <CombatantTwoWrapper name="CombatantTwoWrapper">
+                  {nextRankedIncumbent.map((item) => (
+                    <Movie
+                      key={item.id}
+                      item={item}
+                      id={item.id}
+                      option={B}
+                      combatants={updatedCombatants}
+                      rankedItems={newRankedMoviesList}
+                      totalRankedItems={rankSortedItems}
+                    />
+                  ))}
+                </CombatantTwoWrapper>
+              </EncombantWrapper>
+            );
+          }
         }
       } else if (unrankedItems.length >= 1) {
         console.log("Phase 2: Unranked vs Ranked");
@@ -277,6 +541,7 @@ const MovieList = () => {
                   option={A}
                   combatants={combatants}
                   rankedItems={rankSortedItems}
+                  totalRankedItems={rankSortedItems}
                 />
               ))}
             </CombatantOneWrapper>
@@ -289,6 +554,7 @@ const MovieList = () => {
                   option={B}
                   combatants={combatants}
                   rankedItems={rankSortedItems}
+                  totalRankedItems={rankSortedItems}
                 />
               ))}
             </CombatantTwoWrapper>
