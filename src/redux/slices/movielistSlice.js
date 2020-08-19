@@ -220,7 +220,7 @@ export const movielistSlice = createSlice({
                 " beat " +
                 OptionA.title
             );
-          } else if (bIndex === 0 || bIndex === 1 && OptionA.botBound === rankedItems[2].rank) {
+          } else if (bIndex === 0 || bIndex === 1 && OptionA.botBound === totalRankedItems[bTotalIndex + 1].rank) {
             const lostNewRank =
               (totalRankedItems[bTotalIndex].rank +
                 totalRankedItems[bTotalIndex + 1].rank) /
@@ -249,7 +249,7 @@ export const movielistSlice = createSlice({
           // }
           else {
             const lostNewRank =
-              (rankedItems[bIndex].rank + rankedItems[bIndex + 1].rank) / 2;
+              (totalRankedItems[bTotalIndex].rank + totalRankedItems[bTotalIndex + 1].rank) / 2;
             OptionA.potentialRank = lostNewRank;
             OptionA.topBound = OptionB.rank;
             OptionA.history.push(OptionB.id);
