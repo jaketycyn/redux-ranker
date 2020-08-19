@@ -220,7 +220,7 @@ export const movielistSlice = createSlice({
                 " beat " +
                 OptionA.title
             );
-          } else if (bIndex === 0) {
+          } else if (bIndex === 0 || bIndex === 1 && OptionA.botBound === rankedItems[2].rank) {
             const lostNewRank =
               (totalRankedItems[bTotalIndex].rank +
                 totalRankedItems[bTotalIndex + 1].rank) /

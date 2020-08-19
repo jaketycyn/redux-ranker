@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { changeRank, deleteMovie } from "../../redux/slices/movielistSlice";
+import { changeRank, deleteMovie, reRankMovie } from "../../redux/slices/movielistSlice";
 import styled from "styled-components";
 
 import { Button } from "../../display/components/Buttons";
@@ -26,6 +26,13 @@ export const Movie = ({
       })
     );
   }
+
+  const reRankItem = (id) => {
+    if (window.confirm("Do you want to rerank this item?")) {
+      dispatch(reRankMovie(id));
+    }
+  };
+
   console.log("combatants are: ");
   console.log(combatants);
   //function combines
@@ -49,6 +56,7 @@ export const Movie = ({
         <Button choose onClick={updateRank}>
           Choose
         </Button>
+        <Button choose onClick={() => reRankItem(id)}>Restart</Button>
       </ButtonWrapper>
     </StyledMovieCardDiv>
   );
