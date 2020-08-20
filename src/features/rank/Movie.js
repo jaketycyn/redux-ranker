@@ -1,6 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { changeRank, deleteMovie, reRankMovie } from "../../redux/slices/movielistSlice";
+import {
+  changeRank,
+  deleteMovie,
+  reRankMovie,
+} from "../../redux/slices/movielistSlice";
 import styled from "styled-components";
 
 import { Button } from "../../display/components/Buttons";
@@ -56,7 +60,7 @@ export const Movie = ({
         <Button choose onClick={updateRank}>
           Choose
         </Button>
-        <Button choose onClick={() => reRankItem(id)}>Restart</Button>
+        <Button restart onClick={() => reRankItem(id)} />
       </ButtonWrapper>
     </StyledMovieCardDiv>
   );

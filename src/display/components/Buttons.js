@@ -76,7 +76,17 @@ const StyledButton = styled.button`
       justify-self: center;
     `}
 
-    
+    ${({ restart }) =>
+      restart &&
+      css`
+        width: 4rem;
+        height: 0.25rem;
+        padding-bottom: 0.25rem;
+        background-color: red;
+        align-items: center;
+        align-self: center;
+        justify-self: center;
+      `}
 
 
 /*Media Queries */
@@ -88,6 +98,7 @@ export const Button = ({
   add,
   details,
   choose,
+  restart,
   children,
   onClick,
 }) => {
@@ -97,6 +108,7 @@ export const Button = ({
       primary={primary}
       details={details}
       choose={choose}
+      restart={restart}
       onClick={onClick}
     >
       {children}
@@ -157,7 +169,13 @@ const StyledReviewButton = styled.button`
     `}
 `;
 
-export const ReviewPageButton = ({ remove, reRank, onClick, children }) => {
+export const ReviewPageButton = ({
+  remove,
+  reRank,
+
+  onClick,
+  children,
+}) => {
   return (
     <StyledReviewButton remove={remove} reRank={reRank} onClick={onClick}>
       {children}
