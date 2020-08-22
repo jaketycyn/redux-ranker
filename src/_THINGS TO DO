@@ -28,4 +28,6 @@ Comparison button/reranking = allows ranking changes between items that are alre
 Ideas: 
     - code splitting 
         : https://reactrouter.com/web/guides/code-splitting
-    - 
+    - undo feature
+    - top lists
+    - currated lists

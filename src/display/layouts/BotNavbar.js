@@ -73,10 +73,7 @@ const BotNavbar = () => {
         //   setValue(newValue);
         // }}
       >
-        <StyledButton to="/createList">
-          <AddToList />
-          Add
-        </StyledButton>
+        <StyledButton to="/createList">Add</StyledButton>
         <StyledButton to="/rankList">Rank</StyledButton>
         <StyledButton to="/displayList">Review</StyledButton>
       </BotNavWrapper>

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import BotNavbar from "./display/layouts/BotNavbar";
 import CreateUserList from "./features/add/CreateUserList";
 import MovieList from "./features/rank/MovieList";
+import LandingPage from "./display/layouts/LandingPage";
 import RankedItemDisplay from "./features/review/RankedItemsDisplay";
 
 function App() {
@@ -12,14 +13,21 @@ function App() {
     <Router>
       <AppWrapper name="AppWrapper">
         <Switch>
-          <Route path="/createList">
+          <Route exact path="login" />
+          <Route exact path="signup" />
+          {}
+          <Route exact path="/createList">
             <CreateUserList />
           </Route>
-          <Route path="/rankList">
+          <Route exact path="/rankList">
             <MovieList />
           </Route>
-          <Route path="/displayList">
+          <Route exact path="/displayList">
             <RankedItemDisplay />
+          </Route>
+
+          <Route path="/">
+            <LandingPage />
           </Route>
         </Switch>
         <BotNavbar />
