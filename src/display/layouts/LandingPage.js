@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 
 import CreateUserList from "../../features/add/CreateUserList";
-
+import Userlists from "../../features/userlists/Userlists";
 import styled from "styled-components";
 import { StyledBaseDiv } from "../components/Divs";
 
@@ -23,12 +23,15 @@ const LandingPage = () => {
         <Route exact path="/createList">
           <CreateUserList />
         </Route>
+        <Route exact path="/userlists">
+          <Userlists />
+        </Route>
         <StyledBaseDiv landingPage>
           <div>
             <Link to="/createList">Sign In</Link>
           </div>
           <div>
-            <a>Sign Up</a>
+            <Link to="/userlists">Take me to my lists</Link>
           </div>
         </StyledBaseDiv>
       </Switch>
