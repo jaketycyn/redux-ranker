@@ -220,7 +220,11 @@ export const movielistSlice = createSlice({
                 " beat " +
                 OptionA.title
             );
-          } else if (bIndex === 0 || bIndex === 1 && OptionA.botBound === totalRankedItems[bTotalIndex + 1].rank) {
+          } else if (
+            bIndex === 0 ||
+            (bIndex === 1 &&
+              OptionA.botBound === totalRankedItems[bTotalIndex + 1].rank)
+          ) {
             const lostNewRank =
               (totalRankedItems[bTotalIndex].rank +
                 totalRankedItems[bTotalIndex + 1].rank) /
@@ -249,7 +253,9 @@ export const movielistSlice = createSlice({
           // }
           else {
             const lostNewRank =
-              (totalRankedItems[bTotalIndex].rank + totalRankedItems[bTotalIndex + 1].rank) / 2;
+              (totalRankedItems[bTotalIndex].rank +
+                totalRankedItems[bTotalIndex + 1].rank) /
+              2;
             OptionA.potentialRank = lostNewRank;
             OptionA.topBound = OptionB.rank;
             OptionA.history.push(OptionB.id);
@@ -262,14 +268,22 @@ export const movielistSlice = createSlice({
         }
       }
     },
-    addMovie: {
-      reducer: (state, action) => {
-        //push is an array method but we're dealing with an object
-        // state.push(payload);
-        const { id, title, backImg } = action.payload;
-        state.movies.push({ id, title, backImg, rank: 0, potentialRank: 0 });
-      },
+    // addMovie: {
+    //   reducer: (state, action) => {
+    //     //push is an array method but we're dealing with an object
+    //     // state.push(payload);
+    //     const { id, title, backImg } = action.payload;
+    //     state.movies.push({ id, title, backImg, rank: 0, potentialRank: 0 });
+    //   },
+    // },
+
+    addMovie: (state, { payload }) => {
+      //push is an array method but we're dealing with an object
+      // state.push(payload);
+      const { id, title, backImg } = payload;
+      state.movies.push({ id, title, backImg, rank: 0, potentialRank: 0 });
     },
+
     deleteMovie: (state, { payload }) => {
       const index = state.movies.findIndex((movie) => movie.id === payload);
       console.log(index);

@@ -122,7 +122,18 @@ const MovieList = () => {
     //unranked matchup display 2 unranked movies - after one is selected, both get assigned ranks
 
     if (rankedItems.length === 0) {
-      if (unrankedItems.length === 1) {
+      if (unrankedItems.length === 0) {
+        return (
+          <EncombantWrapper>
+            <StyledFinishedText>
+              <p>
+                Your list is empty! Click <b>'Add'</b> below to find and add
+                some items to rank.
+              </p>
+            </StyledFinishedText>
+          </EncombantWrapper>
+        );
+      } else if (unrankedItems.length === 1) {
         return (
           <EncombantWrapper>
             <StyledFinishedText>
@@ -542,7 +553,7 @@ const MovieList = () => {
             );
           }
         }
-      } else if (unrankedItems.length > 1) {
+      } else if (unrankedItems.length >= 1) {
         console.log("Phase 2: Unranked vs Ranked");
         return (
           <EncombantWrapper>
