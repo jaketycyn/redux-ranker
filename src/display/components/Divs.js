@@ -50,12 +50,42 @@ const StyleBaseDiv = styled.div`
         grid-template-columns: minmax(16em, 20%) 1fr;
       }
     `}
+
+  ${({ landingPage }) =>
+    landingPage &&
+    css`
+      display: grid;
+      grid-template-columns: 1fr;
+      height: 100%;
+      background-color: red;
+      margin: 0;
+      text-align: center;
+      justify-content: center;
+
+      @media ${(props) => props.theme.mediaQueries.sm} {
+      }
+
+      @media ${(props) => props.theme.mediaQueries.md} {
+      }
+
+      @media ${(props) => props.theme.mediaQueries.lg} {
+      }
+
+      @media ${(props) => props.theme.mediaQueries.xl} {
+      }
+    `}
 `;
 
-export const StyledBaseDiv = ({ primary, reviewPage, children }) => {
+export const StyledBaseDiv = ({
+  primary,
+  landingPage,
+  reviewPage,
+  children,
+}) => {
   return (
     <StyleBaseDiv
       primary={primary}
+      landingPage={landingPage}
       reviewPage={reviewPage}
       name="StyledBaseDiv"
     >

@@ -31,3 +31,7 @@ Ideas:
     - undo feature
     - top lists
     - currated lists
+
+    - reranking item after x # of items added to list but item itself hasnt' faced enough
+        - Or notificaiton on 20 items added without this facing competition
+        
