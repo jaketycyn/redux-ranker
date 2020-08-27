@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,6 +8,8 @@ import {
   useHistory,
   useLocation,
 } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { resetListStatus } from "../../redux/slices/movielistSlice";
 
 import CreateUserList from "../../features/add/CreateUserList";
 import Userlists from "../../features/userlists/Userlists";
@@ -17,6 +19,14 @@ import { StyledBaseDiv } from "../components/Divs";
 //Signin/up could be its own function that links to this landing page which is an intermediarry between signin/up and the createList page
 //for now just testing this out for learning react router functionality
 const LandingPage = () => {
+  const dispatch = useDispatch();
+  let location = useLocation();
+
+  useEffect(() => {
+    console.log(location);
+    dispatch(resetListStatus());
+  }, [location]);
+
   return (
     <Router>
       <Switch>

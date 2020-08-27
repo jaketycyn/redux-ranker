@@ -1,5 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
+
+import {
+  addList,
+  resetListStatus,
+  updateListStatus,
+  movielistSelector,
+} from "../../redux/slices/movielistSlice";
 
 const StyledUserListsPage = styled.div`
   display: grid;
@@ -12,11 +21,27 @@ const StyledUserListsPage = styled.div`
 `;
 
 const Userlists = () => {
+  const { movielists } = useSelector(movielistSelector);
   const [lists, setLists] = useState([]);
+  const dispatch = useDispatch();
+  let history = useHistory();
+  let location = useLocation();
+
+  useEffect(() => {
+    console.log(location);
+    dispatch(resetListStatus());
+  }, [location]);
   function createList(e) {
     const newListTitle = prompt("Enter list name");
     console.log(newListTitle);
     setLists((lists) => [...lists, newListTitle]);
+    dispatch(addList({ listName: newListTitle }));
+  }
+
+  function handleClick(listName) {
+    history.push("/createList");
+    console.log(listName);
+    dispatch(updateListStatus({ listName }));
   }
   return (
     <div>
@@ -25,8 +50,10 @@ const Userlists = () => {
           <button onClick={() => createList()}>Create new list</button>
         </div>
         <ul>
-          {lists.map((item) => (
-            <p>{item}</p>
+          {movielists.map((item) => (
+            <button type="button" onClick={() => handleClick(item.listName)}>
+              {item.listName}
+            </button>
           ))}
         </ul>
       </StyledUserListsPage>
