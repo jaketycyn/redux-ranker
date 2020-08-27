@@ -34,9 +34,16 @@ const Userlists = () => {
   function createList(e) {
     const newListTitle = prompt("Enter list name");
     console.log(newListTitle);
-    if (newListTitle !== null && newListTitle.length >= 1) {
-      setLists((lists) => [...lists, newListTitle]);
-      dispatch(addList({ listName: newListTitle }));
+    if (newListTitle !== null) {
+      const trimmedTitle = newListTitle.trim();
+      if (
+        newListTitle !== null &&
+        trimmedTitle.length >= 1 &&
+        newListTitle.length >= 1
+      ) {
+        setLists((lists) => [...lists, newListTitle]);
+        dispatch(addList({ listName: newListTitle }));
+      }
     }
   }
 
