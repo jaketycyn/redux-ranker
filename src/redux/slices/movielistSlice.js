@@ -41,21 +41,18 @@ export const movielistSlice = createSlice({
       state.movielists[listIndex].listStatus = "active";
     },
     resetListStatus: (state, { payload }) => {
-      console.log("reseting status");
-
       const activeListID = state.movielists.reduce(
         (arr, e, i) => (e.listStatus === "active" && arr.push(i), arr),
         []
       );
-      activeListID.shift();
-      const activeLists = activeListID;
-      console.log("activeLists");
-      console.log(activeLists);
-      activeLists.forEach(resetLists);
 
-      function resetLists(item, index) {
-        state.movielists[index].listStatus = "inactive";
-      }
+      console.log("activeListID");
+      console.log(activeListID);
+      // activeLists.forEach(resetLists);
+
+      // function resetLists(item, index) {
+      //   state.movielists[index].listStatus = "inactive";
+      // }
     },
     changeRank: (state, action, id) => {
       // payload
