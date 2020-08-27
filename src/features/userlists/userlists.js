@@ -6,7 +6,7 @@ import styled from "styled-components";
 import {
   addList,
   resetListStatus,
-  updateListStatus,
+  activateListStatus,
   movielistSelector,
 } from "../../redux/slices/movielistSlice";
 
@@ -34,14 +34,16 @@ const Userlists = () => {
   function createList(e) {
     const newListTitle = prompt("Enter list name");
     console.log(newListTitle);
-    setLists((lists) => [...lists, newListTitle]);
-    dispatch(addList({ listName: newListTitle }));
+    if (newListTitle !== null && newListTitle.length >= 1) {
+      setLists((lists) => [...lists, newListTitle]);
+      dispatch(addList({ listName: newListTitle }));
+    }
   }
 
   function handleClick(listName) {
     history.push("/createList");
     console.log(listName);
-    dispatch(updateListStatus({ listName }));
+    dispatch(activateListStatus({ listName }));
   }
   return (
     <div>

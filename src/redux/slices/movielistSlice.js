@@ -30,10 +30,7 @@ export const movielistSlice = createSlice({
       const { listName } = payload;
       state.movielists.push({ listName });
     },
-    resetListStatus: (state, { payload }) => {
-      console.log("reseting status");
-    },
-    updateListStatus: (state, { payload }) => {
+    activateListStatus: (state, { payload }) => {
       const { listName } = payload;
       const listIndex = state.movielists.findIndex(
         (list) => list.listName === listName
@@ -43,7 +40,20 @@ export const movielistSlice = createSlice({
 
       state.movielists[listIndex].listStatus = "active";
     },
+    resetListStatus: (state, { payload }) => {
+      const activeListID = state.movielists.reduce(
+        (arr, e, i) => (e.listStatus === "active" && arr.push(i), arr),
+        []
+      );
 
+      console.log("activeListID");
+      console.log(activeListID);
+      // activeLists.forEach(resetLists);
+
+      // function resetLists(item, index) {
+      //   state.movielists[index].listStatus = "inactive";
+      // }
+    },
     changeRank: (state, action, id) => {
       // payload
       // console.log("Redux action.payload:  ");
@@ -357,8 +367,9 @@ export const {
   getMoviesSuccess,
   getMoviesFailure,
   addList,
+  activateListStatus,
   resetListStatus,
-  updateListStatus,
+
   changeRank,
   addMovie,
   deleteMovie,
