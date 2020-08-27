@@ -46,13 +46,19 @@ export const movielistSlice = createSlice({
         []
       );
 
-      console.log("activeListID");
-      console.log(activeListID);
-      // activeLists.forEach(resetLists);
+      if (activeListID.length > 1) {
+        console.log("activeListID");
+        console.log(activeListID);
+        const spliceID = activeListID.splice(1, activeListID.length - 1);
+        console.log("spliceID");
+        console.log(spliceID);
 
-      // function resetLists(item, index) {
-      //   state.movielists[index].listStatus = "inactive";
-      // }
+        activeListID.forEach(resetLists);
+
+        function resetLists(index) {
+          state.movielists[index].listStatus = "inactive";
+        }
+      }
     },
     changeRank: (state, action, id) => {
       // payload
