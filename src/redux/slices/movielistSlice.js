@@ -1,12 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+//listName = names' created by user or pregenerated (example: IMDB TOP 100)
+//listStatus - denotes which lists items will be added to.
+//'All Movies' should always be active so that items are always added to that list, but additional lists can be selected.
 export const movielistSlice = createSlice({
   name: "movielist",
   initialState: {
     loading: false,
     hasErrors: false,
     movies: [],
+    movielists: [{ listName: "All Movies", listStatus: "active" }],
   },
+
   reducers: {
     getMovies: (state) => {
       state.loading = true;
@@ -21,6 +26,24 @@ export const movielistSlice = createSlice({
       state.hasErrors = true;
       console.log(state.movies);
     },
+    addList: (state, { payload }) => {
+      const { listName } = payload;
+      state.movielists.push({ listName });
+    },
+    resetListStatus: (state, { payload }) => {
+      console.log("reseting status");
+    },
+    updateListStatus: (state, { payload }) => {
+      const { listName } = payload;
+      const listIndex = state.movielists.findIndex(
+        (list) => list.listName === listName
+      );
+      console.log("variable");
+      console.log(JSON.stringify(listIndex, undefined, 2));
+
+      state.movielists[listIndex].listStatus = "active";
+    },
+
     changeRank: (state, action, id) => {
       // payload
       // console.log("Redux action.payload:  ");
@@ -280,8 +303,27 @@ export const movielistSlice = createSlice({
     addMovie: (state, { payload }) => {
       //push is an array method but we're dealing with an object
       // state.push(payload);
+
+      // * https://stackoverflow.com/questions/48584267/get-the-indexes-of-javascript-array-elements-that-satisfy-condition
+      const activeListID = state.movielists.reduce(
+        (arr, e, i) => (e.listStatus === "active" && arr.push(i), arr),
+        []
+      );
+
+      // state.movielists.forEach(
+      //   (list) => list.listStatus === "active"
+      // );
+      console.log(activeListID);
       const { id, title, backImg } = payload;
-      state.movies.push({ id, title, backImg, rank: 0, potentialRank: 0 });
+
+      state.movies.push({
+        id,
+        title,
+        backImg,
+        rank: 0,
+        potentialRank: 0,
+        lists: activeListID,
+      });
     },
 
     deleteMovie: (state, { payload }) => {
@@ -314,6 +356,9 @@ export const {
   getMovies,
   getMoviesSuccess,
   getMoviesFailure,
+  addList,
+  resetListStatus,
+  updateListStatus,
   changeRank,
   addMovie,
   deleteMovie,
@@ -322,7 +367,8 @@ export const {
 } = movielistSlice.actions;
 
 // A selector
-export const movielistSelector = (state) => state.movies;
+
+export const movielistSelector = (state) => state.movieRanker;
 
 // The reducer
 export default movielistSlice.reducer;
@@ -336,7 +382,7 @@ export default movielistSlice.reducer;
 
 //disabled useEffect for now cause i'm not retrieving anything from an api or external db
 
-//Async thunk action
+// //Async thunk action
 // export function fetchMovies() {
 //   return async (dispatch) => {
 //     dispatch(getMovies());

@@ -5,7 +5,7 @@ import movielistReducer from "./slices/movielistSlice";
 const futureReducer = (state = "stuff", action) => state;
 
 const rootReducer = combineReducers({
-  movies: movielistReducer,
+  movieRanker: movielistReducer,
   futureReducer,
   //future reducers
 });
