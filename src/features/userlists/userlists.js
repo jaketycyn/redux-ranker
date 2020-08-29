@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
+import uuid from "react-uuid";
 import styled from "styled-components";
 
 import {
   addList,
+  deleteList,
   resetListStatus,
   activateListStatus,
   movielistSelector,
@@ -42,7 +44,7 @@ const Userlists = () => {
         newListTitle.length >= 1
       ) {
         setLists((lists) => [...lists, newListTitle]);
-        dispatch(addList({ listName: newListTitle }));
+        dispatch(addList({ listName: newListTitle, listId: uuid() }));
       }
     }
   }
@@ -52,6 +54,12 @@ const Userlists = () => {
     console.log(listName);
     dispatch(activateListStatus({ listName }));
   }
+
+  function handleDelete(listName, id) {
+    console.log(listName);
+    dispatch(deleteList({ listName, id }));
+  }
+
   return (
     <div>
       <StyledUserListsPage>
@@ -60,9 +68,14 @@ const Userlists = () => {
         </div>
         <ul>
           {movielists.map((item) => (
-            <button type="button" onClick={() => handleClick(item.listName)}>
-              {item.listName}
-            </button>
+            <div>
+              <button type="button" onClick={() => handleClick(item.listName)}>
+                {item.listName}
+              </button>
+              <button onClick={() => handleDelete(item.listName, item.id)}>
+                Delete
+              </button>
+            </div>
           ))}
         </ul>
       </StyledUserListsPage>
