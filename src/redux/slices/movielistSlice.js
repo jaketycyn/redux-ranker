@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import uuid from "react-uuid";
 //listName = names' created by user or pregenerated (example: IMDB TOP 100)
 //listStatus - denotes which lists items will be added to.
 //'All Movies' should always be active so that items are always added to that list, but additional lists can be selected.
@@ -9,7 +9,14 @@ export const movielistSlice = createSlice({
     loading: false,
     hasErrors: false,
     movies: [],
-    movielists: [{ listName: "All Movies", listStatus: "active" }],
+    movielists: [
+      {
+        listName: "All Movies",
+        id:
+          "01101101011000010111001101110100011001010111001001101100011010010111001101110100",
+        listStatus: "active",
+      },
+    ],
   },
 
   reducers: {
@@ -27,8 +34,21 @@ export const movielistSlice = createSlice({
       console.log(state.movies);
     },
     addList: (state, { payload }) => {
-      const { listName } = payload;
-      state.movielists.push({ listName });
+      const { listName, listId } = payload;
+      console.log(listId);
+      state.movielists.push({ listName, id: listId });
+    },
+    deleteList: (state, { payload }) => {
+      const { listName, id } = payload;
+      const index = state.movielists.findIndex(
+        (list) => list.listName === listName && list.id === id
+      );
+      console.log(index);
+      console.log("id");
+      console.log(id);
+      if (index !== -1 && index !== 0) {
+        state.movielists.splice(index, 1);
+      }
     },
     activateListStatus: (state, { payload }) => {
       const { listName } = payload;
@@ -46,13 +66,19 @@ export const movielistSlice = createSlice({
         []
       );
 
-      console.log("activeListID");
-      console.log(activeListID);
-      // activeLists.forEach(resetLists);
+      if (activeListID.length > 1) {
+        console.log("activeListID");
+        console.log(activeListID);
+        const spliceID = activeListID.splice(1, activeListID.length - 1);
+        console.log("spliceID");
+        console.log(spliceID);
 
-      // function resetLists(item, index) {
-      //   state.movielists[index].listStatus = "inactive";
-      // }
+        activeListID.forEach(resetLists);
+
+        function resetLists(index) {
+          state.movielists[index].listStatus = "inactive";
+        }
+      }
     },
     changeRank: (state, action, id) => {
       // payload
@@ -367,9 +393,9 @@ export const {
   getMoviesSuccess,
   getMoviesFailure,
   addList,
+  deleteList,
   activateListStatus,
   resetListStatus,
-
   changeRank,
   addMovie,
   deleteMovie,
