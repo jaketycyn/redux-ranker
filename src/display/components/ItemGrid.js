@@ -59,20 +59,9 @@ const ItemGrid = ({ isLoading, items }) => {
     console.log("addMovieServer fired")
   }
 
-  const deleteItemServer = async (id) => {
-    try {
-      const response = await MovieFinder.delete(`/${id}`)
-      console.log(response)
-      }
-     catch(err) {
-      console.error(err.message)
-    }
-    console.log("delete Item from Server fired")
-  }
-
   const deleteItem = (id) => {
     dispatch(deleteMovie(id));
-    deleteItemServer(id);
+    
   };
   return isLoading ? (
     <Spinner />
@@ -88,7 +77,7 @@ const ItemGrid = ({ isLoading, items }) => {
           addItem={addItem}
           addItemServer={addItemServer}
           deleteItem={deleteItem}
-          deleteItemServer={deleteItemServer}
+          
         />
       ))}
     </GreaterGrid>
