@@ -1,0 +1,18 @@
+How to structure data:
+
+TABLE user (
+UNQIEU ID
+)
+
+TABLE movies(
+UNIQUE ID
+)
+
+TABLE user_list(
+    foreign key to movie
+    foreign key to user
+
+    //constraint on the table so the value has to be unique for a particular user
+)
+
+//postgress is meant to be on a single machine. If for whatever reason you need to scale to multiple machines. It's infe ot have multiple instances ,b tu 1 master. YOu have have 100 slaves. All the updates happen on the master. It broadcasts that update to  all the other databses they listen for updates.

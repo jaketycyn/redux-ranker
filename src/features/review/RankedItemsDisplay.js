@@ -7,6 +7,8 @@ import {
   reRankMovie,
   movielistSelector,
 } from "../../redux/slices/movielistSlice";
+import MovieFinder from "../../apis/MovieFinder"
+
 import styled from "styled-components";
 
 import { ReviewPageButton, Button } from "../../display/components/Buttons";
@@ -97,9 +99,21 @@ const RankedItemsDisplay = () => {
   const removeItem = (id) => {
     if (window.confirm("Remove this item?")) {
       dispatch(deleteMovie(id));
+      deleteItemServer(id)
     }
   };
 
+  const deleteItemServer = async (id) => {
+    try {
+      const movie_id = id
+      const response = await MovieFinder.delete(`/${movie_id}`)
+      console.log(response)
+      }
+     catch(err) {
+      console.error(err.message)
+    }
+    console.log("delete Item from Server fired")
+  }
   const toggleListView = () => {
     setView(!view);
     console.log(view);
