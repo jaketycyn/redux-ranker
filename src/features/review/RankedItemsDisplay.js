@@ -116,7 +116,9 @@ const RankedItemsDisplay = () => {
   }
   const toggleListView = () => {
     setView(!view);
-    console.log(view);
+    console.log("view is " + view);
+    const reduxdata = JSON.stringify(movies)
+    console.log("redux data " + reduxdata)
   };
 
   let ranking = 1;

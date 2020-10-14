@@ -1,42 +1,52 @@
--- possible table names
---user_info, movie_info, user_rankings
-
+--Draft Version
 CREATE TABLE users
 (
-    id serial,
-    username VARCHAR(25) NOT NULL,
-    PRIMARY KEY(id)
+    user_id serial,
+    user_username VARCHAR(50) UNIQUE NOT NULL,
+    user_name_first VARCHAR(50) NOT NULL,
+    user_name_last VARCHAR(50) NOT NULL,
+    user_dob DATE,
+    user_email VARCHAR(250) UNIQUE NOT NULL,
+    -- user_password 
+    PRIMARY KEY
+    (user_id)
 );
 
 CREATE TABLE movies
 (
-    id serial,
-    title TEXT NOT NULL,
-    poster_path TEXT,
-    genre integer
-    ARRAY,
-    adult boolean,
-    release_date date,
+    movie_id int UNIQUE NOT NULL,
+    movie_title VARCHAR(150) UNIQUE NOT NULL,
+    movie_release_date DATE,
+    movie_poster_path TEXT,
+    movie_overview TEXT,
     PRIMARY KEY
-    (id),
+    (movie_id)
+)
+
+--look into JOIN tables and see if theres a difference
+
+CREATE TABLE user_movies
+(
+    user_movie_id int,
+    user_movie_list_id int,
+    user_movie_rank int,
+    user_movie_potential_rank int,
+    PRIMARY KEY
+    (user_movie_id),
+    FOREIGN KEY (user_movie_id) REFERENCES movies (movie_id),
+    FOREIGN KEY (user_movie_list_id) REFERENCES user_movie_list (list_id)
 );
-    --CURRENTLY CANT USE FOREIGN KEY SINCE MOVIE DATA ISN'T IN ITS OWN TABLE BUT INSTEAD PULLED FROM API
-    --FINAL VERSION DOESNT' REQUIRE TITLE EITHER BUT CURRENT VERSION DOES
-    -- true version
-    CREATE TABLE user_movielists
-    (
-        movie_id FOREIGN KEY NOT NULL,
-        movie_userid FOREIGN KEY  NOT NULL,
-        movie_listid INTEGER NOT NULL,
-      
-        movie_rank INTEGER NOT NULL,
-    )
-    --test version
-    CREATE TABLE user_movielists
-    (
-        movie_id INTEGER NOT NULL,
-        user_id INTEGER NOT NULL,
-        movie_listid INTEGER NOT NULL,
-        movie_title TEXT NOT NULL,
-        movie_rank INTEGER NOT NULL
-    );
+
+CREATE TABLE user_movie_list
+(
+    list_id serial,
+    list_name VARCHAR(50) NOT NULL,
+    list_created_on TIMESTAMP NOT NULL,
+    list_last_used TIMESTAMP,
+    list_owner int,
+    PRIMARY KEY (list_id),
+    FOREIGN KEY (list_owner) REFERENCES users (user_id)
+
+)
+
+    --Final Version Below: - seperating the user_movies table into two distinct tables: 1) movies & 2) user_movies
