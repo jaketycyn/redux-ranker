@@ -35,6 +35,7 @@ const ItemGridCard = ({
   releaseYear,
   overview,
   addItem,
+  addItemServer,
   deleteItem,
 }) => {
   const [added, setAdded] = useState(false);
@@ -44,8 +45,6 @@ const ItemGridCard = ({
   const addItemToList = () => {
     addItem(id, title, backImg);
     setAdded(!added);
-    console.log(added);
-    console.log("hey");
   };
 
   const newOverview = overview.slice(0, 125);

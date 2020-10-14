@@ -8,6 +8,7 @@ import {
 } from "../../redux/slices/movielistSlice";
 import ItemGridCard from "./ItemGridCard";
 import { GreaterGrid } from "./Divs";
+import MovieFinder  from "../../apis/MovieFinder";
 
 import Spinner from "./Spinner";
 //passdown via props specific information needed by the ItemGridCard for displaying
@@ -34,11 +35,33 @@ const ItemGrid = ({ isLoading, items }) => {
           backImg: backImg,
         })
       );
+      addItemServer(id, title);
     }
   };
+  
+
+  const addItemServer = async ( id, title) => {
+    //Order of params dictates what is used for some reason. Keep an eye out.
+    //possible issue was caused by referencing this function inside ItemGridCard component. Still keep an eye out.
+    try {
+      const response = await MovieFinder.post("/", {
+        movie_id: id,
+        user_id: 2,
+        movie_listid: 99,
+        movie_title: title,
+        movie_rank: 0,
+        // id, title, backImg, 
+      })
+      console.log(response)
+    } catch(err) {
+      console.error(err.message)
+    }
+    console.log("addMovieServer fired")
+  }
 
   const deleteItem = (id) => {
     dispatch(deleteMovie(id));
+    
   };
   return isLoading ? (
     <Spinner />
@@ -52,7 +75,9 @@ const ItemGrid = ({ isLoading, items }) => {
           releaseYear={item.release_date}
           overview={item.overview}
           addItem={addItem}
+          addItemServer={addItemServer}
           deleteItem={deleteItem}
+          
         />
       ))}
     </GreaterGrid>

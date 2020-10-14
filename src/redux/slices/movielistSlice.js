@@ -1,5 +1,8 @@
+import React, { useEffect } from "react";
 import { createSlice } from "@reduxjs/toolkit";
 import uuid from "react-uuid";
+
+import MovieFinder from "../../apis/MovieFinder";
 //listName = names' created by user or pregenerated (example: IMDB TOP 100)
 //listStatus - denotes which lists items will be added to.
 //'All Movies' should always be active so that items are always added to that list, but additional lists can be selected.
@@ -327,15 +330,6 @@ export const movielistSlice = createSlice({
         }
       }
     },
-    // addMovie: {
-    //   reducer: (state, action) => {
-    //     //push is an array method but we're dealing with an object
-    //     // state.push(payload);
-    //     const { id, title, backImg } = action.payload;
-    //     state.movies.push({ id, title, backImg, rank: 0, potentialRank: 0 });
-    //   },
-    // },
-
     addMovie: (state, { payload }) => {
       //push is an array method but we're dealing with an object
       // state.push(payload);
