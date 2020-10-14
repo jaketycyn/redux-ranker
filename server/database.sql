@@ -27,12 +27,12 @@ CREATE TABLE movies
 
 CREATE TABLE user_movies
 (
-    user_movie_id int,
-    user_movie_list_id int,
+    user_movie_id int NOT NULL,
+    user_movie_list_id int NOT NULL,
     user_movie_rank int,
     user_movie_potential_rank int,
     PRIMARY KEY
-    (user_movie_id),
+    (user_movie_id, user_movie_list_id),
     FOREIGN KEY (user_movie_id) REFERENCES movies (movie_id),
     FOREIGN KEY (user_movie_list_id) REFERENCES user_movie_list (list_id)
 );

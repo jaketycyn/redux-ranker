@@ -22,33 +22,35 @@ const ItemGrid = ({ isLoading, items }) => {
   //   dispatch(fetchMovies());
   // }, [dispatch]);
 
-  const addItem = (id, title, backImg) => {
+  const addItem = (movie_id, movie_title, movie_poster_path, movie_overview) => {
     //find method prevents repetive movies being added to list
-    if (movies.find((movie) => movie.id === id)) {
+    if (movies.find((movie) => movie.id === movie_id)) {
       prompt("Movie is already added");
       console.log("movie already in list");
     } else {
       dispatch(
         addMovie({
-          id: id,
-          title: title,
-          backImg: backImg,
+          movie_id: movie_id,
+          movie_title: movie_title,
+          movie_poster_path: movie_poster_path,
+          movie_overview: movie_overview
         })
       );
-      addItemMovieDB(id, title);
-      addItemUserMovieDB(id);
+      addItemMovieDB(movie_id, movie_title, movie_poster_path, movie_overview);
+      addItemUserMovieDB(movie_id);
     }
   };
   
 
-  const addItemMovieDB = async ( id, title) => {
+  const addItemMovieDB = async ( movie_id, movie_title, movie_poster_path, movie_overview) => {
     //Order of params dictates what is used for some reason. Keep an eye out.
     //possible issue was caused by referencing this function inside ItemGridCard component. Still keep an eye out.
     try {
       const response = await MovieFinder.post("/movies", {
-        movie_id: id,
-        movie_title: title,
-        movie_overview: "Stuff Happened",
+        movie_id: movie_id,
+        movie_title: movie_title,
+        movie_poster_path: movie_poster_path,
+        movie_overview: movie_overview,
         // id, title, backImg, 
       })
       console.log(response)
@@ -56,11 +58,12 @@ const ItemGrid = ({ isLoading, items }) => {
       console.log(err)
     }
     console.log("addItemMovieDB fired")
+    console.log("movie_overview: "+ movie_overview)
   }
 
   
 
-  const addItemUserMovieDB = async ( id) => {
+  const addItemUserMovieDB = async ( movie_id) => {
     //Order of params dictates what is used for some reason. Keep an eye out.
     //possible issue was caused by referencing this function inside ItemGridCard component. Still keep an eye out.
     try {
@@ -76,8 +79,8 @@ const ItemGrid = ({ isLoading, items }) => {
     console.log("addItemUserMovieDB fired")
   }
 
-  const deleteItem = (id) => {
-    dispatch(deleteMovie(id));
+  const deleteItem = (movie_id) => {
+    dispatch(deleteMovie(movie_id));
     
   };
   return isLoading ? (
@@ -86,11 +89,11 @@ const ItemGrid = ({ isLoading, items }) => {
     <GreaterGrid name="greaterGrid">
       {items.map((item) => (
         <ItemGridCard
-          title={item.title}
-          id={item.id}
-          backImg={item.poster_path}
-          releaseYear={item.release_date}
-          overview={item.overview}
+          movie_id={item.id}
+          movie_title={item.title}
+          movie_poster_path={item.poster_path}
+          movie_releaseYear={item.release_date}
+          movie_overview={item.overview}
           addItem={addItem}
           deleteItem={deleteItem}
         />
