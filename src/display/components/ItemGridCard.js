@@ -35,7 +35,6 @@ const ItemGridCard = ({
   releaseYear,
   overview,
   addItem,
-  addItemServer,
   deleteItem,
 }) => {
   const [added, setAdded] = useState(false);

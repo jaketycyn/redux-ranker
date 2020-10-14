@@ -35,28 +35,45 @@ const ItemGrid = ({ isLoading, items }) => {
           backImg: backImg,
         })
       );
-      addItemServer(id, title);
+      addItemMovieDB(id, title);
+      addItemUserMovieDB(id);
     }
   };
   
 
-  const addItemServer = async ( id, title) => {
+  const addItemMovieDB = async ( id, title) => {
     //Order of params dictates what is used for some reason. Keep an eye out.
     //possible issue was caused by referencing this function inside ItemGridCard component. Still keep an eye out.
     try {
-      const response = await MovieFinder.post("/", {
+      const response = await MovieFinder.post("/movies", {
         movie_id: id,
-        user_id: 2,
-        movie_listid: 99,
         movie_title: title,
-        movie_rank: 0,
+        movie_overview: "Stuff Happened",
         // id, title, backImg, 
       })
       console.log(response)
     } catch(err) {
-      console.error(err.message)
+      console.log(err)
     }
-    console.log("addMovieServer fired")
+    console.log("addItemMovieDB fired")
+  }
+
+  
+
+  const addItemUserMovieDB = async ( id) => {
+    //Order of params dictates what is used for some reason. Keep an eye out.
+    //possible issue was caused by referencing this function inside ItemGridCard component. Still keep an eye out.
+    try {
+      // const response = await MovieFinder.post("/movies", {
+      //   movie_id: id,
+      //   movie_overview: "Stuff Happened",
+      //   // id, title, backImg, 
+      // })
+      console.log("addItemUserMovieDB")
+    } catch(err) {
+      console.log(err)
+    }
+    console.log("addItemUserMovieDB fired")
   }
 
   const deleteItem = (id) => {
@@ -75,9 +92,7 @@ const ItemGrid = ({ isLoading, items }) => {
           releaseYear={item.release_date}
           overview={item.overview}
           addItem={addItem}
-          addItemServer={addItemServer}
           deleteItem={deleteItem}
-          
         />
       ))}
     </GreaterGrid>

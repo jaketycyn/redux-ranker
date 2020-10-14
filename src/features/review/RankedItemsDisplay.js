@@ -106,7 +106,7 @@ const RankedItemsDisplay = () => {
   const deleteItemServer = async (id) => {
     try {
       const movie_id = id
-      const response = await MovieFinder.delete(`/${movie_id}`)
+      const response = await MovieFinder.delete(`/movies/${movie_id}`)
       console.log(response)
       }
      catch(err) {
