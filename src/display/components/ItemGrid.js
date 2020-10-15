@@ -30,10 +30,10 @@ const ItemGrid = ({ isLoading, items }) => {
     } else {
       dispatch(
         addMovie({
-          movie_id: movie_id,
-          movie_title: movie_title,
-          movie_poster_path: movie_poster_path,
-          movie_overview: movie_overview
+          movie_id,
+          movie_title,
+          movie_poster_path,
+          movie_overview
         })
       );
       addItemMovieDB(movie_id, movie_title, movie_poster_path, movie_overview);
@@ -47,11 +47,12 @@ const ItemGrid = ({ isLoading, items }) => {
     //possible issue was caused by referencing this function inside ItemGridCard component. Still keep an eye out.
     try {
       const response = await MovieFinder.post("/movies", {
-        movie_id: movie_id,
-        movie_title: movie_title,
-        movie_poster_path: movie_poster_path,
-        movie_overview: movie_overview,
-        // id, title, backImg, 
+        movie_id,
+        movie_title,
+        movie_poster_path,
+        //!Turning off overview due to clogging the terminal window.
+        //movie_overview,
+       
       })
       console.log(response)
     } catch(err) {
@@ -67,11 +68,17 @@ const ItemGrid = ({ isLoading, items }) => {
     //Order of params dictates what is used for some reason. Keep an eye out.
     //possible issue was caused by referencing this function inside ItemGridCard component. Still keep an eye out.
     try {
-      // const response = await MovieFinder.post("/movies", {
-      //   movie_id: id,
-      //   movie_overview: "Stuff Happened",
-      //   // id, title, backImg, 
-      // })
+      const response = await MovieFinder.post("/user_movies", {
+        user_movie_id: movie_id,
+        //TODO: Add/figure out what variable to pass down as the list_id. Also, functionality how a user will attribute a movie to a list. 
+        //*movie_list_id references the current or chosen list id.
+        user_movie_list_id: 1,
+        //*using hardcore 1 as user "yojt9"
+        user_movie_user_id: 1,
+        user_movie_rank: 0,
+        user_movie_potential_rank: 0,
+        // id, title, backImg, 
+      })
       console.log("addItemUserMovieDB")
     } catch(err) {
       console.log(err)

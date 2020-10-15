@@ -29,7 +29,6 @@ app.post("/movies", async (req, res) => {
         req.body.movie_title,
         req.body.movie_poster_path,
         req.body.movie_overview,
-
       ]
     );
 
@@ -132,10 +131,11 @@ app.post("/user_movies", async (req, res) => {
   console.log(req.body);
   try {
     const results = await db.query(
-      "INSERT INTO user_movies (user_movie_id,user_movie_list_id, user_movie_rank, user_movie_potential_rank) values ($1, $2, $3, $4)returning *",
+      "INSERT INTO user_movies (user_movie_id,user_movie_list_id,user_movie_user_id, user_movie_rank, user_movie_potential_rank) values ($1, $2, $3, $4, $5)returning *",
       [
         req.body.user_movie_id,
         req.body.user_movie_list_id,
+        req.body.user_movie_user_id,
         req.body.user_movie_rank,
         req.body.user_movie_potential_rank,
       ]
