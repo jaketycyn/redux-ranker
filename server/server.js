@@ -20,7 +20,6 @@ app.use(express.json()); //req.body
 //!TABLE movies
 //add a movie to TABLE movies
 app.post("/movies", async (req, res) => {
-  console.log(req.body);
   try {
     const results = await db.query(
       "INSERT INTO movies (movie_id, movie_title, movie_poster_path, movie_overview) values ($1, $2, $3, $4)returning *",
@@ -31,8 +30,6 @@ app.post("/movies", async (req, res) => {
         req.body.movie_overview,
       ]
     );
-
-    console.log(results);
     res.status(200).json({
       status: "success",
       data: {
@@ -101,7 +98,6 @@ app.delete("/movies/:movie_id", async (req, res) => {
 //!TABLE user_movie_list 
 //add a movie_list to TABLE user_movie_list
 app.post("/user_movie_list", async (req, res) => {
-  console.log(req.body);
   try {
     const results = await db.query(
       "INSERT INTO user_movie_list (list_id, list_name, list_created_on, list_last_used, list_owner) values ($1, $2, $3, $4, $5) returning *",
@@ -113,7 +109,7 @@ app.post("/user_movie_list", async (req, res) => {
         req.body.list_owner,
       ]
     );
-    console.log(results);
+
     res.status(200).json({
       status: "success",
       data: {
@@ -128,19 +124,16 @@ app.post("/user_movie_list", async (req, res) => {
 //!TABLE user_movies 
 //add a movie to TABLE user_movies
 app.post("/user_movies", async (req, res) => {
-  console.log(req.body);
   try {
     const results = await db.query(
-      "INSERT INTO user_movies (user_movie_id,user_movie_list_id,user_movie_user_id, user_movie_rank, user_movie_potential_rank) values ($1, $2, $3, $4, $5)returning *",
+      "INSERT INTO user_movies (user_movie_id,user_movie_list_id,user_movie_user_id, user_movie_rank) values ($1, $2, $3, $4)returning *",
       [
         req.body.user_movie_id,
         req.body.user_movie_list_id,
         req.body.user_movie_user_id,
         req.body.user_movie_rank,
-        req.body.user_movie_potential_rank,
       ]
     );
-    console.log(results);
     res.status(200).json({
       status: "success",
       data: {
@@ -148,7 +141,7 @@ app.post("/user_movies", async (req, res) => {
       },
     });
   } catch (err) {
-    console.error(err.message);
+    console.log(err.message);
   }
 });
 
@@ -158,14 +151,12 @@ app.get("/user_movies/:user_movie_id/:user_movie_list_id/:user_movie_user_id", a
     const results = await db.query(
       "SELECT * FROM user_movies WHERE user_movie_id=$1 AND user_movie_list_id=$2 AND user_movie_user_id=$3",
       [
-        req.params.user_movie_id,
+         req.params.user_movie_id,
          req.params.user_movie_list_id,
          req.params.user_movie_user_id
       ]
     );
-    console.log(results.rows);
-
-    res.status(200).json({
+      res.status(200).json({
       status: "success",
       results: results.rows.length,
       data: {
@@ -191,15 +182,15 @@ app.delete("/user_movies/:user_movie_id/:user_movie_list_id/:user_movie_user_id"
         req.params.user_movie_user_id
       ]
     );
-    console.log(results.rows);
+    console.log(results.rows[0]);
 
-    res.status(200).json({
-      status: "success",
-      results: results.rows.length,
-      data: {
-        movies: results.rows,
-      },
-    });
+    // res.status(200).json({
+    //   status: "success",
+    //   results: results.rows.length,
+    //   data: {
+    //     movies: results.rows,
+    //   },
+    // });
   } catch (err) {
     console.error(err.message);
   }
@@ -215,8 +206,6 @@ app.delete("/user_movies/:user_movie_list_id/:user_movie_user_id", async (req, r
         req.params.user_movie_user_id
       ]
     );
-    console.log(results.rows);
-
     res.status(200).json({
       status: "success",
       results: results.rows.length,
@@ -229,29 +218,26 @@ app.delete("/user_movies/:user_movie_list_id/:user_movie_user_id", async (req, r
   }
 });
 
-
-
 // UPDATE THE RANK OF A MOVIE via ChangeRank Redux Functionality
-app.put("/user_movies/:user_movie_rank/:user_movie_potential_rank/:user_movie_id/:user_movie_list_id/:user_movie_user_id", async (req, res) => {
+//Removed used of user_movie_potential_rank for the current time
+//Might rely on redux/local state storage for potential rank and only place 'set in stone' ranks on items to database. 
+app.put("/user_movies/:user_movie_rank/:user_movie_id/:user_movie_list_id/:user_movie_user_id", async (req, res) => {
   try {
-    const results = await db.query("UPDATE user_movies SET user_movie_rank=$1, user_movie_potential_rank=$2 WHERE user_movie_id=$3 AND user_movie_list_id=$4 AND user_movie_user_id=$5", 
+    const results = await db.query("UPDATE user_movies SET user_movie_rank=$1 WHERE user_movie_id=$2 AND user_movie_list_id=$3 AND user_movie_user_id=$4", 
     [
       req.params.user_movie_rank,
-      req.params.user_movie_potential_rank,
       req.params.user_movie_id,
       req.params.user_movie_list_id,
       req.params.user_movie_user_id
     ])
-    console.log(results.rows)
+    console.log(results.rows[0])
   } catch (err) {
     console.log(err.message);
   }
 });
 
-
 //!TABLE users 
 app.post("/users", async (req, res) => {
-  console.log(req.body);
   try {
     const results = await db.query(
       "INSERT INTO users (user_id, user_username, user_name_first,user_name_last, user_dob, user_email) values ($1, $2, $3, $4, $5, $6)returning *",
@@ -264,8 +250,6 @@ app.post("/users", async (req, res) => {
         req.body.user_email
       ]
     );
-
-    console.log(results);
     res.status(200).json({
       status: "success",
       data: {

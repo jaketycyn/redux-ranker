@@ -30,8 +30,7 @@ CREATE TABLE user_movies
     user_movie_id int NOT NULL,
     user_movie_list_id int NOT NULL,
     user_movie_user_id int NOT NULL,
-    user_movie_rank int,
-    user_movie_potential_rank int,
+    user_movie_rank DECIMAL,
     PRIMARY KEY
     (user_movie_id, user_movie_list_id, user_movie_user_id),
     FOREIGN KEY (user_movie_id) REFERENCES movies (movie_id),
