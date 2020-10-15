@@ -181,17 +181,29 @@ app.get("/user_movies/:user_movie_id/:user_movie_list_id/:user_movie_user_id", a
 
 //TODO: need to change table to user_movies and add in protection of user_id for deleting movie from this table. So other user's movies of the same ID are not removed.
 // delete a movie
-app.delete("/user_movies/:movie_id", async (req, res) => {
+app.delete("/user_movies/:user_movie_id/:user_movie_list_id/:user_movie_user_id", async (req, res) => {
   try {
-    const results = await db.query("DELETE FROM movies WHERE movie_id = $1", [req.params.movie_id,]);
-    res.status(204).json({
-      status: "Success"
-    })
+    const results = await db.query(
+      "DELETE FROM user_movies WHERE user_movie_id=$1 AND user_movie_list_id=$2 AND user_movie_user_id=$3",
+      [
+        req.params.user_movie_id,
+        req.params.user_movie_list_id,
+        req.params.user_movie_user_id
+      ]
+    );
+    console.log(results.rows);
+
+    res.status(200).json({
+      status: "success",
+      results: results.rows.length,
+      data: {
+        movies: results.rows,
+      },
+    });
   } catch (err) {
-    console.error(err.message)
+    console.error(err.message);
   }
 });
-
 
 // TODO:  update a movie
 // app.put("/user_movies/:movie_id", async (req, res) => {
