@@ -62,7 +62,7 @@ const RankedItemsDisplay = () => {
   //   dispatch(fetchMovies());
   // }, [dispatch]);
 
-  let rankedItems = movies.filter((movie) => movie.movie_rank >= 1);
+  let rankedItems = movies.filter((movie) => movie.user_movie_rank >= 1);
   const sort_by = (field, reverse, primer) => {
     const key = primer
       ? function (x) {
@@ -80,7 +80,7 @@ const RankedItemsDisplay = () => {
 
   const itemsSortedByRank = rankedItems
     .slice()
-    .sort(sort_by("rank", false, parseInt));
+    .sort(sort_by("user_movie_rank", false, parseInt));
 
   //custom remove prompt
 
@@ -94,6 +94,7 @@ const RankedItemsDisplay = () => {
   const reRankItem = (movie_id) => {
     if (window.confirm("Do you want to rerank this item?")) {
       dispatch(reRankMovie(movie_id));
+      user_movies_rank_update(movie_id)
     }
   };
 
@@ -139,6 +140,22 @@ const RankedItemsDisplay = () => {
     }
     console.log("delete Item from Server fired")
   }
+
+
+  const user_movies_rank_update = (async (user_movie_id) => {
+    //rank = 0 since we're reranking this item
+    const user_movie_rank = 0;
+      //   //TODO: will be passed down in future
+    const user_movie_list_id = 1;
+      //   //TODO: will be passed down in future
+    const user_movie_user_id = 1;
+    try {
+      const response = await MovieFinder.put(`/user_movies/${user_movie_rank}/${user_movie_id}/${user_movie_list_id}/${user_movie_user_id}`)
+      console.log(response)
+    } catch (err) {
+      console.log(err.message)
+    }
+  })
 
   const toggleListView = () => {
     setView(!view);

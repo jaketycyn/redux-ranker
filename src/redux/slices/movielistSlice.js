@@ -86,12 +86,12 @@ export const movielistSlice = createSlice({
     changeRank: (state, action, movie_id) => {
       
         
-        const user_movies_rank_update = (async (user_movie_rank, user_movie_potential_rank, user_movie_id) => {
+        const user_movies_rank_update = (async (user_movie_rank, user_movie_id) => {
       
         const user_movie_list_id = 1;
         const user_movie_user_id = 1;
         try {
-          const response = await MovieFinder.put(`/user_movies/${user_movie_rank}/${user_movie_potential_rank}/${user_movie_id}/${user_movie_list_id}/${user_movie_user_id}`)
+          const response = await MovieFinder.put(`/user_movies/${user_movie_rank}/${user_movie_id}/${user_movie_list_id}/${user_movie_user_id}`)
           console.log(response)
         } catch (err) {
           console.log(err.message)
@@ -128,20 +128,25 @@ export const movielistSlice = createSlice({
               " beat " +
               OptionB.movie_title
           );
+
           OptionA.user_movie_rank = startTopRank;
+          user_movies_rank_update(startTopRank, OptionA.movie_id)
+
           OptionB.user_movie_rank = startBotRank;
-          user_movies_rank_update(startTopRank, 0, OptionA.movie_id)
+          user_movies_rank_update(startBotRank, OptionB.movie_id)
           
         } else if (action.payload.option === "B") {
           console.log(
-            "ORIGINAL INITIAL RANKING: " +
+            "EXIT: ORIGINAL INITIAL RANKING: " +
               OptionB.movie_title +
               " beat " +
               OptionA.movie_title
+
           );
           OptionA.user_movie_rank = startBotRank;
+          user_movies_rank_update(startBotRank, OptionA.movie_id)
           OptionB.user_movie_rank = startTopRank;
-          user_movies_rank_update(startBotRank, 0, OptionA.movie_id)
+          user_movies_rank_update(startTopRank, OptionB.movie_id)
 
         } else {
           console.log("ERROR DURING INITIAL RANKING!!!");
@@ -176,12 +181,14 @@ export const movielistSlice = createSlice({
         else if (action.payload.option === "B") {
           if (rankedItems.length === bIndex + 1) {
             console.log(
-              "SUBSEQUENT INITIAL RANKING: Max Index reached - this item, " +
+              "EXIT: SUBSEQUENT INITIAL RANKING: Max Index reached - this item, " +
                 OptionA.movie_title +
-                " is the new bottom ranked item- EXIT LOOP"
+                " is the new bottom ranked item"
             );
             OptionA.user_movie_rank = rankedItems[bIndex].user_movie_rank * 2;
             delete OptionA.active;
+            user_movies_rank_update(OptionA.user_movie_rank, OptionA.movie_id);
+            
           } else {
             console.log(
               "SUBSEQUENT INITIAL RANKING: " +
@@ -226,17 +233,19 @@ export const movielistSlice = createSlice({
           ) {
             const newTopRank = rankedItems[bIndex].user_movie_rank / 2;
             OptionA.user_movie_rank = newTopRank;
+            user_movies_rank_update(OptionA.user_movie_rank, OptionA.movie_id);
             delete OptionA.active;
             console.log(
-              "SUBSEQUENT INITIAL RANKING: Max Index reached - this item, " +
+              "EXIT: SUBSEQUENT INITIAL RANKING: Max Index reached - this item, " +
                 OptionA.movie_title +
-                " is the new top ranked item- EXIT LOOP"
+                " is the new top ranked item"
             );
           } else if (bIndex === 0) {
             OptionA.user_movie_rank = OptionA.user_movie_potential_rank;
             delete OptionA.active;
+            user_movies_rank_update(OptionA.user_movie_rank, OptionA.movie_id);
             console.log(
-              "SUBSEQUENT RANKING - NEXT OPPONENT ALREADY FACED EXITING LOOP: " +
+              "EXIT: SUBSEQUENT RANKING - NEXT OPPONENT ALREADY FACED " +
                 OptionA.movie_title +
                 " beat " +
                 OptionB.movie_title
@@ -279,9 +288,10 @@ export const movielistSlice = createSlice({
             OptionA.user_movie_potential_rank < totalRankedItems[1].user_movie_rank
           ) {
             OptionA.user_movie_rank = OptionA.user_movie_potential_rank;
+            user_movies_rank_update(OptionA.user_movie_rank, OptionA.movie_id);
             delete OptionA.active;
             console.log(
-              "SUBSEQUENT RANKING - LOSING TO TOP RANK: " +
+              "EXIT: SUBSEQUENT RANKING - LOSING TO TOP RANK: " +
                 OptionB.movie_title +
                 " beat " +
                 OptionA.movie_title
@@ -291,8 +301,9 @@ export const movielistSlice = createSlice({
           ) {
             delete OptionA.active;
             OptionA.user_movie_rank = rankedItems[bIndex].user_movie_rank * 2;
+            user_movies_rank_update(OptionA.user_movie_rank, OptionA.movie_id);
             console.log(
-              "SUBSEQUENT RANKING - LOST TO BOTTOM RANKING: " +
+              "EXIT: SUBSEQUENT RANKING - LOST TO BOTTOM RANKING: " +
                 OptionB.movie_title +
                 " beat " +
                 OptionA.movie_title
@@ -307,9 +318,10 @@ export const movielistSlice = createSlice({
                 totalRankedItems[bTotalIndex + 1].user_movie_rank) /
               2;
             OptionA.user_movie_rank = lostNewRank;
+            user_movies_rank_update(OptionA.user_movie_rank, OptionA.movie_id);
             delete OptionA.active;
             console.log(
-              "SUBSEQUENT RANKING - NEXT OPPONENT ALREADY FACED EXITING LOOP: " +
+              "EXIT: SUBSEQUENT RANKING - NEXT OPPONENT ALREADY FACED " +
                 OptionB.movie_title +
                 " beat " +
                 OptionA.movie_title
