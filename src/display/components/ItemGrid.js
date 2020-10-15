@@ -24,7 +24,7 @@ const ItemGrid = ({ isLoading, items }) => {
 
   const addItem = (movie_id, movie_title, movie_poster_path, movie_overview) => {
     //find method prevents repetive movies being added to list
-    if (movies.find((movie) => movie.id === movie_id)) {
+    if (movies.find((movie) => movie.movie_id === movie_id)) {
       prompt("Movie is already added");
       console.log("movie already in list");
     } else {
@@ -72,9 +72,9 @@ const ItemGrid = ({ isLoading, items }) => {
         user_movie_id: movie_id,
         //TODO: Add/figure out what variable to pass down as the list_id. Also, functionality how a user will attribute a movie to a list. 
         //*movie_list_id references the current or chosen list id.
-        user_movie_list_id: 1,
+        user_movie_list_id: 2,
         //*using hardcore 1 as user "yojt9"
-        user_movie_user_id: 1,
+        user_movie_user_id: 99,
         user_movie_rank: 0,
         user_movie_potential_rank: 0,
         // id, title, backImg, 

@@ -91,8 +91,8 @@ const MovieList = () => {
   const A = "A";
   const B = "B";
 
-  const unrankedItems = movies.filter((item) => item.rank === 0);
-  const rankedItems = movies.filter((item) => item.rank >= 1);
+  const unrankedItems = movies.filter((item) => item.movie_rank === 0);
+  const rankedItems = movies.filter((item) => item.movie_rank >= 1);
   const rankSortedItems = rankedItems
     .slice()
     // false = reversed order ; lowest # is highest rank
@@ -153,9 +153,9 @@ const MovieList = () => {
             <CombatantOneWrapper name="CombatantOneWrapper">
               {unRankedMatchup.slice(0, 1).map((item) => (
                 <Movie
-                  key={item.id}
+                  key={item.movie_id}
                   item={item}
-                  id={item.id}
+                  movie_id={item.movie_id}
                   option={A}
                   combatants={unRankedMatchup}
                 />
@@ -164,9 +164,9 @@ const MovieList = () => {
             <CombatantTwoWrapper name="CombatantTwoWrapper">
               {unRankedMatchup.slice(1, 2).map((item) => (
                 <Movie
-                  key={item.id}
+                  key={item.movie_id}
                   item={item}
-                  id={item.id}
+                  movie_id={item.movie_id}
                   option={B}
                   combatants={unRankedMatchup}
                 />
@@ -186,7 +186,7 @@ const MovieList = () => {
           console.log("Phase 3.1: ChallengerRanked(Won) vs Ranked");
 
           const botBoundIndex = rankSortedItems.findIndex(
-            (item) => item.rank === activeItem[0].botBound
+            (item) => item.movie_rank === activeItem[0].botBound
           );
 
           console.log("botBoundIndex");
@@ -194,7 +194,7 @@ const MovieList = () => {
 
           if (activeItem[0].topBound) {
             const topBoundIndex = rankSortedItems.findIndex(
-              (item) => item.rank === activeItem[0].topBound
+              (item) => item.movie_rank === activeItem[0].topBound
             );
 
             const newRankedMoviesList = rankSortedItems.slice(
@@ -230,9 +230,9 @@ const MovieList = () => {
                 <CombatantOneWrapper name="CombatantOneWrapper">
                   {activeItem.map((item) => (
                     <Movie
-                      key={item.id}
+                      key={item.movie_id}
                       item={item}
-                      id={item.id}
+                      movie_id={item.movie_id}
                       active={item.active}
                       option={A}
                       combatants={updatedCombatants}
@@ -244,9 +244,9 @@ const MovieList = () => {
                 <CombatantTwoWrapper name="CombatantTwoWrapper">
                   {nextRankedIncumbent.map((item) => (
                     <Movie
-                      key={item.id}
+                      key={item.movie_id}
                       item={item}
-                      id={item.id}
+                      movie_id={item.movie_id}
                       option={B}
                       combatants={updatedCombatants}
                       rankedItems={newRankedMoviesList}
@@ -291,9 +291,9 @@ const MovieList = () => {
               <CombatantOneWrapper name="CombatantOneWrapper">
                 {activeItem.map((item) => (
                   <Movie
-                    key={item.id}
+                    key={item.movie_id}
                     item={item}
-                    id={item.id}
+                    movie_id={item.movie_id}
                     active={item.active}
                     option={A}
                     combatants={updatedCombatants}
@@ -305,9 +305,9 @@ const MovieList = () => {
               <CombatantTwoWrapper name="CombatantTwoWrapper">
                 {nextRankedIncumbent.map((item) => (
                   <Movie
-                    key={item.id}
+                    key={item.movie_id}
                     item={item}
-                    id={item.id}
+                    movie_id={item.movie_id}
                     option={B}
                     combatants={updatedCombatants}
                     rankedItems={newRankedMoviesList}
@@ -324,7 +324,7 @@ const MovieList = () => {
           console.log("Phase 3.2: ChallengerRanked(Lost) vs Ranked");
 
           const topBoundIndex = rankSortedItems.findIndex(
-            (item) => item.rank === activeItem[0].topBound
+            (item) => item.movie_rank === activeItem[0].topBound
           );
 
           console.log("topBoundIndex");
@@ -332,7 +332,7 @@ const MovieList = () => {
 
           if (activeItem[0].botBound) {
             const botBoundIndex = rankSortedItems.findIndex(
-              (item) => item.rank === activeItem[0].botBound
+              (item) => item.movie_rank === activeItem[0].botBound
             );
             console.log("botBoundIndex");
             console.log(botBoundIndex);
@@ -370,9 +370,9 @@ const MovieList = () => {
             //       <CombatantOneWrapper name="CombatantOneWrapper">
             //         {activeItem.map((item) => (
             //           <Movie
-            //             key={item.id}
+            //             key={item.movie_id}
             //             item={item}
-            //             id={item.id}
+            //             movie_id={item.movie_id}
             //             active={item.active}
             //             option={A}
             //             combatants={updatedCombatants}
@@ -384,9 +384,9 @@ const MovieList = () => {
             //       <CombatantTwoWrapper name="CombatantTwoWrapper">
             //         {nextRankedIncumbent.map((item) => (
             //           <Movie
-            //             key={item.id}
+            //             key={item.movie_id}
             //             item={item}
-            //             id={item.id}
+            //             movie_id={item.movie_id}
             //             option={B}
             //             combatants={updatedCombatants}
             //             rankedItems={newRankedMoviesList}
@@ -415,9 +415,9 @@ const MovieList = () => {
                 <CombatantOneWrapper name="CombatantOneWrapper">
                   {activeItem.map((item) => (
                     <Movie
-                      key={item.id}
+                      key={item.movie_id}
                       item={item}
-                      id={item.id}
+                      movie_id={item.movie_id}
                       active={item.active}
                       option={A}
                       combatants={updatedCombatants}
@@ -429,9 +429,9 @@ const MovieList = () => {
                 <CombatantTwoWrapper name="CombatantTwoWrapper">
                   {nextRankedIncumbent.map((item) => (
                     <Movie
-                      key={item.id}
+                      key={item.movie_id}
                       item={item}
-                      id={item.id}
+                      movie_id={item.movie_id}
                       option={B}
                       combatants={updatedCombatants}
                       rankedItems={newRankedMoviesList}
@@ -480,9 +480,9 @@ const MovieList = () => {
                 <CombatantOneWrapper name="CombatantOneWrapper">
                   {activeItem.map((item) => (
                     <Movie
-                      key={item.id}
+                      key={item.movie_id}
                       item={item}
-                      id={item.id}
+                      movie_id={item.movie_id}
                       active={item.active}
                       option={A}
                       combatants={updatedCombatants}
@@ -494,9 +494,9 @@ const MovieList = () => {
                 <CombatantTwoWrapper name="CombatantTwoWrapper">
                   {nextRankedIncumbent.map((item) => (
                     <Movie
-                      key={item.id}
+                      key={item.movie_id}
                       item={item}
-                      id={item.id}
+                      movie_id={item.movie_id}
                       option={B}
                       combatants={updatedCombatants}
                       rankedItems={newRankedMoviesList}
@@ -525,9 +525,9 @@ const MovieList = () => {
                 <CombatantOneWrapper name="CombatantOneWrapper">
                   {activeItem.map((item) => (
                     <Movie
-                      key={item.id}
+                      key={item.movie_id}
                       item={item}
-                      id={item.id}
+                      movie_id={item.movie_id}
                       active={item.active}
                       option={A}
                       combatants={updatedCombatants}
@@ -539,9 +539,9 @@ const MovieList = () => {
                 <CombatantTwoWrapper name="CombatantTwoWrapper">
                   {nextRankedIncumbent.map((item) => (
                     <Movie
-                      key={item.id}
+                      key={item.movie_id}
                       item={item}
-                      id={item.id}
+                      movie_id={item.movie_id}
                       option={B}
                       combatants={updatedCombatants}
                       rankedItems={newRankedMoviesList}
@@ -561,9 +561,9 @@ const MovieList = () => {
             <CombatantOneWrapper name="CombatantOneWrapper">
               {unrankedCombatant.map((item) => (
                 <Movie
-                  key={item.id}
+                  key={item.movie_id}
                   item={item}
-                  id={item.id}
+                  movie_id={item.movie_id}
                   active={item.active}
                   option={A}
                   combatants={combatants}
@@ -575,9 +575,9 @@ const MovieList = () => {
             <CombatantTwoWrapper name="CombatantTwoWrapper">
               {rankedIncumbent.map((item) => (
                 <Movie
-                  key={item.id}
+                  key={item.movie_id}
                   item={item}
-                  id={item.id}
+                  movie_id={item.movie_id}
                   option={B}
                   combatants={combatants}
                   rankedItems={rankSortedItems}

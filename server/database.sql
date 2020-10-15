@@ -24,7 +24,7 @@ CREATE TABLE movies
 )
 
 --look into JOIN tables and see if theres a difference
-
+-- ?Primary key is 3 values to allow for us to create multiple of the same lists (ex: Top Romantic Movies) and track in the future what movies are added by multiple users because it'll have a set user_movie_list_id by us. 
 CREATE TABLE user_movies
 (
     user_movie_id int NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE user_movies
     user_movie_rank int,
     user_movie_potential_rank int,
     PRIMARY KEY
-    (user_movie_id, user_movie_list_id ),
+    (user_movie_id, user_movie_list_id, user_movie_user_id),
     FOREIGN KEY (user_movie_id) REFERENCES movies (movie_id),
     FOREIGN KEY (user_movie_list_id) REFERENCES user_movie_list (list_id),
     FOREIGN KEY (user_movie_user_id) REFERENCES users (user_id)

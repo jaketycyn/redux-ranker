@@ -11,7 +11,7 @@ import { Button } from "../../display/components/Buttons";
 
 export const Movie = ({
   item,
-  id,
+  movie_id,
   option,
   combatants,
   rankedItems,
@@ -22,7 +22,7 @@ export const Movie = ({
   function updateRank() {
     dispatch(
       changeRank({
-        id: id,
+        movie_id: movie_id,
         option: option,
         combatants: combatants,
         rankedItems: rankedItems,
@@ -31,10 +31,10 @@ export const Movie = ({
     );
   }
 
-  const reRankItem = (id) => {
+  const reRankItem = (movie_id) => {
     if (window.confirm("Do you want to rerank this item?")) {
-      dispatch(reRankMovie(id));
-    }
+      dispatch(reRankMovie(movie_id));
+    } 
   };
 
   console.log("combatants are: ");
@@ -45,22 +45,22 @@ export const Movie = ({
     updateRank();
   }
 
-  const deleteItem = (id) => {
-    dispatch(deleteMovie((id: id)));
+  const deleteItem = (movie_id) => {
+    dispatch(deleteMovie((movie_id: movie_id)));
   };
 
   return (
     <StyledMovieCardDiv name="StyledMovieCard">
       <StyledImg
-        src={"https://image.tmdb.org/t/p/w500" + item.backImg}
-        title={item.title}
+        src={"https://image.tmdb.org/t/p/w500" + item.movie_poster_path}
+        title={item.movie_title}
         alt="movie image"
       />
       <ButtonWrapper>
         <Button choose onClick={updateRank}>
           Choose
         </Button>
-        <Button restart onClick={() => reRankItem(id)} />
+        <Button restart onClick={() => reRankItem(movie_id)} />
       </ButtonWrapper>
     </StyledMovieCardDiv>
   );
