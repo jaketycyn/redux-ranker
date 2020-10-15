@@ -29,13 +29,12 @@ const StyledBottomDivRightButton = styled.div`
 `;
 
 const ItemGridCard = ({
-  id,
-  title,
-  backImg,
-  releaseYear,
-  overview,
+  movie_id,
+  movie_title,
+  movie_poster_path,
+  movie_releaseYear,
+  movie_overview,
   addItem,
-  addItemServer,
   deleteItem,
 }) => {
   const [added, setAdded] = useState(false);
@@ -43,11 +42,11 @@ const ItemGridCard = ({
 
   //adding ellipsesis for multiple line overviews
   const addItemToList = () => {
-    addItem(id, title, backImg);
+    addItem(movie_id, movie_title, movie_poster_path, movie_overview);
     setAdded(!added);
   };
 
-  const newOverview = overview.slice(0, 125);
+  const newOverview = movie_overview.slice(0, 125);
   //console.log(newOverview);
   const newOverviewIndex = newOverview.lastIndexOf(" ");
   const resliceOverview = newOverview.slice(0, newOverviewIndex);
@@ -55,23 +54,23 @@ const ItemGridCard = ({
 
   //adding Ellipsis for multiple line titles
 
-  const newTitle = title.slice(0, 46);
+  const newTitle = movie_title.slice(0, 46);
   //console.log(newOverview);
   const newTitleIndex = newTitle.lastIndexOf(" ");
   const resliceTitle = newTitle.slice(0, newOverviewIndex);
   const ellipsisTitle = resliceTitle.concat("...");
 
   //console.log(finalOverview);
-  //const newText = overview.find(" ")
+  //const newText = movie_overview.find(" ")
   /* removed for now can add back in on backside of card or when i want to add in more sizes/showing txt only on desktop
   <StyledOverview>{finalOverview}</StyledOverview> */
   const renderItemCard = () => {
-    if (title.length >= 46) {
+    if (movie_title.length >= 46) {
       return (
         <StyledBaseDiv name="BaseDiv">
           <StyledImg
-            src={"https://image.tmdb.org/t/p/w500" + backImg}
-            title={title}
+            src={"https://image.tmdb.org/t/p/w500" + movie_poster_path}
+            movie_title={movie_title}
             alt="movie image"
           />
           <StyledContentDiv>
@@ -80,7 +79,7 @@ const ItemGridCard = ({
               <Button
                 add
                 added={added}
-                onClick={(e) => addItemToList(id, title, backImg)}
+                onClick={(e) => addItemToList()}
                 style={{ backgroundColor: "red" }}
               >
                 Add
@@ -98,17 +97,17 @@ const ItemGridCard = ({
       return (
         <StyledBaseDiv name="BaseDiv">
           <StyledImg
-            src={"https://image.tmdb.org/t/p/w500" + backImg}
-            title={title}
+            src={"https://image.tmdb.org/t/p/w500" + movie_poster_path}
+            movie_title={movie_title}
             alt="movie image"
           />
           <StyledContentDiv>
-            <StyledTitle>{title}</StyledTitle>
+            <StyledTitle>{movie_title}</StyledTitle>
             <StyledBottomDivLeftButton>
               {added ? (
                 <Button
                   add
-                  onClick={(e) => addItemToList(id, title, backImg)}
+                  onClick={(e) => addItemToList( )}
                   added={added}
                 >
                   Delete
@@ -116,7 +115,7 @@ const ItemGridCard = ({
               ) : (
                 <Button
                   add
-                  onClick={(e) => addItemToList(id, title, backImg)}
+                  onClick={(e) => addItemToList( )}
                   added={added}
                 >
                   Add

@@ -344,20 +344,21 @@ export const movielistSlice = createSlice({
       //   (list) => list.listStatus === "active"
       // );
       console.log(activeListID);
-      const { id, title, backImg } = payload;
+      const { movie_id, movie_title, movie_poster_path, movie_overview } = payload;
 
       state.movies.push({
-        id,
-        title,
-        backImg,
-        rank: 0,
-        potentialRank: 0,
+        movie_id,
+        movie_title,
+        movie_poster_path,
+        movie_overview,
+        movie_rank: 0,
+        movie_potential_Rank: 0,
         lists: activeListID,
       });
     },
 
     deleteMovie: (state, { payload }) => {
-      const index = state.movies.findIndex((movie) => movie.id === payload);
+      const index = state.movies.findIndex((movie) => movie.movie_id === payload);
       console.log(index);
       if (index !== -1) {
         state.movies.splice(index, 1);

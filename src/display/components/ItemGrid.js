@@ -22,45 +22,72 @@ const ItemGrid = ({ isLoading, items }) => {
   //   dispatch(fetchMovies());
   // }, [dispatch]);
 
-  const addItem = (id, title, backImg) => {
+  const addItem = (movie_id, movie_title, movie_poster_path, movie_overview) => {
     //find method prevents repetive movies being added to list
-    if (movies.find((movie) => movie.id === id)) {
+    if (movies.find((movie) => movie.id === movie_id)) {
       prompt("Movie is already added");
       console.log("movie already in list");
     } else {
       dispatch(
         addMovie({
-          id: id,
-          title: title,
-          backImg: backImg,
+          movie_id,
+          movie_title,
+          movie_poster_path,
+          movie_overview
         })
       );
-      addItemServer(id, title);
+      addItemMovieDB(movie_id, movie_title, movie_poster_path, movie_overview);
+      addItemUserMovieDB(movie_id);
     }
   };
   
 
-  const addItemServer = async ( id, title) => {
+  const addItemMovieDB = async ( movie_id, movie_title, movie_poster_path, movie_overview) => {
     //Order of params dictates what is used for some reason. Keep an eye out.
     //possible issue was caused by referencing this function inside ItemGridCard component. Still keep an eye out.
     try {
-      const response = await MovieFinder.post("/", {
-        movie_id: id,
-        user_id: 2,
-        movie_listid: 99,
-        movie_title: title,
-        movie_rank: 0,
-        // id, title, backImg, 
+      const response = await MovieFinder.post("/movies", {
+        movie_id,
+        movie_title,
+        movie_poster_path,
+        //!Turning off overview due to clogging the terminal window.
+        //movie_overview,
+       
       })
       console.log(response)
     } catch(err) {
-      console.error(err.message)
+      console.log(err)
     }
-    console.log("addMovieServer fired")
+    console.log("addItemMovieDB fired")
+    console.log("movie_overview: "+ movie_overview)
   }
 
-  const deleteItem = (id) => {
-    dispatch(deleteMovie(id));
+  
+
+  const addItemUserMovieDB = async ( movie_id) => {
+    //Order of params dictates what is used for some reason. Keep an eye out.
+    //possible issue was caused by referencing this function inside ItemGridCard component. Still keep an eye out.
+    try {
+      const response = await MovieFinder.post("/user_movies", {
+        user_movie_id: movie_id,
+        //TODO: Add/figure out what variable to pass down as the list_id. Also, functionality how a user will attribute a movie to a list. 
+        //*movie_list_id references the current or chosen list id.
+        user_movie_list_id: 1,
+        //*using hardcore 1 as user "yojt9"
+        user_movie_user_id: 1,
+        user_movie_rank: 0,
+        user_movie_potential_rank: 0,
+        // id, title, backImg, 
+      })
+      console.log("addItemUserMovieDB")
+    } catch(err) {
+      console.log(err)
+    }
+    console.log("addItemUserMovieDB fired")
+  }
+
+  const deleteItem = (movie_id) => {
+    dispatch(deleteMovie(movie_id));
     
   };
   return isLoading ? (
@@ -69,15 +96,13 @@ const ItemGrid = ({ isLoading, items }) => {
     <GreaterGrid name="greaterGrid">
       {items.map((item) => (
         <ItemGridCard
-          title={item.title}
-          id={item.id}
-          backImg={item.poster_path}
-          releaseYear={item.release_date}
-          overview={item.overview}
+          movie_id={item.id}
+          movie_title={item.title}
+          movie_poster_path={item.poster_path}
+          movie_releaseYear={item.release_date}
+          movie_overview={item.overview}
           addItem={addItem}
-          addItemServer={addItemServer}
           deleteItem={deleteItem}
-          
         />
       ))}
     </GreaterGrid>
