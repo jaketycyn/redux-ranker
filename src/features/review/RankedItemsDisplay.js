@@ -87,6 +87,7 @@ const RankedItemsDisplay = () => {
   const deleteEverything = () => {
     if (window.confirm("Do you want to delete everything?")) {
       dispatch(deleteAllMovies());
+      user_movies_deleteAll();
     }
   };
 
@@ -103,10 +104,17 @@ const RankedItemsDisplay = () => {
     }
   };
 
-  const user_movies_deleteItem = async (movie_id, user_movie_user_id) => {
+  const user_movies_deleteItem = async (movie_id) => {
+    const user_movie_id = movie_id
+
+    //TODO: will be passed down in future
+    const user_movie_list_id = 1
+    //TODO: will be passed down in future
+    const user_movie_user_id = 1
     try {
       //TODO: how to reference both movie_Id and user_id
-      const response = await MovieFinder.delete(`/user_movies/${movie_id}`)
+      const response = await MovieFinder.delete(`/user_movies/${user_movie_id}/${user_movie_list_id}/${user_movie_user_id}`)
+     // (`/user_movies/${movie_id}`)
       console.log(response)
       }
      catch(err) {
@@ -114,6 +122,24 @@ const RankedItemsDisplay = () => {
     }
     console.log("delete Item from Server fired")
   }
+
+  const user_movies_deleteAll = async () => {
+    //TODO: will be passed down in future
+    const user_movie_list_id = 1
+    //TODO: will be passed down in future
+    const user_movie_user_id = 1
+    try {
+      //TODO: how to reference both movie_Id and user_id
+      const response = await MovieFinder.delete(`/user_movies/${user_movie_list_id}/${user_movie_user_id}`)
+     // (`/user_movies/${movie_id}`)
+      console.log(response)
+      }
+     catch(err) {
+      console.error(err.message)
+    }
+    console.log("delete Item from Server fired")
+  }
+
   const toggleListView = () => {
     setView(!view);
     console.log("view is " + view);
