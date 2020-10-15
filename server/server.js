@@ -231,14 +231,22 @@ app.delete("/user_movies/:user_movie_list_id/:user_movie_user_id", async (req, r
 
 
 
-// TODO:  update a movie
-// app.put("/user_movies/:movie_id", async (req, res) => {
-//   try {
-//     const results = await db.query("UPDATE user_movielists SET ");
-//   } catch (err) {
-//     console.error(err.message);
-//   }
-// });
+// UPDATE THE RANK OF A MOVIE via ChangeRank Redux Functionality
+app.put("/user_movies/:user_movie_rank/:user_movie_potential_rank/:user_movie_id/:user_movie_list_id/:user_movie_user_id", async (req, res) => {
+  try {
+    const results = await db.query("UPDATE user_movies SET user_movie_rank=$1, user_movie_potential_rank=$2 WHERE user_movie_id=$3 AND user_movie_list_id=$4 AND user_movie_user_id=$5", 
+    [
+      req.params.user_movie_rank,
+      req.params.user_movie_potential_rank,
+      req.params.user_movie_id,
+      req.params.user_movie_list_id,
+      req.params.user_movie_user_id
+    ])
+    console.log(results.rows)
+  } catch (err) {
+    console.log(err.message);
+  }
+});
 
 
 //!TABLE users 

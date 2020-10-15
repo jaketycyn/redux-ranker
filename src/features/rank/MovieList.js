@@ -91,8 +91,8 @@ const MovieList = () => {
   const A = "A";
   const B = "B";
 
-  const unrankedItems = movies.filter((item) => item.movie_rank === 0);
-  const rankedItems = movies.filter((item) => item.movie_rank >= 1);
+  const unrankedItems = movies.filter((item) => item.user_movie_rank === 0);
+  const rankedItems = movies.filter((item) => item.user_movie_rank >= 1);
   const rankSortedItems = rankedItems
     .slice()
     // false = reversed order ; lowest # is highest rank
@@ -186,7 +186,7 @@ const MovieList = () => {
           console.log("Phase 3.1: ChallengerRanked(Won) vs Ranked");
 
           const botBoundIndex = rankSortedItems.findIndex(
-            (item) => item.movie_rank === activeItem[0].botBound
+            (item) => item.user_movie_rank === activeItem[0].botBound
           );
 
           console.log("botBoundIndex");
@@ -194,7 +194,7 @@ const MovieList = () => {
 
           if (activeItem[0].topBound) {
             const topBoundIndex = rankSortedItems.findIndex(
-              (item) => item.movie_rank === activeItem[0].topBound
+              (item) => item.user_movie_rank === activeItem[0].topBound
             );
 
             const newRankedMoviesList = rankSortedItems.slice(
@@ -324,7 +324,7 @@ const MovieList = () => {
           console.log("Phase 3.2: ChallengerRanked(Lost) vs Ranked");
 
           const topBoundIndex = rankSortedItems.findIndex(
-            (item) => item.movie_rank === activeItem[0].topBound
+            (item) => item.user_movie_rank === activeItem[0].topBound
           );
 
           console.log("topBoundIndex");
@@ -332,7 +332,7 @@ const MovieList = () => {
 
           if (activeItem[0].botBound) {
             const botBoundIndex = rankSortedItems.findIndex(
-              (item) => item.movie_rank === activeItem[0].botBound
+              (item) => item.user_movie_rank === activeItem[0].botBound
             );
             console.log("botBoundIndex");
             console.log(botBoundIndex);

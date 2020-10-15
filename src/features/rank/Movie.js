@@ -46,7 +46,7 @@ export const Movie = ({
   }
 
   const deleteItem = (movie_id) => {
-    dispatch(deleteMovie((movie_id: movie_id)));
+    dispatch(deleteMovie(movie_id));
   };
 
   return (
