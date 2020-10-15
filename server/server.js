@@ -152,28 +152,101 @@ app.post("/user_movies", async (req, res) => {
   }
 });
 
-//TODO: need to change table to user_movies and add in protection of user_id for deleting movie from this table. So other user's movies of the same ID are not removed.
-// delete a movie
-app.delete("/user_movies/:movie_id", async (req, res) => {
+//Get movie from Table user_movies
+app.get("/user_movies/:user_movie_id/:user_movie_list_id/:user_movie_user_id", async (req, res) => {
   try {
-    const results = await db.query("DELETE FROM movies WHERE movie_id = $1", [req.params.movie_id,]);
-    res.status(204).json({
-      status: "Success"
-    })
+    const results = await db.query(
+      "SELECT * FROM user_movies WHERE user_movie_id=$1 AND user_movie_list_id=$2 AND user_movie_user_id=$3",
+      [
+        req.params.user_movie_id,
+         req.params.user_movie_list_id,
+         req.params.user_movie_user_id
+      ]
+    );
+    console.log(results.rows);
+
+    res.status(200).json({
+      status: "success",
+      results: results.rows.length,
+      data: {
+        movies: results.rows,
+      },
+    });
   } catch (err) {
-    console.error(err.message)
+    console.error(err.message);
   }
 });
 
 
-// TODO:  update a movie
-// app.put("/user_movies/:movie_id", async (req, res) => {
-//   try {
-//     const results = await db.query("UPDATE user_movielists SET ");
-//   } catch (err) {
-//     console.error(err.message);
-//   }
-// });
+
+//TODO: need to change table to user_movies and add in protection of user_id for deleting movie from this table. So other user's movies of the same ID are not removed.
+// DELETE A MOVIE from user_movies
+app.delete("/user_movies/:user_movie_id/:user_movie_list_id/:user_movie_user_id", async (req, res) => {
+  try {
+    const results = await db.query(
+      "DELETE FROM user_movies WHERE user_movie_id=$1 AND user_movie_list_id=$2 AND user_movie_user_id=$3",
+      [
+        req.params.user_movie_id,
+        req.params.user_movie_list_id,
+        req.params.user_movie_user_id
+      ]
+    );
+    console.log(results.rows);
+
+    res.status(200).json({
+      status: "success",
+      results: results.rows.length,
+      data: {
+        movies: results.rows,
+      },
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+//DELETE ALL
+app.delete("/user_movies/:user_movie_list_id/:user_movie_user_id", async (req, res) => {
+  try {
+    const results = await db.query(
+      "DELETE FROM user_movies WHERE user_movie_list_id=$1 AND user_movie_user_id=$2",
+      [
+        req.params.user_movie_list_id,
+        req.params.user_movie_user_id
+      ]
+    );
+    console.log(results.rows);
+
+    res.status(200).json({
+      status: "success",
+      results: results.rows.length,
+      data: {
+        movies: results.rows,
+      },
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+
+
+// UPDATE THE RANK OF A MOVIE via ChangeRank Redux Functionality
+app.put("/user_movies/:user_movie_rank/:user_movie_potential_rank/:user_movie_id/:user_movie_list_id/:user_movie_user_id", async (req, res) => {
+  try {
+    const results = await db.query("UPDATE user_movies SET user_movie_rank=$1, user_movie_potential_rank=$2 WHERE user_movie_id=$3 AND user_movie_list_id=$4 AND user_movie_user_id=$5", 
+    [
+      req.params.user_movie_rank,
+      req.params.user_movie_potential_rank,
+      req.params.user_movie_id,
+      req.params.user_movie_list_id,
+      req.params.user_movie_user_id
+    ])
+    console.log(results.rows)
+  } catch (err) {
+    console.log(err.message);
+  }
+});
 
 
 //!TABLE users 
