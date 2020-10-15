@@ -152,17 +152,15 @@ app.post("/user_movies", async (req, res) => {
   }
 });
 
-//!FIX GET to then fix deletion
 //Get movie from Table user_movies
 app.get("/user_movies/:user_movie_id/:user_movie_list_id/:user_movie_user_id", async (req, res) => {
-  console.log(req.params.movie_id);
   try {
     const results = await db.query(
-      "SELECT * FROM movies WHERE user_movie_id=$1,user_movie_list_id=$2, user_movie_user_id=$3  returning *",
+      "SELECT * FROM user_movies WHERE user_movie_id=$1 AND user_movie_list_id=$2 AND user_movie_user_id=$3",
       [
         req.params.user_movie_id,
-        req.params.user_movie_list_id,
-        req.params.user_movie_user_id
+         req.params.user_movie_list_id,
+         req.params.user_movie_user_id
       ]
     );
     console.log(results.rows);
