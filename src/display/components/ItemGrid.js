@@ -72,9 +72,10 @@ const ItemGrid = ({ isLoading, items }) => {
         user_movie_id: movie_id,
         //TODO: Add/figure out what variable to pass down as the list_id. Also, functionality how a user will attribute a movie to a list. 
         //*movie_list_id references the current or chosen list id.
-        user_movie_list_id: 2,
+        user_movie_list_id: 1,
         //*using hardcore 1 as user "yojt9"
-        user_movie_user_id: 99,
+        //*using hardcore 99 as user "yoschmitty"
+        user_movie_user_id: 1,
         user_movie_rank: 0,
         user_movie_potential_rank: 0,
         // id, title, backImg, 

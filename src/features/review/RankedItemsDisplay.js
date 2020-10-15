@@ -62,7 +62,7 @@ const RankedItemsDisplay = () => {
   //   dispatch(fetchMovies());
   // }, [dispatch]);
 
-  let rankedItems = movies.filter((movie) => movie.rank >= 1);
+  let rankedItems = movies.filter((movie) => movie.movie_rank >= 1);
   const sort_by = (field, reverse, primer) => {
     const key = primer
       ? function (x) {
@@ -90,22 +90,22 @@ const RankedItemsDisplay = () => {
     }
   };
 
-  const reRankItem = (id) => {
+  const reRankItem = (movie_id) => {
     if (window.confirm("Do you want to rerank this item?")) {
-      dispatch(reRankMovie(id));
+      dispatch(reRankMovie(movie_id));
     }
   };
 
-  const removeItem = (id) => {
+  const removeItem = (movie_id) => {
     if (window.confirm("Remove this item?")) {
-      dispatch(deleteMovie(id));
-      deleteItemServer(id)
+      dispatch(deleteMovie(movie_id));
+      user_movies_deleteItem(movie_id)
     }
   };
 
-  const deleteItemServer = async (id) => {
+  const user_movies_deleteItem = async (movie_id, user_movie_user_id) => {
     try {
-      const movie_id = id
+      //TODO: how to reference both movie_Id and user_id
       const response = await MovieFinder.delete(`/user_movies/${movie_id}`)
       console.log(response)
       }
@@ -117,8 +117,8 @@ const RankedItemsDisplay = () => {
   const toggleListView = () => {
     setView(!view);
     console.log("view is " + view);
-    const reduxdata = JSON.stringify(movies)
-    console.log("redux data " + reduxdata)
+    // const reduxdata = JSON.stringify(movies)
+    // console.log("redux data " + reduxdata)
   };
 
   let ranking = 1;
@@ -133,11 +133,11 @@ const RankedItemsDisplay = () => {
               <RankedItemWrapper>
                 <StyledRankingNum>{ranking++}</StyledRankingNum>
                 <StyledBaseDiv>
-                  <StyledTitle>{movie.title}</StyledTitle>
+                  <StyledTitle>{movie.movie_title}</StyledTitle>
                   <StyledBottomDivLeftButton>
                     <ReviewPageButton
                       reRank
-                      onClick={() => reRankItem(movie.id)}
+                      onClick={() => reRankItem(movie.movie_id)}
                     >
                       ReRank
                     </ReviewPageButton>
@@ -145,7 +145,7 @@ const RankedItemsDisplay = () => {
                   <StyledBottomDivRightButton>
                     <ReviewPageButton
                       remove
-                      onClick={() => removeItem(movie.id)}
+                      onClick={() => removeItem(movie.movie_id)}
                     >
                       Remove
                     </ReviewPageButton>
@@ -171,16 +171,16 @@ const RankedItemsDisplay = () => {
               <StyledRankingNum>{ranking++}</StyledRankingNum>
               <StyledBaseDiv reviewPage>
                 <StyledImg
-                  src={"https://image.tmdb.org/t/p/w500" + movie.backImg}
-                  title={movie.title}
+                  src={"https://image.tmdb.org/t/p/w500" + movie.movie_poster_path}
+                  title={movie.movie_title}
                   alt="movie image"
                 />
                 <StyledContentDiv>
-                  <StyledTitle>{movie.title}</StyledTitle>
+                  <StyledTitle>{movie.movie_title}</StyledTitle>
                   <StyledBottomDivLeftButton>
                     <ReviewPageButton
                       reRank
-                      onClick={() => reRankItem(movie.id)}
+                      onClick={() => reRankItem(movie.movie_id)}
                     >
                       ReRank
                     </ReviewPageButton>
@@ -188,7 +188,7 @@ const RankedItemsDisplay = () => {
                   <StyledBottomDivRightButton>
                     <ReviewPageButton
                       remove
-                      onClick={() => removeItem(movie.id)}
+                      onClick={() => removeItem(movie.movie_id)}
                     >
                       Remove
                     </ReviewPageButton>

@@ -152,6 +152,35 @@ app.post("/user_movies", async (req, res) => {
   }
 });
 
+//!FIX GET to then fix deletion
+//Get movie from Table user_movies
+app.get("/user_movies/:user_movie_id/:user_movie_list_id/:user_movie_user_id", async (req, res) => {
+  console.log(req.params.movie_id);
+  try {
+    const results = await db.query(
+      "SELECT * FROM movies WHERE user_movie_id=$1,user_movie_list_id=$2, user_movie_user_id=$3  returning *",
+      [
+        req.params.user_movie_id,
+        req.params.user_movie_list_id,
+        req.params.user_movie_user_id
+      ]
+    );
+    console.log(results.rows);
+
+    res.status(200).json({
+      status: "success",
+      results: results.rows.length,
+      data: {
+        movies: results.rows,
+      },
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+
+
 //TODO: need to change table to user_movies and add in protection of user_id for deleting movie from this table. So other user's movies of the same ID are not removed.
 // delete a movie
 app.delete("/user_movies/:movie_id", async (req, res) => {

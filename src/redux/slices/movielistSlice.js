@@ -113,18 +113,18 @@ export const movielistSlice = createSlice({
         if (action.payload.option === "A") {
           console.log(
             "ORIGINAL INITIAL RANKING: " +
-              OptionA.title +
+              OptionA.movie_title +
               " beat " +
-              OptionB.title
+              OptionB.movie_title
           );
           OptionA.movie_rank = startTopRank;
           OptionB.movie_rank = startBotRank;
         } else if (action.payload.option === "B") {
           console.log(
             "ORIGINAL INITIAL RANKING: " +
-              OptionB.title +
+              OptionB.movie_title +
               " beat " +
-              OptionA.title
+              OptionA.movie_title
           );
           OptionA.movie_rank = startBotRank;
           OptionB.movie_rank = startTopRank;
@@ -147,9 +147,9 @@ export const movielistSlice = createSlice({
           //CHALLENGER SELECTED
           console.log(
             "SUBSEQUENT INITIAL RANKING: " +
-              OptionA.title +
+              OptionA.movie_title +
               " beat " +
-              OptionB.title
+              OptionB.movie_title
           );
           const newRank =
             (rankedItems[bIndex - 1].movie_rank + rankedItems[bIndex].movie_rank) / 2;
@@ -162,7 +162,7 @@ export const movielistSlice = createSlice({
           if (rankedItems.length === bIndex + 1) {
             console.log(
               "SUBSEQUENT INITIAL RANKING: Max Index reached - this item, " +
-                OptionA.title +
+                OptionA.movie_title +
                 " is the new bottom ranked item- EXIT LOOP"
             );
             OptionA.movie_rank = rankedItems[bIndex].movie_rank * 2;
@@ -170,9 +170,9 @@ export const movielistSlice = createSlice({
           } else {
             console.log(
               "SUBSEQUENT INITIAL RANKING: " +
-                OptionB.title +
+                OptionB.movie_title +
                 " beat " +
-                OptionA.title
+                OptionA.movie_title
             );
             OptionA.active = "lost";
             const lostNewRank =
@@ -214,7 +214,7 @@ export const movielistSlice = createSlice({
             delete OptionA.active;
             console.log(
               "SUBSEQUENT INITIAL RANKING: Max Index reached - this item, " +
-                OptionA.title +
+                OptionA.movie_title +
                 " is the new top ranked item- EXIT LOOP"
             );
           } else if (bIndex === 0) {
@@ -222,9 +222,9 @@ export const movielistSlice = createSlice({
             delete OptionA.active;
             console.log(
               "SUBSEQUENT RANKING - NEXT OPPONENT ALREADY FACED EXITING LOOP: " +
-                OptionA.title +
+                OptionA.movie_title +
                 " beat " +
-                OptionB.title
+                OptionB.movie_title
             );
 
             // bIndex = 0 now prevents facing previous "bound" opponents due to removing the ranking of our 'incumbent' until it has exited the loop of ranking
@@ -236,9 +236,9 @@ export const movielistSlice = createSlice({
           //   delete OptionA.active;
           //   console.log(
           //     "SUBSEQUENT RANKING - NEXT OPPONENT ALREADY FACED EXITING LOOP: " +
-          //       OptionA.title +
+          //       OptionA.movie_title +
           //       " beat " +
-          //       OptionB.title
+          //       OptionB.movie_title
           //   );
           // }
           else {
@@ -248,7 +248,7 @@ export const movielistSlice = createSlice({
             OptionA.botBound = OptionB.movie_rank;
             OptionA.history.push(OptionB.movie_id);
             console.log(
-              "SUBSEQUENT RANKING: " + OptionA.title + " beat " + OptionB.title
+              "SUBSEQUENT RANKING: " + OptionA.movie_title + " beat " + OptionB.movie_title
             );
           }
         }
@@ -267,9 +267,9 @@ export const movielistSlice = createSlice({
             delete OptionA.active;
             console.log(
               "SUBSEQUENT RANKING - LOSING TO TOP RANK: " +
-                OptionB.title +
+                OptionB.movie_title +
                 " beat " +
-                OptionA.title
+                OptionA.movie_title
             );
           } else if (
             OptionB.movie_rank === totalRankedItems[totalRankedItems.length - 1].movie_rank
@@ -278,9 +278,9 @@ export const movielistSlice = createSlice({
             OptionA.movie_rank = rankedItems[bIndex].movie_rank * 2;
             console.log(
               "SUBSEQUENT RANKING - LOST TO BOTTOM RANKING: " +
-                OptionB.title +
+                OptionB.movie_title +
                 " beat " +
-                OptionA.title
+                OptionA.movie_title
             );
           } else if (
             bIndex === 0 ||
@@ -295,9 +295,9 @@ export const movielistSlice = createSlice({
             delete OptionA.active;
             console.log(
               "SUBSEQUENT RANKING - NEXT OPPONENT ALREADY FACED EXITING LOOP: " +
-                OptionB.title +
+                OptionB.movie_title +
                 " beat " +
-                OptionA.title
+                OptionA.movie_title
             );
           }
           //else if (
@@ -307,9 +307,9 @@ export const movielistSlice = createSlice({
           // ) {
           //   console.log(
           //     "SUBSEQUENT RANKING - FOUND ITS SPOT - FACED ALL MATCHUPS: " +
-          //       OptionB.title +
+          //       OptionB.movie_title +
           //       " beat " +
-          //       OptionA.title
+          //       OptionA.movie_title
           //   );
           //   delete OptionA.active;
           // }
@@ -322,7 +322,7 @@ export const movielistSlice = createSlice({
             OptionA.topBound = OptionB.movie_rank;
             OptionA.history.push(OptionB.movie_id);
             console.log(
-              "SUBSEQUENT RANKING: " + OptionB.title + " beat " + OptionA.title
+              "SUBSEQUENT RANKING: " + OptionB.movie_title + " beat " + OptionA.movie_title
             );
           }
         } else {
@@ -352,7 +352,7 @@ export const movielistSlice = createSlice({
         movie_poster_path,
         movie_overview,
         movie_rank: 0,
-        movie_potential_Rank: 0,
+        movie_potential_rank: 0,
         lists: activeListID,
       });
     },
