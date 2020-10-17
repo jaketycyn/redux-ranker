@@ -230,7 +230,7 @@ app.put("/user_movies/:user_movie_rank/:user_movie_id/:user_movie_list_id/:user_
       req.params.user_movie_list_id,
       req.params.user_movie_user_id
     ])
-    console.log(results.rows[0])
+    console.log(results)
   } catch (err) {
     console.log(err.message);
   }

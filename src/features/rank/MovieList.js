@@ -96,7 +96,7 @@ const MovieList = () => {
   const rankSortedItems = rankedItems
     .slice()
     // false = reversed order ; lowest # is highest rank
-    .sort(sort_by("rank", false, parseInt));
+    .sort(sort_by("user_movie_rank", false, parseInt));
   console.log("ranked sorted items:");
   console.log(rankSortedItems);
   const nextChallengerIndex = Math.floor(rankSortedItems.length / 2);
