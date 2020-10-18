@@ -35,3 +35,12 @@ Ideas:
     - reranking item after x # of items added to list but item itself hasnt' faced enough
         - Or notificaiton on 20 items added without this facing competition
         
+
+
+USERS:
+-creation + autentication tied into creating a user for psql db. Tie in creation of lists to userID and adding movies to those lists + userID as foreign key
+
+USER_LISTS:
+- think through process of adding movies. All movies should be added to the 'grandmaster' list, but dictate a way for displaying what movies are shown. For instance, base value set is all movies power ranked shown, but when selecting to add movies to a specific list only show them in that list. Also, maybe think through whether or not items should berated independent of the list they're attached to. 
+- Need to add additional  list value
+
