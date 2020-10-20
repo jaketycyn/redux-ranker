@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { resetListStatus } from "../../redux/slices/movielistSlice";
+import Login from '../../features/user/Login'
+import Register from '../../features/user/Register'
 
 import CreateUserList from "../../features/add/CreateUserList";
 import Userlists from "../../features/userlists/Userlists";
@@ -28,22 +30,33 @@ const LandingPage = () => {
   }, [location]);
 
   return (
+    //traditional set up
+    // <Router>
+    //   <Switch>
+    
+    //     <Route exact path="/createList">
+    //       <CreateUserList />
+    //     </Route>
+    //     <Route exact path="/userlists">
+    //       <Userlists />
+    //     </Route>
+    //     <StyledBaseDiv landingPage>
+    //       <div>
+    //         <Link to="/createList">Sign In</Link>
+    //       </div>
+    //       <div>
+    //         <Link to="/userlists">Take me to my lists</Link>
+    //       </div>
+    //     </StyledBaseDiv>
+    //   </Switch>
+    // </Router>
+
     <Router>
       <Switch>
-        <Route exact path="/createList">
-          <CreateUserList />
-        </Route>
-        <Route exact path="/userlists">
-          <Userlists />
-        </Route>
-        <StyledBaseDiv landingPage>
-          <div>
-            <Link to="/createList">Sign In</Link>
-          </div>
-          <div>
-            <Link to="/userlists">Take me to my lists</Link>
-          </div>
-        </StyledBaseDiv>
+      <div style={{color: "white"}}>
+        <Register/>
+        <Login/>
+      </div>
       </Switch>
     </Router>
   );

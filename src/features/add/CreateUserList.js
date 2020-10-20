@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { ItemGridWrapper } from "../../display/components/Divs";
-import ItemGrid from "../../display/components/ItemGrid";
+import ItemGrid from "./ItemGrid";
 import BotNavbar from "../../display/layouts/BotNavbar";
 import Search from "./Search";
 

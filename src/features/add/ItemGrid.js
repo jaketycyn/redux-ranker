@@ -7,10 +7,10 @@ import {
   movielistSelector,
 } from "../../redux/slices/movielistSlice";
 import ItemGridCard from "./ItemGridCard";
-import { GreaterGrid } from "./Divs";
+import { GreaterGrid } from "../../display/components/Divs";
 import MovieFinder  from "../../apis/MovieFinder";
 
-import Spinner from "./Spinner";
+import Spinner from "../../display/components/Spinner";
 //passdown via props specific information needed by the ItemGridCard for displaying
 
 const ItemGrid = ({ isLoading, items }) => {
