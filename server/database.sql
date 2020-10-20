@@ -3,12 +3,24 @@ CREATE TABLE users
 (
     user_id BIGSERIAL,
     user_username VARCHAR(50) UNIQUE NOT NULL,
+    user_email VARCHAR(200) UNIQUE NOT NULL,
+    user_password VARCHAR(200) NOT NULL,
+
+    PRIMARY KEY
+    (user_id)
+);
+
+--Final Version
+CREATE TABLE users
+(
+    user_id BIGSERIAL,
+    user_username VARCHAR(50) UNIQUE NOT NULL,
     user_name_first VARCHAR(50) NOT NULL,
     user_name_last VARCHAR(50) NOT NULL,
     user_dob DATE,
     user_email VARCHAR(200) UNIQUE NOT NULL,
     user_password VARCHAR(200) NOT NULL,
-    -- user_password 
+
     PRIMARY KEY
     (user_id)
 );

@@ -1,13 +1,29 @@
 require("dotenv").config();
 const express = require("express");
-const app = express();
 const cors = require("cors");
+const passport = require("passport");
+const passportLocal = require("passport-local").Strategy;
+const cookeParser = require("cookie-parser");
+const bcrypt = require("bcryptjs");
+const session = require("express-session");
+const bodyParser = require("body-parser");
 
+const app = express();
 //by using the pool we can run quieries with postgres
 const db = require("./db");
 
 //middleware
-app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(session({
+  secret: "secretcode",
+  resave: true,
+  saveUninitialized: true
+}))
+app.use(cors({
+  origin: "http://localhost:3000", //<-- location of the react app were connecting to
+  credentials: true
+}));
 
 //Anytime when building a fullstack application. You need to get data from the client side. The only way to get data from the client side is to get it from the request.body object.
 
@@ -15,10 +31,50 @@ app.use(cors());
 //when we send a request it takes this information thats in the body and attach it to our req object as req.body.
 app.use(express.json()); //req.body
 
+//USER ROUTES
+app.post("/login", (req, res) => {
+  console.log(req.body);
+})
+
+app.post("/register", (req, res) => {
+  console.log(req.body);
+})
+
+app.get("/user", (req, res) => {
+  
+})
+
+//!TABLE users 
+app.post("/users", async (req, res) => {
+  try {
+    const results = await db.query(
+      "INSERT INTO users (user_username,user_password, user_email) values ($1, $2, $3)returning *",
+      [
+        req.body.user_username,
+        req.body.user_password,
+        req.body.user_email
+        //user_name_first,user_name_last, user_dob for above statement in final
+        // req.body.user_name_first,
+        // req.body.user_name_last,
+        // req.body.user_dob,
+      ]
+    );
+    res.status(200).json({
+      status: "success",
+      data: {
+        movies: results.rows[0],
+      },
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+
 //ROUTES//
 
 //!TABLE movies
-//add a movie to TABLE movies
+//add a movie to TABLE movies n 
 app.post("/movies", async (req, res) => {
   try {
     const results = await db.query(
@@ -236,30 +292,6 @@ app.put("/user_movies/:user_movie_rank/:user_movie_id/:user_movie_list_id/:user_
   }
 });
 
-//!TABLE users 
-app.post("/users", async (req, res) => {
-  try {
-    const results = await db.query(
-      "INSERT INTO users (user_id, user_username, user_name_first,user_name_last, user_dob, user_email) values ($1, $2, $3, $4, $5, $6)returning *",
-      [
-        req.body.user_id,
-        req.body.user_username,
-        req.body.user_name_first,
-        req.body.user_name_last,
-        req.body.user_dob,
-        req.body.user_email
-      ]
-    );
-    res.status(200).json({
-      status: "success",
-      data: {
-        movies: results.rows[0],
-      },
-    });
-  } catch (err) {
-    console.error(err.message);
-  }
-});
 
 
 const port = process.env.PORT || 3005;

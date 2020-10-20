@@ -14,6 +14,7 @@ function App() {
       <AppWrapper name="AppWrapper">
         <Switch>
           <Route exact path="login" />
+          <Route exact path="dashboard_main" />
           <Route exact path="signup" />
           {}
           <Route exact path="/createList">

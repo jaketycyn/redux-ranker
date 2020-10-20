@@ -5,13 +5,10 @@ import React, { useState } from "react";
 // import IconButton from "@material-ui/core/IconButton";
 // import Typography from "@material-ui/core/Typography";
 
-import AddIcon from "@material-ui/icons/Add";
-import DeleteIcon from "@material-ui/icons/Delete";
-
-import { Button } from "./Buttons";
-import { StyledBaseDiv, StyledContentDiv } from "./Divs";
-import { StyledImg } from "./Imgs";
-import { StyledTitle } from "./Text";
+import { Button } from "../../display/components/Buttons";
+import { StyledBaseDiv, StyledContentDiv } from "../../display/components/Divs";
+import { StyledImg } from "../../display/components/Imgs";
+import { StyledTitle } from "../../display/components/Text";
 import { deleteMovie } from "../../redux/slices/movielistSlice";
 
 import styled from "styled-components";
