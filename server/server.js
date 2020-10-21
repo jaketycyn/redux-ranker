@@ -48,7 +48,7 @@ app.get("/user", (req, res) => {
 app.post("/users", async (req, res) => {
   try {
     const results = await db.query(
-      "INSERT INTO users (user_username,user_password, user_email) values ($1, $2, $3)returning *",
+      "INSERT INTO users (user_username,user_password, user_email) values ($1, $2, $3) returning *",
       [
         req.body.user_username,
         req.body.user_password,
@@ -59,12 +59,7 @@ app.post("/users", async (req, res) => {
         // req.body.user_dob,
       ]
     );
-    res.status(200).json({
-      status: "success",
-      data: {
-        movies: results.rows[0],
-      },
-    });
+   console.log(results.rows[0])
   } catch (err) {
     console.error(err.message);
   }
@@ -289,6 +284,7 @@ app.put("/user_movies/:user_movie_rank/:user_movie_id/:user_movie_list_id/:user_
     console.log(results)
   } catch (err) {
     console.log(err.message);
+    
   }
 });
 
