@@ -34,3 +34,5 @@ function Account({history, match}) {
         </div>
     )
 }
+
+export {Account}

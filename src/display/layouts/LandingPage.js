@@ -10,8 +10,9 @@ import {
 } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { resetListStatus } from "../../redux/slices/movielistSlice";
-import Login from '../../features/user/Login'
-import Register from '../../features/user/Register'
+//possibly will relocate login/register and to account index
+import {Login} from '../../features/account/Login'
+import {Register} from '../../features/account/Register'
 
 import CreateUserList from "../../features/add/CreateUserList";
 import Userlists from "../../features/userlists/Userlists";
