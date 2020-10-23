@@ -1,9 +1,9 @@
-import {BehaviourSubject} from 'rxjs'
+import {BehaviorSubject} from 'rxjs'
 
 import config from 'config'
 import {fetchWrapper, history} from '@/_helpers';
 
-const userSubject = new BehaviourSubject(null);
+const userSubject = new BehaviorSubject(null);
 const baseUrl = `${config.apiUrl}/accounts`;
 
 export const accountService = {
@@ -117,7 +117,7 @@ let refreshTokenTimeout;
 
 function startRefreshTokenTimer() {
     // parse json object from base64 encoded jwt token
-    const jwtToken = JSON.parse(atbo(userSubject.value.jwtToken.split('.')[1]));
+    const jwtToken = JSON.parse(atob(userSubject.value.jwtToken.split('.')[1]));
 
     // set a timeout to refresh the token a minute before it expires
     const expires = new Date(jwtToken.exp * 1000);
