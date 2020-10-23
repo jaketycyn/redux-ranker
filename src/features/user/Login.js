@@ -1,22 +1,23 @@
 import React, {useState} from 'react'
-import axios from 'axios';
+
+import MovieFinder  from "../../apis/MovieFinder";
+
 const Login = () => {
     const [loginUsername, setLoginUsername] = useState('')
     const [loginPassword, setLoginPassword] = useState('')
     
-    const register = async(registerUsername, registerPassword, registerEmail) => {
+    const login = async(registerUsername, registerPassword, registerEmail) => {
         //Order of params dictates what is used for some reason. Keep an eye out.
         //possible issue was caused by referencing this function inside ItemGridCard component. Still keep an eye out.
         console.log(registerUsername
           )
         try {
-          const response = await MovieFinder.post("users", {
-            user_username: registerUsername,
-            user_password: registerPassword,
-            user_email: registerEmail  
+          const response = await MovieFinder.get("users", {
+            user_username: loginUsername,
+            user_password: loginPassword,
           })
           console.log(response)
-          console.log("added User to DB")
+          console.log("added User to DB")``
         } catch(err) {
           console.log(err)
         }
