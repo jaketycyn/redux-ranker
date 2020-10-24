@@ -73,7 +73,7 @@ export function configureFakeBackend() {
         }
     
         function refreshToken() {
-            const refreshToken = geRefreshToken();
+            const refreshToken = getRefreshToken();
 
             if(!refreshToken) return unauthorized();
 
