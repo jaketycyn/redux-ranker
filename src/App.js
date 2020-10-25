@@ -5,10 +5,10 @@ import { Role } from '/_helpers';
 import { accountService } from '/_services';
 import { Nav, PrivateRoute, Alert } from '/_components';
 
-// import { Home } from '@/home';
- import { Profile } from './features/profile';
- import { Admin } from './features/admin';
- import { Account } from './features/ccount';
+import { Home } from './display/layouts/Home';
+import { Profile } from './features/profile';
+import { Admin } from './features/admin';
+import { Account } from './features/ccount';
 
 function App() {
   const { pathname } = useLocation();
